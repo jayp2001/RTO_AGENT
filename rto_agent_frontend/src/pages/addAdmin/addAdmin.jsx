@@ -1,5 +1,6 @@
 import "./addAdmin.css"
 import React from "react";
+import {useState} from "react";
 import TextField from '@mui/material/TextField';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -14,19 +15,65 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import axios from 'axios';
 
 
 function AddAdminPage(){
 
-    const [value, setValue] = React.useState(dayjs(new Date()));
-    const [city, setCity] = React.useState('');
+    const [formData,setFormData] = useState(
+        {
+            agentFirstName      : '',
+            agentMiddleName     : '',
+            agentLastName       : '',
+            agentGender         : '',
+            agentBirthDate      : '2022-11-09',
+            agentAddressLine1   : '',
+            agentAddressLine2   : '',
+            agentCity           : '',
+            agentState          : '',
+            agentPincode        : '',
+            agentMobileNumber   : '',
+            agentEmailId        : ''
+        }
+    )
 
-    const handleCityChange = (event) => {
-        setCity(event.target.value);
-    };
-  const handleChange = (newValue) => {
-    setValue(newValue);
+  const handleChange = (date) => {
+    setFormData((prevState) => ({
+        ...prevState,
+        ["agentBirthDate"]: new Date(date).toISOString().slice(0, 10),
+        }))
   };
+
+        const onChange = (e) => {
+            setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+            }))
+        }
+
+        const submit = async () => {
+            console.log('>>>>>>>>>>',formData)
+            const res = await axios.post('http://localhost:5000/agentrouter/addAgentDetails',formData);
+            if(res){
+                console.log(">>",res)
+                alert("Data inserted successfully")
+                setFormData({
+                    agentFirstName      : '',
+                    agentMiddleName     : '',
+                    agentLastName       : '',
+                    agentGender         : '',
+                    agentBirthDate      : '2022-11-09',
+                    agentAddressLine1   : '',
+                    agentAddressLine2   : '',
+                    agentCity           : '',
+                    agentState          : '',
+                    agentPincode        : '',
+                    agentMobileNumber   : '',
+                    agentEmailId        : ''
+                })
+            }
+        }
+
     return(
         <>
             <div className="addAdmin_wrapper flex items-center">
@@ -48,9 +95,11 @@ function AddAdminPage(){
                                 <div className="col-span-5">
                                     <TextField
                                         required
+                                        onChange={onChange}
+                                        value={formData.agentFirstName}
+                                        name= "agentFirstName"
                                         id="outlined-required"
                                         label="Name"
-                                        defaultValue=""
                                         InputProps={{style:{ fontSize: 20 } }}
                                         InputLabelProps={{style: {fontSize: 20}}}
                                         fullWidth
@@ -59,9 +108,11 @@ function AddAdminPage(){
                                 <div className="col-span-5">
                                     <TextField
                                         required
+                                        onChange={onChange}
+                                        value={formData.agentLastName}
+                                        name= "agentLastName"
                                         id="outlined-required"
                                         label="Surname"
-                                        defaultValue=""
                                         InputProps={{style:{ fontSize: 20 } }}
                                         InputLabelProps={{style: {fontSize: 20}}}
                                         fullWidth
@@ -75,9 +126,11 @@ function AddAdminPage(){
                                 <div className="col-span-5">
                                     <TextField
                                         required
+                                        onChange={onChange}
+                                        value={formData.agentMiddleName}
+                                        name="agentMiddleName"
                                         id="outlined-required"
                                         label="Middle Name"
-                                        defaultValue=""
                                         InputProps={{style:{ fontSize: 20 } }}
                                         InputLabelProps={{style: {fontSize: 20}}}
                                         fullWidth
@@ -87,9 +140,11 @@ function AddAdminPage(){
                                 <div className="col-span-5">
                                     <TextField
                                         required
+                                        onChange={onChange}
+                                        value={formData.agentMobileNumber}
+                                        name="agentMobileNumber"
                                         id="outlined-required"
                                         label="Mobile Number"
-                                        defaultValue=""
                                         InputProps={{style:{ fontSize: 20 } }}
                                         InputLabelProps={{style: {fontSize: 20}}}
                                         fullWidth
@@ -103,9 +158,11 @@ function AddAdminPage(){
                                 <div className="col-span-5">
                                     <TextField
                                         required
+                                        onChange={onChange}
+                                        value={formData.agentEmailId}
+                                        name="agentEmailId"
                                         id="outlined-required"
                                         label="Email"
-                                        defaultValue=""
                                         InputProps={{style:{ fontSize: 20 } }}
                                         InputLabelProps={{style: {fontSize: 20}}}
                                         fullWidth
@@ -119,9 +176,10 @@ function AddAdminPage(){
                                         InputLabelProps={{style: {fontSize: 20}}}
                                         label="Date Of Birth"
                                         required
-                                        inputFormat="MM/DD/YYYY"
-                                        value={value}
+                                        inputFormat="YYYY/MM/DD"
+                                        value={new Date(formData.agentBirthDate)}
                                         onChange={handleChange}
+                                        name="agentBirthDate"
                                         renderInput={(params) => <TextField {...params} sx={{width: '100%'}}/>}
                                         />
                                     </LocalizationProvider>
@@ -131,8 +189,10 @@ function AddAdminPage(){
                                     <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
                                     <RadioGroup
                                         row
+                                        onChange={onChange}
                                         aria-labelledby="demo-row-radio-buttons-group-label"
-                                        name="row-radio-buttons-group"
+                                        value={formData.agentGender}
+                                        name="agentGender"
                                     >
                                         <FormControlLabel value="female" control={<Radio />} label="Female" />
                                         <FormControlLabel value="male" control={<Radio />} label="Male" />
@@ -141,26 +201,7 @@ function AddAdminPage(){
                                 </div>
                                
                             </div>
-                            {/* <div className="grid grid-cols-12">
-                                <div className="col-span-1">
-
-                                </div>
-                                <div className="col-span-2">
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DesktopDatePicker
-                                        textFieldStyle={{width: '100%'}}
-                                        InputProps={{style:{ fontSize: 20,width:'100%'} }}
-                                        InputLabelProps={{style: {fontSize: 20}}}
-                                        label="Date Of Birth"
-                                        required
-                                        inputFormat="MM/DD/YYYY"
-                                        value={value}
-                                        onChange={handleChange}
-                                        renderInput={(params) => <TextField {...params} sx={{width: '100%'}}/>}
-                                        />
-                                    </LocalizationProvider>
-                                </div>
-                            </div> */}
+                            
                             <div className="grid grid-cols-12">
                                 <div className="col-span-1">
 
@@ -168,9 +209,11 @@ function AddAdminPage(){
                                 <div className="col-span-10">
                                     <TextField
                                         required
+                                        onChange={onChange}
                                         id="outlined-required"
                                         label="Address Line 1"
-                                        defaultValue=""
+                                        value={formData.agentAddressLine1}
+                                        name="agentAddressLine1"
                                         InputProps={{style:{ fontSize: 20 } }}
                                         InputLabelProps={{style: {fontSize: 20}}}
                                         fullWidth
@@ -184,9 +227,11 @@ function AddAdminPage(){
                                 <div className="col-span-10">
                                     <TextField
                                         required
+                                        onChange={onChange}
+                                        value={formData.agentAddressLine2}
+                                        name="agentAddressLine2"
                                         id="outlined-required"
                                         label="Address Line 1"
-                                        defaultValue=""
                                         InputProps={{style:{ fontSize: 20 } }}
                                         InputLabelProps={{style: {fontSize: 20}}}
                                         fullWidth
@@ -203,14 +248,13 @@ function AddAdminPage(){
                                         <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        value={city}
-                                        label="City"
+                                        value={formData.agentState}
+                                        name="agentState"
+                                        label="State"
                                         input={<OutlinedInput sx={{fontSize: '20px'}} label="Tag" />}
-                                        onChange={handleCityChange}
+                                        onChange={onChange}
                                         >
-                                        <MenuItem value={10}>Rajkot</MenuItem>
-                                        <MenuItem value={20}>Jamnagar</MenuItem>
-                                        <MenuItem value={30}>Morbi</MenuItem>
+                                        <MenuItem value={"Gujarat"}>Gujarat</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -220,23 +264,26 @@ function AddAdminPage(){
                                         <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        value={city}
+                                        value={formData.agentCity}
+                                        name="agentCity"
                                         label="City"
                                         input={<OutlinedInput sx={{fontSize: '20px'}} label="Tag" />}
-                                        onChange={handleCityChange}
+                                        onChange={onChange}
                                         >
-                                        <MenuItem value={10}>Rajkot</MenuItem>
-                                        <MenuItem value={20}>Jamnagar</MenuItem>
-                                        <MenuItem value={30}>Morbi</MenuItem>
+                                        <MenuItem value={"Rajkot"}>Rajkot</MenuItem>
+                                        <MenuItem value={"Jamnagar"}>Jamnagar</MenuItem>
+                                        <MenuItem value={"Morrbi"}>Morbi</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </div>
                                 <div className="col-span-4">
                                     <TextField
                                         required
+                                        value={formData.agentPincode}
+                                        name="agentPincode"
                                         id="outlined-required"
                                         label="PIN Code"
-                                        defaultValue=""
+                                        onChange={onChange}
                                         InputProps={{style:{ fontSize: 20 } }}
                                         InputLabelProps={{style: {fontSize: 20}}}
                                         fullWidth
@@ -245,7 +292,7 @@ function AddAdminPage(){
                             </div>
                             <div className="grid grid-cols-12 gap-x-5">
                                 <div className="col-span-4 col-start-5">
-                                    <button className="addAgent_button">
+                                    <button className="addAgent_button" onClick={submit}>
                                         Add Agent
                                     </button>
                                 </div>
