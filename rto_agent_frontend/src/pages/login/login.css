@@ -1,0 +1,64 @@
+.loginCard{
+    background-color: #fff;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    /* height: 500px; */
+    padding-bottom: 60px;
+}
+
+.loginHeader{
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%);
+    position: relative;
+    top: -25px;
+    left: 25px;
+    z-index: 1000;
+}
+
+.header_text{
+    font-size: 24px;
+    color: white;
+    font-weight: 600;
+}
+
+.textField{
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.textFieldWrapper{
+    margin-top: 30px;
+}
+
+.loginBtn{
+    margin-top: 30px;
+    height: 50px;
+    width: 100%;
+    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(76,217,100,1) 0%, rgba(23,243,112,1) 81%, rgba(0,255,117,1) 100%); */
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%);
+    color: white;
+    font-size: 22px;
+    border-radius: 10px;
+}
+
+.buttonWrapper{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.forgetPwd{
+    margin-top: 20px;
+    padding-left: 35px;
+    padding-right: 30px;
+}
+.forgetPwdBtn{
+    cursor: pointer;
+    text-decoration: underline;
+color: rgba(0,122,255,1);
+}

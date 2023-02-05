@@ -5,6 +5,7 @@ import AddAdminPage from "./pages/addAdmin/addAdmin";
 import AgentList from "./pages/agentList/agentList";
 import NaveBar from "./navbar/navbar";
 import './App.css';
+import LoginPage from "./pages/login/login";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
     <BrowserRouter>
         <NaveBar/>
         <Routes>
+        <Route path='/' exact element={<LoginPage />}/>
           <Route path='/add' exact element={<AddAdminPage />}/>
           <Route path='/list' exact element={<AgentList />}/>
         </Routes>
