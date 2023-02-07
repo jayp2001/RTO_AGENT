@@ -1,18 +1,19 @@
-import { Link,NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./navbar.css"
 
-function NaveBar(){
-    return(
+function NaveBar() {
+    return (
         <>
-            <div className='navBar_container flex items-center'>
-                <div className='grid grid-rows-1'>
-                    <div className='grid grid-cols-12 navbar_wrapper'>
-                        <div className='nav_header_text col-span-3'>
-                            <NavLink to="/add" activeClassName="active" className="Home">Add Admin </NavLink>
+            <div className="mainContainer grid content-center">
+                <div className="navBarContainerWrapper justify-center flex">
+                    <div className='navBar_container'>
+                        <div className="navLinkHeader">
+                            RTO Agent
+                            <hr className="hr"></hr>
                         </div>
-
-                        <div className='nav_header_text col-span-2'>
-                            <NavLink to="/list" activeClassName="active" className="Home">Admin List</NavLink>
+                        <div className="navLinkWrapper flex flex-col">
+                            <NavLink to="/add" activeClassName="active" className="navLink">Add Admin </NavLink>
+                            <NavLink to="/list" activeClassName="active" className="navLink">Admin List</NavLink>
                         </div>
                     </div>
                 </div>

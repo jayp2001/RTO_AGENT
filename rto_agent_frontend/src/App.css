@@ -1,3 +1,13 @@
 body{
   background-color: rgb(240,242,245);
 }
+
+.mainBodyWrapper{
+  height: 100vh;
+}
+
+.mainBody{
+  width: 80%;
+  float: left;
+  overflow: scroll;
+}

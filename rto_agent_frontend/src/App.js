@@ -11,12 +11,16 @@ function App() {
   return (
     <>
     <BrowserRouter>
-        <NaveBar/>
-        <Routes>
-        <Route path='/' exact element={<LoginPage />}/>
-          <Route path='/add' exact element={<AddAdminPage />}/>
-          <Route path='/list' exact element={<AgentList />}/>
-        </Routes>
+        <div className="flex mainBodyWrapper">
+          <NaveBar/>
+          <div className="mainBody">
+            <Routes>
+            <Route path='/' exact element={<LoginPage />}/>
+              <Route path='/add' exact element={<AddAdminPage />}/>
+              <Route path='/list' exact element={<AgentList />}/>
+            </Routes>
+          </div>
+        </div>
     </BrowserRouter>
     </>
   );

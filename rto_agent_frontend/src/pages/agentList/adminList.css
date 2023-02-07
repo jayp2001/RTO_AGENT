@@ -1,9 +1,9 @@
 .admin_container{
     background-color: white;
-    width: 80%;
+    width: 95%;
     padding: 30px;
     padding-bottom: 50px;
-    margin-top: 100px;
+    margin-top: 50px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.1) Orem 0.25rem 0.375rem -0.0625rem, a rgba(0,0,0,0.06) Orem 0.125rem 0.25 rem -0.0625 rem;
 }
@@ -30,7 +30,7 @@
 }
 
 .header_text{
-    font-size: 34px;
+    font-size: 22px;
     color: white;
     font-weight: 600;
 }
