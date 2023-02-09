@@ -6,6 +6,7 @@ import AgentList from "./pages/agentList/agentList";
 import NaveBar from "./navbar/navbar";
 import './App.css';
 import LoginPage from "./pages/login/login";
+import ProtectedRoute from "./protectedRoute";
 
 function App() {
   return (
@@ -15,9 +16,11 @@ function App() {
           <NaveBar/>
           <div className="mainBody">
             <Routes>
-            <Route path='/' exact element={<LoginPage />}/>
-              <Route path='/add' exact element={<AddAdminPage />}/>
-              <Route path='/list' exact element={<AgentList />}/>
+              <Route path="/" element={<ProtectedRoute/>}>
+                <Route path='add' exact element={<AddAdminPage />}/>
+                <Route path='list' exact element={<AgentList />}/>
+              </Route>
+              <Route path='/login' exact element={<LoginPage />}/>
             </Routes>
           </div>
         </div>

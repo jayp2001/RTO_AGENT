@@ -15,18 +15,21 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { useDispatch, useSelector } from "react-redux";
+import { createAgent } from '../../action/adminAction/adminAction'
 import axios from 'axios';
 
 
 function AddAdminPage() {
-
+    const agentAddRes = useSelector((state) => state.agentCreate);
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState(
         {
             agentFirstName: '',
             agentMiddleName: '',
             agentLastName: '',
             agentGender: '',
-            agentBirthDate: '2022-11-09',
+            agentBirthDate: '01/01/1999',
             agentAddressLine1: '',
             agentAddressLine2: '',
             agentCity: '',
@@ -50,19 +53,19 @@ function AddAdminPage() {
             [e.target.name]: e.target.value,
         }))
     }
-
+    console.log("<><>", agentAddRes)
     const submit = async () => {
         console.log('>>>>>>>>>>', formData)
-        const res = await axios.post('http://192.168.0.104:8000/agentrouter/addAgentDetails', formData);
-        if (res) {
-            console.log(">>", res)
+        dispatch(createAgent(formData))
+        if (agentAddRes.success) {
+            console.log(">>", agentAddRes.success)
             alert("Data inserted successfully")
             setFormData({
                 agentFirstName: '',
                 agentMiddleName: '',
                 agentLastName: '',
                 agentGender: '',
-                agentBirthDate: '2022-11-09',
+                agentBirthDate: '01/01/1999',
                 agentAddressLine1: '',
                 agentAddressLine2: '',
                 agentCity: '',
@@ -254,7 +257,7 @@ function AddAdminPage() {
                                             input={<OutlinedInput sx={{ fontSize: '20px' }} label="Tag" />}
                                             onChange={onChange}
                                         >
-                                            <MenuItem value={"Gujarat"}>Gujarat</MenuItem>
+                                            <MenuItem value={1}>Gujarat</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -270,8 +273,8 @@ function AddAdminPage() {
                                             input={<OutlinedInput sx={{ fontSize: '20px' }} label="Tag" />}
                                             onChange={onChange}
                                         >
-                                            <MenuItem value={"Rajkot"}>Rajkot</MenuItem>
-                                            <MenuItem value={"Jamnagar"}>Jamnagar</MenuItem>
+                                            <MenuItem value={30}>Rajkot</MenuItem>
+                                            <MenuItem value={31}>Jamnagar</MenuItem>
                                             <MenuItem value={"Morrbi"}>Morbi</MenuItem>
                                         </Select>
                                     </FormControl>
@@ -292,7 +295,7 @@ function AddAdminPage() {
                             </div>
                             <div className="grid grid-cols-12 gap-x-5">
                                 <div className="col-span-4 col-start-5">
-                                    <button className="addAgent_button" onClick={submit}>
+                                    <button className="addAgent_button" onClick={() => submit}>
                                         Add Agent
                                     </button>
                                 </div>

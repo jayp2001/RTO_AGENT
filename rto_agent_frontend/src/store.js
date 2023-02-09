@@ -4,8 +4,12 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   userLoginReducer
 } from "./reducer/userReducer";
+import{
+  agentCreateReducer
+} from './reducer/adminReducer/adminReducer'
 const reducer = combineReducers({
   userLogin: userLoginReducer,
+  agentCreate:agentCreateReducer
 });
 
 // const userInfoFromStorage = localStorage.getItem("userInfo")
