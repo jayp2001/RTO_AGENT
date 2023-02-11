@@ -16,12 +16,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { useDispatch, useSelector } from "react-redux";
-import { createAgent } from '../../action/adminAction/adminAction'
+import { createAgent, getStateList, getCityList, deleteAgent } from '../../action/adminAction/adminAction'
 import axios from 'axios';
 
 
 function AddAdminPage() {
     const agentAddRes = useSelector((state) => state.agentCreate);
+    const states = useSelector((state) => state.stateList.state);
+    const citys = useSelector((state) => state.cityList.state)
     const dispatch = useDispatch();
     const [formData, setFormData] = useState(
         {
@@ -40,6 +42,13 @@ function AddAdminPage() {
         }
     )
 
+    React.useEffect(() => {
+        dispatch(getStateList());
+        dispatch(getCityList())
+    }, [dispatch])
+
+    console.log(":::", agentAddRes)
+
     const handleChange = (date) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -56,6 +65,7 @@ function AddAdminPage() {
     console.log("<><>", agentAddRes)
     const submit = async () => {
         console.log('>>>>>>>>>>', formData)
+        dispatch(deleteAgent(16))
         dispatch(createAgent(formData))
         if (agentAddRes.success) {
             console.log(">>", agentAddRes.success)
@@ -75,6 +85,9 @@ function AddAdminPage() {
                 agentEmailId: ''
             })
         }
+        else if (agentAddRes.error) {
+            alert(agentAddRes.error)
+        }
     }
 
     return (
@@ -92,6 +105,7 @@ function AddAdminPage() {
                         </div>
                         <div className="grid gird-rows-10 gap-y-6">
                             <div className="grid grid-cols-12 gap-x-5">
+
                                 <div className="col-span-1">
 
                                 </div>
@@ -247,7 +261,7 @@ function AddAdminPage() {
                                 </div>
                                 <div className="col-span-3">
                                     <FormControl style={{ minWidth: '100%' }}>
-                                        <InputLabel id="demo-simple-select-label">City</InputLabel>
+                                        <InputLabel id="demo-simple-select-label">State</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
@@ -257,7 +271,12 @@ function AddAdminPage() {
                                             input={<OutlinedInput sx={{ fontSize: '20px' }} label="Tag" />}
                                             onChange={onChange}
                                         >
-                                            <MenuItem value={1}>Gujarat</MenuItem>
+                                            {
+                                                states?.map((state) => (
+                                                    <MenuItem value={state.stateId}>{state.stateName}</MenuItem>
+                                                ))
+                                            }
+
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -273,9 +292,14 @@ function AddAdminPage() {
                                             input={<OutlinedInput sx={{ fontSize: '20px' }} label="Tag" />}
                                             onChange={onChange}
                                         >
-                                            <MenuItem value={30}>Rajkot</MenuItem>
+                                            {
+                                                citys?.map((city) => (
+                                                    <MenuItem value={city.cityId}>{city.cityName}</MenuItem>
+                                                ))
+                                            }
+                                            {/* <MenuItem value={30}>Rajkot</MenuItem>
                                             <MenuItem value={31}>Jamnagar</MenuItem>
-                                            <MenuItem value={"Morrbi"}>Morbi</MenuItem>
+                                            <MenuItem value={"Morrbi"}>Morbi</MenuItem> */}
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -295,7 +319,7 @@ function AddAdminPage() {
                             </div>
                             <div className="grid grid-cols-12 gap-x-5">
                                 <div className="col-span-4 col-start-5">
-                                    <button className="addAgent_button" onClick={() => submit}>
+                                    <button className="addAgent_button" onClick={submit}>
                                         Add Agent
                                     </button>
                                 </div>

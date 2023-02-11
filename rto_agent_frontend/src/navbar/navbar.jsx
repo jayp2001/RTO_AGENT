@@ -4,7 +4,7 @@ import "./navbar.css"
 function NaveBar() {
     return (
         <>
-            <div className="mainContainer grid content-center">
+            <div className="mainContainer">
                 <div className="navBarContainerWrapper justify-center flex">
                     <div className='navBar_container'>
                         <div className="navLinkHeader">

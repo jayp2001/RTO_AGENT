@@ -4,6 +4,8 @@ body{
 
 .mainBodyWrapper{
   height: 100vh;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .mainBody{
