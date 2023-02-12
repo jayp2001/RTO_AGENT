@@ -1,0 +1,35 @@
+.card{
+    position: absolute;
+    width: 260px;
+    max-width: 20%;
+    /* margin-top: 100px; */
+    height: 132px;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0rem 0.25rem 0.375rem -0.0625rem, rgba(0, 0, 0, 0.06) 0rem 0.125rem 0.25rem -0.0625rem;
+}
+
+.card_header_box{
+    position: relative;
+    top: -16px;
+    left: 16px;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.75rem;
+}
+
+.blue{
+    background:linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%) ;
+}
+
+.pink{
+    background:linear-gradient(195deg, rgb(236, 64, 122), rgb(216, 27, 96));
+}
+
+.green{
+    background:linear-gradient(195deg, rgb(102, 187, 106), rgb(67, 160, 71));
+}
+
+.black{
+    background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+}

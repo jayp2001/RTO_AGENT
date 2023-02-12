@@ -3,7 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import './login.css';
 import { useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
-import { login } from '../../action/userAction'
+import { login } from '../../action/userAction';
+import CryptoJS from 'crypto-js'
+
+const decryptData = (text) => {
+    const key = process.env.REACT_APP_AES_KEY;
+    const bytes = CryptoJS.AES.decrypt(text, key);
+    const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    return (data);
+};
 
 function LoginPage() {
     const [email, setEmail] = useState("");
@@ -15,8 +23,13 @@ function LoginPage() {
     const { loading, error, userInfo } = userLogin;
 
     useEffect(() => {
-        if (userInfo) {
-            navigate('/list')
+        const user = JSON.parse(localStorage.getItem('userInfo'))
+        const role = decryptData(user.isAdminrights)
+        if (userInfo && role == '1') {
+            navigate('/list');
+        }
+        else if (userInfo && role == '0') {
+            navigate('/dashboard');
         }
     }, [userInfo]);
 

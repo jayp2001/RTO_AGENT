@@ -1,0 +1,32 @@
+.nav_wrapper{
+    margin-top: 5px;
+    margin-bottom: 50px;
+    width: 95%;
+    height: 65px;
+    border-radius: 0.75rem;
+    /* background-color: #fff; */
+    /* backdrop-filter: saturate(200%) blur(1.875rem);
+background-color: rgba(255, 255, 255, 0.5); */
+background-color: #fff;
+}
+
+/* .temp{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 1000;
+    height: 100px;
+} */
+
+.tt{
+    width: 80%;
+    position: fixed;
+    left: 18%;
+    top: 3.5%;
+    height: 65px;
+    border-radius: 0.75rem;
+    z-index: 10000;
+    background-color: #fff;
+    backdrop-filter: saturate(200%) blur(1.875rem);
+    background-color: rgba(255, 255, 255, 0.5);
+  }

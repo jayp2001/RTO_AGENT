@@ -1,7 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import "./navbar.css"
-
+import { useLocation } from 'react-router-dom';
 function NaveBar() {
+    const location = useLocation();
+    if (location.pathname === "/login") {
+        return null;
+    }
     return (
         <>
             <div className="mainContainer">
@@ -12,8 +16,9 @@ function NaveBar() {
                             <hr className="hr"></hr>
                         </div>
                         <div className="navLinkWrapper flex flex-col">
-                            <NavLink to="/add" activeClassName="active" className="navLink">Add Admin </NavLink>
                             <NavLink to="/list" activeClassName="active" className="navLink">Admin List</NavLink>
+                            <NavLink to="/add" activeClassName="active" className="navLink">Add Admin </NavLink>
+                            <NavLink to="/dashboard" activeClassName="active" className="navLink">Dashboard </NavLink>
                         </div>
                     </div>
                 </div>

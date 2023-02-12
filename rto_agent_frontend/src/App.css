@@ -9,7 +9,23 @@ body{
 }
 
 .mainBody{
-  width: 80%;
+  width: 100%;
+  position: relative;
   float: left;
+  height: 100%;
   overflow: scroll;
+}
+
+/* .tt{
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 50px;
+  width: 50px;
+  background-color: #fff;
+} */
+
+.mainBodyW{
+  width: 80%;
+  overflow: hidden;
 }

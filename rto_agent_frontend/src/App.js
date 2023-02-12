@@ -6,7 +6,10 @@ import AgentList from "./pages/agentList/agentList";
 import NaveBar from "./navbar/navbar";
 import './App.css';
 import LoginPage from "./pages/login/login";
-import ProtectedRoute from "./protectedRoute";
+import ProtectedAdminRoute from "./protectedAdminRoute";
+import Dashboard from "./agentPages/dashboard/dashboard";
+import ProtectedAgentRoutes from "./protectedAgentRoutes";
+import Nav from "./agentPages/dashboard/components/nav/nav";
 
 function App() {
   return (
@@ -15,13 +18,21 @@ function App() {
         <div className="flex mainBodyWrapper">
           <NaveBar/>
           <div className="mainBody">
+            {/* <div className="tt"> */}
+              <Nav/>
+              {/* </div> */}
+              <div className="mt-8">
             <Routes>
-              <Route path="/" element={<ProtectedRoute/>}>
+              <Route path="/" element={<ProtectedAdminRoute/>}>
                 <Route path='add' exact element={<AddAdminPage />}/>
                 <Route path='list' exact element={<AgentList />}/>
               </Route>
+              <Route path="/" element={<ProtectedAgentRoutes/>}>
+                <Route path="/dashboard" element={<Dashboard/>}/>
+              </Route>
               <Route path='/login' exact element={<LoginPage />}/>
             </Routes>
+            </div>
           </div>
         </div>
     </BrowserRouter>
