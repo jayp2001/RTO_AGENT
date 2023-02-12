@@ -10,14 +10,18 @@ import{
   stateListReducer,
   cityListReducer,
   agentDeleteReducer
-} from './reducer/adminReducer/adminReducer'
+} from './reducer/adminReducer/adminReducer';
+import{
+  dealerListReducer
+} from './reducer/agentReducer/agentReducer'
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   agentCreate:agentCreateReducer,
   agentList:agentListReducer,
   stateList:stateListReducer,
   cityList:cityListReducer,
-  agentDelete:agentDeleteReducer
+  agentDelete:agentDeleteReducer,
+  dealerList:dealerListReducer
 });
 
 // const userInfoFromStorage = localStorage.getItem("userInfo")

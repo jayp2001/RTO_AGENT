@@ -116,7 +116,7 @@ function AgentList() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {data.map((row) => (
+                                    {data?.map((row) => (
                                         <TableRow
                                             key={row.agentId}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

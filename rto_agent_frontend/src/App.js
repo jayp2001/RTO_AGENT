@@ -18,20 +18,18 @@ function App() {
         <div className="flex mainBodyWrapper">
           <NaveBar/>
           <div className="mainBody">
-            {/* <div className="tt"> */}
               <Nav/>
-              {/* </div> */}
               <div className="mt-8">
-            <Routes>
-              <Route path="/" element={<ProtectedAdminRoute/>}>
-                <Route path='add' exact element={<AddAdminPage />}/>
-                <Route path='list' exact element={<AgentList />}/>
-              </Route>
-              <Route path="/" element={<ProtectedAgentRoutes/>}>
-                <Route path="/dashboard" element={<Dashboard/>}/>
-              </Route>
-              <Route path='/login' exact element={<LoginPage />}/>
-            </Routes>
+                <Routes>
+                  <Route path="/" element={<ProtectedAdminRoute/>}>
+                    <Route path='add' exact element={<AddAdminPage />}/>
+                    <Route path='list' exact element={<AgentList />}/>
+                  </Route>
+                  <Route path="/" element={<ProtectedAgentRoutes/>}>
+                    <Route path="/dashboard" element={<Dashboard/>}/>
+                  </Route>
+                  <Route path='/login' exact element={<LoginPage />}/>
+                </Routes>
             </div>
           </div>
         </div>
