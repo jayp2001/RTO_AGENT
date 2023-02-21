@@ -1,4 +1,4 @@
-import './dealerList.css'
+import './pendingBookList.css'
 import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,11 +9,12 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useDispatch, useSelector } from "react-redux";
-import { dealerList } from "../../action/agentAction/agentAction"
+// import { dealerList } from "../../../action/agentAction/agentAction"
 import { useNavigate } from "react-router-dom";
-// import { dealerList } from "../../action/adminAction/adminAction";
+import { dealerList } from "../../../action/agentAction/agentAction";
 
-function DealerList() {
+function PendingBookList() {
+    const [stateOfBook, setStateOfBook] = React.useState(0);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const dispatch = useDispatch();
@@ -43,15 +44,34 @@ function DealerList() {
     }
 
     return (
-        <div className='tableWrapper'>
-            <div className='tableContainer'>
+        <div className='pendingTableWrapper'>
+            <div className='pendingTableContainer'>
                 <div className='flex justify-center w-full'>
                     <div className='tableHeader flex justify-between'>
                         <div>
-                            Dealer List
+                            Book List
                         </div>
                         <div>
                             {totalRows}
+                        </div>
+                    </div>
+                </div>
+                <div className='tabContainer content-center grid gap-2 grid-cols-12'>
+                    <div className='col-span-8 flex tabWrapper'>
+                        <div className={`${stateOfBook == 0 ? 'tabActive pink' : 'tab'}`}>
+                            <button className={`${stateOfBook == 0 ? 'tabTextActive ' : 'tabText'}`} onClick={() => setStateOfBook(0)}>
+                                Pendding
+                            </button>
+                        </div>
+                        <div className={`${stateOfBook == 2 ? 'tabActive yellow' : 'tab'}`}>
+                            <button className={`${stateOfBook == 2 ? 'tabTextActive' : 'tabText'}`} onClick={() => setStateOfBook(2)}>
+                                Appointment
+                            </button>
+                        </div>
+                        <div className={`${stateOfBook == 3 ? 'tabActive green' : 'tab'}`}>
+                            <button className={`${stateOfBook == 3 ? 'tabTextActive' : 'tabText'}`} onClick={() => setStateOfBook(3)}>
+                                Complete
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -106,4 +126,4 @@ function DealerList() {
     )
 }
 
-export default DealerList;
+export default PendingBookList;

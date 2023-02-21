@@ -13,7 +13,7 @@ import {
     CITY_LIST_FAIL,
     AGENT_DELETE_REQUEST,
     AGENT_DELETE_SUCCESS,
-    AGENT_DELETE_FAIL
+    AGENT_DELETE_FAIL,RESET_STATE
 
     } from "../../type/adminTypes/adminTypes";
 
@@ -25,7 +25,8 @@ export const agentCreateReducer = (state = {}, action) => {
         return { loading: false, success: true };
       case AGENT_CREATE_FAIL:
         return { loading: false, error: action.payload };
-  
+      case RESET_STATE:
+        return {}
       default:
         return state;
     }

@@ -13,7 +13,7 @@ import {
     CITY_LIST_FAIL,
     AGENT_DELETE_REQUEST,
     AGENT_DELETE_SUCCESS,
-    AGENT_DELETE_FAIL
+    AGENT_DELETE_FAIL,RESET_STATE
     } from "../../type/adminTypes/adminTypes";
     import axios from "axios";
     import {BACKEND_BASE_URL} from '../../type/url'
@@ -217,3 +217,11 @@ import {
           });
         }
       };
+
+
+    export const resetAddAgent = () => async (dispatch)=>{
+      console.log("LKT")
+      dispatch({
+        type: RESET_STATE,
+      })
+    };

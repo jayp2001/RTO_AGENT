@@ -10,6 +10,8 @@ import ProtectedAdminRoute from "./protectedAdminRoute";
 import Dashboard from "./agentPages/dashboard/dashboard";
 import ProtectedAgentRoutes from "./protectedAgentRoutes";
 import Nav from "./agentPages/dashboard/components/nav/nav";
+import DealerDetail from "./agentPages/dealerDetail/dealerDetail";
+import AddDealer from "./agentPages/addDealer/addDealer";
 
 function App() {
   return (
@@ -26,7 +28,9 @@ function App() {
                     <Route path='list' exact element={<AgentList />}/>
                   </Route>
                   <Route path="/" element={<ProtectedAgentRoutes/>}>
+                    <Route path="/addDealer" element={<AddDealer/>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
+                    <Route path="/dealer/:id" element={<DealerDetail/>}/>
                   </Route>
                   <Route path='/login' exact element={<LoginPage />}/>
                 </Routes>

@@ -24,7 +24,8 @@ function LoginPage() {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('userInfo'))
-        const role = decryptData(user.isAdminrights)
+        const role = user && user.isAdminrights ? decryptData(user.isAdminrights) : '';
+        // const role = '1'
         if (userInfo && role == '1') {
             navigate('/list');
         }

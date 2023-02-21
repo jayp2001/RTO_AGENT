@@ -16,12 +16,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { useDispatch, useSelector } from "react-redux";
-import { createAgent, getStateList, getCityList, deleteAgent } from '../../action/adminAction/adminAction'
+import { createAgent, getStateList, getCityList, resetAddAgent, deleteAgent } from '../../action/adminAction/adminAction'
 import axios from 'axios';
-
+import { ToastContainer, toast } from 'react-toastify';
+import '../../../node_modules/react-toastify/dist/ReactToastify.css';
 
 function AddAdminPage() {
-    const agentAddRes = useSelector((state) => state.agentCreate);
+    const { loading, success, error } = useSelector((state) => state.agentCreate);
+    console.log(loading, success, error)
     const states = useSelector((state) => state.stateList.state);
     const citys = useSelector((state) => state.cityList.state)
     const dispatch = useDispatch();
@@ -42,12 +44,12 @@ function AddAdminPage() {
         }
     )
 
-    React.useEffect(() => {
-        dispatch(getStateList());
-        dispatch(getCityList())
-    }, [dispatch])
+    // React.useEffect(() => {
+    //     dispatch(getStateList());
+    //     dispatch(getCityList())
+    // }, [dispatch, formData])
 
-    console.log(":::", agentAddRes)
+    // console.log(":::", agentAddRes)
 
     const handleChange = (date) => {
         setFormData((prevState) => ({
@@ -62,32 +64,77 @@ function AddAdminPage() {
             [e.target.name]: e.target.value,
         }))
     }
-    console.log("<><>", agentAddRes)
-    const submit = async () => {
+    const submit = (e) => {
+
+        e.preventDefault();
         console.log('>>>>>>>>>>', formData)
-        dispatch(deleteAgent(16))
         dispatch(createAgent(formData))
-        if (agentAddRes.success) {
-            console.log(">>", agentAddRes.success)
-            alert("Data inserted successfully")
-            setFormData({
-                agentFirstName: '',
-                agentMiddleName: '',
-                agentLastName: '',
-                agentGender: '',
-                agentBirthDate: '01/01/1999',
-                agentAddressLine1: '',
-                agentAddressLine2: '',
-                agentCity: '',
-                agentState: '',
-                agentPincode: '',
-                agentMobileNumber: '',
-                agentEmailId: ''
-            })
-        }
-        else if (agentAddRes.error) {
-            alert(agentAddRes.error)
-        }
+    }
+
+    const reset = async () => {
+        setFormData({
+            agentFirstName: '',
+            agentMiddleName: '',
+            agentLastName: '',
+            agentGender: '',
+            agentBirthDate: '01/01/1999',
+            agentAddressLine1: '',
+            agentAddressLine2: '',
+            agentCity: '',
+            agentState: '',
+            agentPincode: '',
+            agentMobileNumber: '',
+            agentEmailId: ''
+        })
+    }
+    if (loading) {
+        // toast.loading("Please wait...", {
+        //     toastId: 'loading'
+        // })
+        // window.alert()
+    }
+    if (success) {
+        toast.dismiss('loading');
+        toast.dismiss('error');
+        toast('success',
+            {
+                type: 'success',
+                toastId: 'success',
+                position: "bottom-right",
+                toastId: 'error',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+
+        dispatch(resetAddAgent())
+        setTimeout(() => {
+            reset()
+        }, 50)
+
+
+        console.log('././. ', formData)
+    }
+    console.log('././. >>>', formData)
+    if (error) {
+        toast.dismiss('loading');
+        toast(error, {
+            type: 'error',
+            position: "bottom-right",
+            toastId: 'error',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+        dispatch(resetAddAgent())
     }
 
     return (
@@ -268,7 +315,7 @@ function AddAdminPage() {
                                             value={formData.agentState}
                                             name="agentState"
                                             label="State"
-                                            input={<OutlinedInput sx={{ fontSize: '20px' }} label="Tag" />}
+                                            input={<OutlinedInput sx={{ fontSize: '14' }} label="Tag" />}
                                             onChange={onChange}
                                         >
                                             {
@@ -289,7 +336,7 @@ function AddAdminPage() {
                                             value={formData.agentCity}
                                             name="agentCity"
                                             label="City"
-                                            input={<OutlinedInput sx={{ fontSize: '20px' }} label="Tag" />}
+                                            input={<OutlinedInput sx={{ fontSize: '14' }} label="Tag" />}
                                             onChange={onChange}
                                         >
                                             {
@@ -319,7 +366,7 @@ function AddAdminPage() {
                             </div>
                             <div className="grid grid-cols-12 gap-x-5">
                                 <div className="col-span-4 col-start-5">
-                                    <button className="addAgent_button" onClick={submit}>
+                                    <button className="addAgent_button" onClick={(event) => submit(event)}>
                                         Add Agent
                                     </button>
                                 </div>
@@ -327,6 +374,7 @@ function AddAdminPage() {
                         </div>
                     </div>
                 </div>
+                <ToastContainer />
             </div>
         </>
     )
