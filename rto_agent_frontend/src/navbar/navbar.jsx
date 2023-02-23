@@ -20,6 +20,7 @@ function NaveBar() {
                             <NavLink to="/add" activeClassName="active" className="navLink">Add Admin </NavLink>
                             <NavLink to="/dashboard" activeClassName="active" className="navLink">Dashboard </NavLink>
                             <NavLink to="/addDealer" activeClassName="active" className="navLink">add Dealer </NavLink>
+                            <NavLink to="/addBook" activeClassName="active" className="navLink">add Book </NavLink>
                         </div>
                     </div>
                 </div>

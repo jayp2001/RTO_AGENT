@@ -1,0 +1,15 @@
+.formHeader{
+    height: 35px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin-bottom: 24px;
+    font-size: 18px;
+    font-weight: 400;
+}
+.formHeader2{
+    height: 35px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin-bottom: 24px;
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 24px;
+}

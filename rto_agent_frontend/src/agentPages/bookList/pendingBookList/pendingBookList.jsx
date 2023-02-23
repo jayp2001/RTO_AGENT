@@ -11,24 +11,26 @@ import TablePagination from '@mui/material/TablePagination';
 import { useDispatch, useSelector } from "react-redux";
 // import { dealerList } from "../../../action/agentAction/agentAction"
 import { useNavigate } from "react-router-dom";
-import { dealerList } from "../../../action/agentAction/agentAction";
+import { dealerBookList } from "../../../action/agentAction/agentAction";
+import Menutemp from './menu';
 
-function PendingBookList() {
+function PendingBookList({ dealerId }) {
+    console.log('>>', dealerId);
     const [stateOfBook, setStateOfBook] = React.useState(0);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // const totalRows = 10
-    const data = useSelector((state) => state.dealerList.state);
-    const totalRows = useSelector((state) => state.dealerList.totalRows);
+    const data = useSelector((state) => state.dealerBookList.state);
+    const totalRows = useSelector((state) => state.dealerBookList.totalRows);
     React.useEffect(() => {
-        dispatch(dealerList(page + 1, rowsPerPage))
+        dispatch(dealerBookList(page + 1, rowsPerPage, dealerId))
     }, [dispatch, setRowsPerPage, setPage])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-        dispatch(dealerList(newPage + 1, rowsPerPage))
+        dispatch(dealerBookList(newPage + 1, rowsPerPage, dealerId))
     };
 
     const handleChangeRowsPerPage = (event) => {
@@ -36,13 +38,12 @@ function PendingBookList() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
         console.log('>>>????', page, parseInt(event.target.value, 10));
-        dispatch(dealerList(page + 1, parseInt(event.target.value, 10)))
+        dispatch(dealerBookList(page + 1, parseInt(event.target.value, 10), dealerId))
     };
 
     const handleClickTable = (id) => {
-        navigate(`/dealer/${id}`)
+        // navigate(`/dealer/${id}`)
     }
-
     return (
         <div className='pendingTableWrapper'>
             <div className='pendingTableContainer'>
@@ -81,11 +82,11 @@ function PendingBookList() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>No.</TableCell>
-                                    <TableCell>Firm Name</TableCell>
-                                    <TableCell align="left">Dealer Name</TableCell>
-                                    <TableCell align="center">Dealer Code</TableCell>
-                                    <TableCell align="right">Phone Number</TableCell>
-                                    <TableCell align="right">Whatsapp Number</TableCell>
+                                    <TableCell>Vehicle Registration No</TableCell>
+                                    <TableCell align="left">Vehicle Model</TableCell>
+                                    <TableCell align="center">Work List</TableCell>
+                                    <TableCell align="right">Client Number</TableCell>
+                                    <TableCell align="right"></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -93,18 +94,20 @@ function PendingBookList() {
                                     <TableRow
                                         key={row.dealerId}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        onClick={() => handleClickTable(row.dealerId)}
+                                        onClick={() => handleClickTable(row.vehicleRegistrationId)}
                                         style={{ cursor: "pointer" }}
                                         className='tableRow'
                                     >
                                         <TableCell align="left">{index + 1}</TableCell>
                                         <TableCell component="th" scope="row">
-                                            {row.dealerFirmName}
+                                            {row.vehicleRegistrationNumber}
                                         </TableCell>
-                                        <TableCell align="left">{row.dealerName}</TableCell>
-                                        <TableCell align="center">{row.dealerDisplayName}</TableCell>
-                                        <TableCell align="right">{row.dealerMobileNumber}</TableCell>
-                                        <TableCell align="right">{row.dealerWhatsAppNumber}</TableCell>
+                                        <TableCell align="left">{row.vehicleModelMake}</TableCell>
+                                        <TableCell align="left">{row.workType}</TableCell>
+                                        <TableCell align="right">{row.clientWhatsAppNumber}</TableCell>
+                                        <TableCell align="right">
+                                            <Menutemp />
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

@@ -115,11 +115,7 @@ function AddAdminPage() {
         setTimeout(() => {
             reset()
         }, 50)
-
-
-        console.log('././. ', formData)
     }
-    console.log('././. >>>', formData)
     if (error) {
         toast.dismiss('loading');
         toast(error, {
@@ -134,7 +130,6 @@ function AddAdminPage() {
             progress: undefined,
             theme: "colored",
         });
-        dispatch(resetAddAgent())
     }
 
     return (

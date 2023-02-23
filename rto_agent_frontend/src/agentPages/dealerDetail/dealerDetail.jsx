@@ -125,7 +125,7 @@ function DealerDetail() {
                 </div>
             </div>
             <div className=''>
-                <PendingBookList />
+                <PendingBookList dealerId={id} />
             </div>
         </div>
     )

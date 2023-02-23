@@ -12,6 +12,7 @@ import ProtectedAgentRoutes from "./protectedAgentRoutes";
 import Nav from "./agentPages/dashboard/components/nav/nav";
 import DealerDetail from "./agentPages/dealerDetail/dealerDetail";
 import AddDealer from "./agentPages/addDealer/addDealer";
+import AddBook from "./agentPages/addBook/addBook";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                   </Route>
                   <Route path="/" element={<ProtectedAgentRoutes/>}>
                     <Route path="/addDealer" element={<AddDealer/>}/>
+                    <Route path="/addBook" element={<AddBook/>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/dealer/:id" element={<DealerDetail/>}/>
                   </Route>
