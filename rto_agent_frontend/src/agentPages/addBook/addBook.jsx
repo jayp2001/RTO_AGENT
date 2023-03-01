@@ -17,22 +17,32 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { useDispatch, useSelector } from "react-redux";
 import { addBook, resetAddBook } from '../../action/agentAction/agentAction'
+import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import '../../../node_modules/react-toastify/dist/ReactToastify.css';
 import Checkbox from '@mui/material/Checkbox';
+import { dealerDropdown, insuranceCompany, serviceAuthority, vehicleCategories, vehicleClass } from '../../action/agentAction/agentAction'
+import { containerClasses } from "@mui/system";
+import { getStateList, getCityList } from '../../action/adminAction/adminAction';
 
 function AddBook() {
     const { loading, success, error } = useSelector((state) => state.addBook);
     console.log(loading, success, error)
     const states = useSelector((state) => state.stateList.state);
     const citys = useSelector((state) => state.cityList.state);
+    const dealerDropdownList = useSelector((state) => state.dealerDropdown.state);
+    const insuranceCompanyList = useSelector((state) => state.insuranceCompanyL.state);
+    const serviceAuthorityList = useSelector((state) => state.serviceAuthority.state);
+    const vehicleCategoriesList = useSelector((state) => state.vehicleCategories.state);
+    const vehicleClassList = useSelector((state) => state.vehicleClass.state);
     const dispatch = useDispatch();
     const [formData, setFormData] = useState(
         {
             vehicleRegistrationNumber: '',
             vehicleChassisNumber: '',
             vehicleEngineNumber: '',
+            vehicleModel: '',
             vehicleMake: '',
             vehicleRegistrationDate: null,
             vehicleClass: '',
@@ -48,16 +58,12 @@ function AddBook() {
             addressChange: false,
             insuranceStartDate: null,
             insuranceEndDate: null,
-            insuranceCompanyNameld: '',
+            insuranceCompanyNameId: '',
             insuranceType: '',
             policyNumber: '',
-            dealerld: '',
+            dealerId: '',
             privateCustomerName: '',
-            sellerCity: '',
-            sellerState: '',
-            sellerPincode: '',
-            sellerAddressLine1: '',
-            sellerAddressLine2: '',
+            sellerAddress: '',
             sellerFirstName: '',
             sellerMiddleName: '',
             sellerLastName: '',
@@ -65,26 +71,34 @@ function AddBook() {
             buyerState: '',
             buyerAddressLine1: '',
             buyerAddressLine2: '',
+            buyerAddressLine3: '',
             buyerFirstName: '',
             buyerMiddleName: '',
             buyerLastName: '',
-            clientMobileNumber: '',
-            buyerPincode: ''
+            clientWhatsAppNumber: '',
+            buyerPincode: '',
+            serviceAuthority: ''
 
         }
     )
 
-    // React.useEffect(() => {
-    //     dispatch(getStateList());
-    //     dispatch(getCityList())
-    // }, [dispatch, formData])
+    React.useEffect(() => {
+        dispatch(getStateList());
+        dispatch(getCityList())
+        dispatch(dealerDropdown());
+        dispatch(insuranceCompany());
+        dispatch(serviceAuthority());
+        dispatch(vehicleCategories());
+        dispatch(vehicleClass());
+    }, [dispatch])
 
     // console.log(":::", agentAddRes)
 
     const handleVehicleRegistrationDate = (date) => {
+        console.log(date['$d'])
         setFormData((prevState) => ({
             ...prevState,
-            ["vehicleRegistrationDate"]: date,
+            ["vehicleRegistrationDate"]: date['$d'],
         }))
     };
     const handleInsuranceStartDate = (date) => {
@@ -139,16 +153,15 @@ function AddBook() {
             addressChange: false,
             insuranceStartDate: null,
             insuranceEndDate: null,
-            insuranceCompanyNameld: '',
+            insuranceCompanyNameId: '',
             insuranceType: '',
             policyNumber: '',
-            dealerld: '',
+            dealerId: '',
             privateCustomerName: '',
             sellerCity: '',
             sellerState: '',
             sellerPincode: '',
-            sellerAddressLine1: '',
-            sellerAddressLine2: '',
+            sellerAddress: '',
             sellerFirstName: '',
             sellerMiddleName: '',
             sellerLastName: '',
@@ -157,17 +170,19 @@ function AddBook() {
             buyerState: '',
             buyerAddressLine1: '',
             buyerAddressLine2: '',
+            buyerAddressLine3: '',
             buyerFirstName: '',
             buyerMiddleName: '',
             buyerLastName: '',
-            clientMobileNumber: '',
-            buyerPincode: ''
+            clientWhatsAppNumber: '',
+            buyerPincode: '',
+            vehicleModel: ''
         })
     }
     if (loading) {
-        // toast.loading("Please wait...", {
-        //     toastId: 'loading'
-        // })
+        toast.loading("Please wait...", {
+            toastId: 'loading'
+        })
         // window.alert()
     }
     if (success) {
@@ -207,8 +222,45 @@ function AddBook() {
             progress: undefined,
             theme: "colored",
         });
+        dispatch(resetAddBook())
     }
-    console.log("././?", formData.insuranceStartDate);
+
+    const handleInsuranceChange = (event, value) => {
+        console.log(event)
+        const id = value?.insuranceId
+        setFormData((prevState) => ({
+            ...prevState,
+            ['insuranceCompanyNameId']: id
+        }))
+        console.log('>>', formData.insuranceCompanyNameId);
+    }
+    const handleVehicleClassChange = (event, value) => {
+        console.log(event)
+        const id = value?.vehicleClassId
+        setFormData((prevState) => ({
+            ...prevState,
+            ['vehicleClass']: id
+        }))
+        console.log('>>', formData.insuranceCompanyNameId);
+    }
+    const handleVehicleCategoryChange = (event, value) => {
+        console.log(event)
+        const id = value?.vehicleCategoryId
+        setFormData((prevState) => ({
+            ...prevState,
+            ['vehicleCategory']: id
+        }))
+        console.log('>>', formData.insuranceCompanyNameId);
+    }
+    const handleDealerChange = (event, value) => {
+        console.log(event)
+        const id = value?.dealerId
+        setFormData((prevState) => ({
+            ...prevState,
+            ['dealerId']: id
+        }))
+        console.log('>>', formData.insuranceCompanyNameId);
+    }
     return (
         <>
             <div className="addAdmin_wrapper flex items-center">
@@ -270,7 +322,7 @@ function AddBook() {
                             <div className="grid grid-cols-12 gap-x-5">
                                 <div className="col-span-4">
                                     <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label">Vehicle Class</InputLabel>
+                                        {/* <InputLabel id="demo-simple-select-label">Vehicle Class</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
@@ -279,14 +331,24 @@ function AddBook() {
                                             name="vehicleClass"
                                             onChange={onChange}
                                         >
-                                            <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem>
-                                        </Select>
+                                            {vehicleClassList && vehicleClassList.map((row) => (
+                                                <MenuItem value={row.vehicleClassId}>{row.vehicleClassName}</MenuItem>
+                                            ))}
+                                        </Select> */}
+                                        <Autocomplete
+                                            disablePortal
+                                            id="vehicleClass"
+                                            // value={formData.insuranceCompanyNameId}
+                                            onChange={handleVehicleClassChange}
+                                            options={vehicleClassList ? vehicleClassList : []}
+                                            sx={{ width: 300 }}
+                                            getOptionLabel={(options) => options.vehicleClassName}
+                                            renderInput={(params) => <TextField {...params} label="Vehicle Class" />}
+                                        />
                                     </FormControl>
                                 </div>
                                 <div className="col-span-4">
-                                    <FormControl fullWidth>
+                                    {/* <FormControl fullWidth>
                                         <InputLabel id="demo-simple-select-label">Vehicle Category</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
@@ -296,11 +358,21 @@ function AddBook() {
                                             name="vehicleCategory"
                                             onChange={onChange}
                                         >
-                                            <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem>
+                                            {vehicleCategoriesList?.map((row) => (
+                                                <MenuItem value={row.vehicleCategoryId}>{row.vehicleCategoryName}</MenuItem>
+                                            ))}
                                         </Select>
-                                    </FormControl>
+                                    </FormControl> */}
+                                    <Autocomplete
+                                        disablePortal
+                                        id="vehicleCategoriesList"
+                                        // value={formData.insuranceCompanyNameId}
+                                        onChange={handleVehicleCategoryChange}
+                                        options={vehicleCategoriesList ? vehicleCategoriesList : []}
+                                        sx={{ width: 300 }}
+                                        getOptionLabel={(options) => options.vehicleCategoryName}
+                                        renderInput={(params) => <TextField {...params} label="Vehicle Category" />}
+                                    />
                                 </div>
                                 <div className="col-span-4">
                                     <TextField
@@ -345,6 +417,23 @@ function AddBook() {
                                             renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}
                                         />
                                     </LocalizationProvider>
+                                </div>
+                                <div className="col-span-4">
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Service Authority</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            value={formData.serviceAuthority}
+                                            label="Service Authority"
+                                            name="serviceAuthority"
+                                            onChange={onChange}
+                                        >
+                                            {serviceAuthorityList?.map((row) => (
+                                                <MenuItem value={row.RTOcityId}>{row.cityRTOName}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
                                 </div>
                             </div>
                         </div>
@@ -393,23 +482,33 @@ function AddBook() {
                             <div className="grid grid-cols-12 gap-x-5">
                                 <div className="col-span-4">
                                     <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label">Dealer Code</InputLabel>
+                                        {/* <InputLabel id="demo-simple-select-label">Dealer Code</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
-                                            value={formData.dealerld}
+                                            value={formData.dealerId}
                                             label="Dealer Code"
-                                            name="dealerld"
+                                            name="dealerId"
                                             onChange={onChange}
                                         >
-                                            <MenuItem value={1}>private</MenuItem>
-                                            <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem>
-                                        </Select>
+                                            <MenuItem value={100}>private</MenuItem>
+                                            {dealerDropdownList ? dealerDropdownList.map((row) => (
+                                                <MenuItem value={row.dealerId}>{row.dealerDisplayName}</MenuItem>
+                                            )) : null}
+                                        </Select> */}
+                                        <Autocomplete
+                                            disablePortal
+                                            id="dealerDropdownList"
+                                            // value={formData.insuranceCompanyNameId}
+                                            onChange={handleDealerChange}
+                                            options={dealerDropdownList ? dealerDropdownList : []}
+                                            sx={{ width: 300 }}
+                                            getOptionLabel={(options) => options.dealerDisplayName}
+                                            renderInput={(params) => <TextField {...params} label="Dealer Code" />}
+                                        />
                                     </FormControl>
                                 </div>
-                                {formData?.dealerld == 1 &&
+                                {formData?.dealerId == 100 &&
                                     <>
                                         <div className="col-span-4">
                                             <TextField
@@ -426,14 +525,14 @@ function AddBook() {
                                         </div>
                                     </>
                                 }
-                                {(formData?.dealerld == 1 || (formData.dealerld != 1 && !formData.TO)) &&
+                                {(formData?.dealerId == 100 || (formData.dealerId != 100 && !formData.TO)) &&
                                     <>
                                         <div className="col-span-4">
                                             <TextField
                                                 required
                                                 onChange={onChange}
-                                                value={formData.clientMobileNumber}
-                                                name="clientMobileNumber"
+                                                value={formData.clientWhatsAppNumber}
+                                                name="clientWhatsAppNumber"
                                                 id="outlined-required"
                                                 label="Customer Number"
                                                 InputProps={{ style: { fontSize: 16 } }}
@@ -491,96 +590,14 @@ function AddBook() {
                                 </div>
                             </div>
                             <div className="grid grid-cols-12 gap-x-5">
-                                <div className="col-span-6">
-                                    <TextField
-                                        required
-                                        onChange={onChange}
-                                        id="outlined-required"
-                                        label="Address Line 1"
-                                        value={formData.sellerAddressLine1}
-                                        name="sellerAddressLine1"
-                                        InputProps={{ style: { fontSize: 14 } }}
-                                        InputLabelProps={{ style: { fontSize: 14 } }}
-                                        fullWidth
-                                    />
-                                </div>
-                                <div className="col-span-6">
-                                    <TextField
-                                        required
-                                        onChange={onChange}
-                                        value={formData.sellerAddressLine2}
-                                        name="sellerAddressLine2"
-                                        id="outlined-required"
-                                        label="Address Line 2"
-                                        InputProps={{ style: { fontSize: 14 } }}
-                                        InputLabelProps={{ style: { fontSize: 14 } }}
-                                        fullWidth
-                                    />
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-12 gap-x-5">
-                                <div className="col-span-4">
-                                    <FormControl style={{ minWidth: '100%' }}>
-                                        <InputLabel id="demo-simple-select-label">State</InputLabel>
-                                        <Select
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            value={formData.sellerState}
-                                            name="sellerState"
-                                            label="State"
-                                            onChange={onChange}
-                                        >
-                                            {
-                                                states?.map((state) => (
-                                                    <MenuItem value={state.stateId}>{state.stateName}</MenuItem>
-                                                ))
-                                            }
-
-                                        </Select>
-                                    </FormControl>
-                                </div>
-                                <div className="col-span-4">
-                                    <FormControl style={{ minWidth: '100%' }}>
-                                        <InputLabel id="demo-simple-select-label">City</InputLabel>
-                                        <Select
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            value={formData.sellerCity}
-                                            name="sellerCity"
-                                            label="City"
-                                            onChange={onChange}
-                                        >
-                                            {
-                                                citys?.map((city) => (
-                                                    <MenuItem value={city.cityId}>{city.cityName}</MenuItem>
-                                                ))
-                                            }
-                                        </Select>
-                                    </FormControl>
-                                </div>
-                                <div className="col-span-4">
-                                    <TextField
-                                        required
-                                        value={formData.sellerPincode}
-                                        name="sellerPincode"
-                                        id="outlined-required"
-                                        label="PIN Code"
-                                        onChange={onChange}
-                                        InputProps={{ style: { fontSize: 16 } }}
-                                        InputLabelProps={{ style: { fontSize: 16 } }}
-                                        fullWidth
-                                    />
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-12 gap-x-5">
                                 <div className="col-span-4">
                                     <TextField
                                         required
                                         onChange={onChange}
-                                        value={formData.sellerMobileNumber}
-                                        name="sellerMobileNumber"
                                         id="outlined-required"
-                                        label="Mobile Number"
+                                        label="Town/City"
+                                        value={formData.sellerAddress}
+                                        name="sellerAddress"
                                         InputProps={{ style: { fontSize: 14 } }}
                                         InputLabelProps={{ style: { fontSize: 14 } }}
                                         fullWidth
@@ -636,12 +653,12 @@ function AddBook() {
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-12 gap-x-5">
-                                        <div className="col-span-6">
+                                        <div className="col-span-4">
                                             <TextField
                                                 required
                                                 onChange={onChange}
                                                 id="outlined-required"
-                                                label="Address Line 1"
+                                                label="House no & Street name"
                                                 value={formData.buyerAddressLine1}
                                                 name="buyerAddressLine1"
                                                 InputProps={{ style: { fontSize: 14 } }}
@@ -649,14 +666,27 @@ function AddBook() {
                                                 fullWidth
                                             />
                                         </div>
-                                        <div className="col-span-6">
+                                        <div className="col-span-4">
                                             <TextField
                                                 required
                                                 onChange={onChange}
                                                 value={formData.buyerAddressLine2}
                                                 name="buyerAddressLine2"
                                                 id="outlined-required"
-                                                label="Address Line 2"
+                                                label="Landmark / Police station"
+                                                InputProps={{ style: { fontSize: 14 } }}
+                                                InputLabelProps={{ style: { fontSize: 14 } }}
+                                                fullWidth
+                                            />
+                                        </div>
+                                        <div className="col-span-4">
+                                            <TextField
+                                                required
+                                                onChange={onChange}
+                                                value={formData.buyerAddressLine3}
+                                                name="buyerAddressLine3"
+                                                id="outlined-required"
+                                                label="Village/Town/City"
                                                 InputProps={{ style: { fontSize: 14 } }}
                                                 InputLabelProps={{ style: { fontSize: 14 } }}
                                                 fullWidth
@@ -670,8 +700,8 @@ function AddBook() {
                                                 <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
-                                                    value={formData.sellerState}
-                                                    name="sellerState"
+                                                    value={formData.buyerState}
+                                                    name="buyerState"
                                                     label="State"
                                                     onChange={onChange}
                                                 >
@@ -722,8 +752,8 @@ function AddBook() {
                                             <TextField
                                                 required
                                                 onChange={onChange}
-                                                value={formData.clientMobileNumber}
-                                                name="clientMobileNumber"
+                                                value={formData.clientWhatsAppNumber}
+                                                name="clientWhatsAppNumber"
                                                 id="outlined-required"
                                                 label="Mobile Number"
                                                 InputProps={{ style: { fontSize: 14 } }}
@@ -759,19 +789,31 @@ function AddBook() {
                                 </div>
                                 <div className="col-span-4">
                                     <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label">Insurance Company Name</InputLabel>
+                                        {/* <InputLabel id="demo-simple-select-label">Insurance Company Name</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
-                                            value={formData.insuranceCompanyNameld}
+                                            value={formData.insuranceCompanyNameId}
                                             label="Insurance Company Name"
-                                            name="insuranceCompanyNameld"
+                                            name="insuranceCompanyNameId"
                                             onChange={onChange}
                                         >
-                                            <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem>
-                                        </Select>
+                                            {
+                                                insuranceCompanyList?.map((insurance) => (
+                                                    < MenuItem value={insurance.insuranceId} > {insurance.insuranceCompanyName}</MenuItem>
+                                                ))
+                                            }
+                                        </Select> */}
+                                        <Autocomplete
+                                            disablePortal
+                                            id="insuranceCompanyList"
+                                            // value={formData.insuranceCompanyNameId}
+                                            onChange={handleInsuranceChange}
+                                            options={insuranceCompanyList ? insuranceCompanyList : []}
+                                            sx={{ width: 300 }}
+                                            getOptionLabel={(options) => options.insuranceCompanyName}
+                                            renderInput={(params) => <TextField {...params} label="Insurance Company Name" />}
+                                        />
                                     </FormControl>
                                 </div>
                                 <div className="col-span-4">
