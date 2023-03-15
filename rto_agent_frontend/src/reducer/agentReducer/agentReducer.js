@@ -2,21 +2,33 @@ import{
     DEALER_LIST_REQUEST,
     DEALER_LIST_SUCCESS,
     DEALER_LIST_FAIL,
+
     DEALER_DETAIL_REQUEST,
     DEALER_DETAIL_SUCCESS,
     DEALER_DETAIL_FAIL,
+
     ADD_DEALER_REQUEST,
     ADD_DEALER_SUCCESS,
     ADD_DEALER_FAIL,
+
     DEALER_BOOK_LIST_REQUEST,
     DEALER_BOOK_LIST_SUCCESS,
     DEALER_BOOK_LIST_FAIL,
     DEALER_RESET,
+
     ADD_BOOK_REQUEST,
     ADD_BOOK_SUCCESS,
     ADD_BOOK_FAIL,
     ADD_BOOK_RESET,
-    ADD_BOOK_RESET_ERROR
+
+    ADD_BOOK_RESET_ERROR,
+    BOOK_DETAIL_REQUEST,
+    BOOK_DETAIL_SUCCESS,
+    BOOK_DETAIL_FAIL,
+
+    BOOK_LIST_REQUEST,
+    BOOK_LIST_SUCCESS,
+    BOOK_LIST_FAIL
     } from '../../type/agentTypes/agentTypes'
 
     import{
@@ -175,6 +187,62 @@ export const dealerListReducer = (state = [],action) =>{
         return { state: action.payload};
       case DEALER_LIST_DROPDOWN_FAIL:
         return { loading: false, error: action.payload };
+      default:
+        return state;
+    }
+  }
+
+  export const bookDetailReducer = (state = [],action) =>{
+    switch (action.type) {
+      case BOOK_DETAIL_REQUEST:
+        return { loading: true };
+      case BOOK_DETAIL_SUCCESS:
+        return { state: action.payload};
+      case BOOK_DETAIL_FAIL:
+        return { loading: false, error: action.payload };
+  
+      default:
+        return state;
+    }
+  }
+
+  export const ttoBookListReducer = (state = [],action) =>{
+    switch (action.type) {
+      case BOOK_LIST_REQUEST:
+        return { loading: true };
+      case BOOK_LIST_SUCCESS:
+        return { state: action.payload.rows,totalRows: action.payload.numRows};
+      case BOOK_LIST_FAIL:
+        return { loading: false, error: action.payload };
+  
+      default:
+        return state;
+    }
+  }
+
+  export const rrfBookListReducer = (state = [],action) =>{
+    switch (action.type) {
+      case BOOK_LIST_REQUEST:
+        return { loading: true };
+      case BOOK_LIST_SUCCESS:
+        return { state: action.payload.rows,totalRows: action.payload.numRows};
+      case BOOK_LIST_FAIL:
+        return { loading: false, error: action.payload };
+  
+      default:
+        return state;
+    }
+  }
+
+  export const otherBookListReducer = (state = [],action) =>{
+    switch (action.type) {
+      case BOOK_LIST_REQUEST:
+        return { loading: true };
+      case BOOK_LIST_SUCCESS:
+        return { state: action.payload.rows,totalRows: action.payload.numRows};
+      case BOOK_LIST_FAIL:
+        return { loading: false, error: action.payload };
+  
       default:
         return state;
     }

@@ -13,6 +13,11 @@ import Nav from "./agentPages/dashboard/components/nav/nav";
 import DealerDetail from "./agentPages/dealerDetail/dealerDetail";
 import AddDealer from "./agentPages/addDealer/addDealer";
 import AddBook from "./agentPages/addBook/addBook";
+import PageNotFoundRedirect from "./pageNotFound";
+import VehicleDetail from "./agentPages/vehicleDetail/vehicleDetail";
+import TtoBookList from "./agentPages/ttoBookList/ttoBookList";
+import RrfBookList from "./agentPages/rrfBookList/rrfBookList";
+import OtherBookList from "./agentPages/otherBookList/otherBookList";
 
 function App() {
   return (
@@ -33,8 +38,13 @@ function App() {
                     <Route path="/addBook" element={<AddBook/>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/dealer/:id" element={<DealerDetail/>}/>
+                    <Route path="/vehicleDetail/:id" element={<VehicleDetail/>}/>
+                    <Route path="/TTO" element={<TtoBookList/>}/>
+                    <Route path="/RRF" element={<RrfBookList/>}/>
+                    <Route path="/OTHER" element={<OtherBookList/>}/>
                   </Route>
                   <Route path='/login' exact element={<LoginPage />}/>
+                  <Route path='*' element={<PageNotFoundRedirect/>}/>
                 </Routes>
             </div>
           </div>

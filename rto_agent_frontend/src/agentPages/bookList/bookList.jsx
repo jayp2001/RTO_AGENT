@@ -1,4 +1,4 @@
-import './pendingBookList.css'
+import './bookList.css'
 import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,38 +11,14 @@ import TablePagination from '@mui/material/TablePagination';
 import { useDispatch, useSelector } from "react-redux";
 // import { dealerList } from "../../../action/agentAction/agentAction"
 import { useNavigate } from "react-router-dom";
-import { dealerBookList } from "../../../action/agentAction/agentAction";
+import { dealerBookList } from "../../action/agentAction/agentAction";
 import Menutemp from './menu';
 
-function PendingBookList({ dealerId }) {
-    console.log('>>', dealerId);
-    const [stateOfBook, setStateOfBook] = React.useState(0);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const dispatch = useDispatch();
+function BookList(props) {
+
     const navigate = useNavigate();
-    // const totalRows = 10
-    const data = useSelector((state) => state.dealerBookList.state);
-    const totalRows = useSelector((state) => state.dealerBookList.totalRows);
-    React.useEffect(() => {
-        dispatch(dealerBookList(page + 1, rowsPerPage, dealerId))
-    }, [dispatch, setRowsPerPage, setPage])
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-        dispatch(dealerBookList(newPage + 1, rowsPerPage, dealerId))
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        console.log('>>><<,', page, rowsPerPage);
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-        console.log('>>>????', page, parseInt(event.target.value, 10));
-        dispatch(dealerBookList(page + 1, parseInt(event.target.value, 10), dealerId))
-    };
-
     const handleClickTable = (id) => {
-        // navigate(`/dealer/${id}`)
+        navigate(`/vehicleDetail/${id}`)
     }
     return (
         <div className='pendingTableWrapper'>
@@ -53,24 +29,24 @@ function PendingBookList({ dealerId }) {
                             Book List
                         </div>
                         <div>
-                            {totalRows}
+                            {props.totalRows}
                         </div>
                     </div>
                 </div>
                 <div className='tabContainer content-center grid gap-2 grid-cols-12'>
                     <div className='col-span-8 flex tabWrapper'>
-                        <div className={`${stateOfBook == 0 ? 'tabActive pink' : 'tab'}`}>
-                            <button className={`${stateOfBook == 0 ? 'tabTextActive ' : 'tabText'}`} onClick={() => setStateOfBook(0)}>
+                        <div className={`${props.stateOfBook == 0 ? 'tabActive pink' : 'tab'}`}>
+                            <button className={`${props.stateOfBook == 0 ? 'tabTextActive ' : 'tabText'}`} onClick={() => props.setStateOfBook(0)}>
                                 Pendding
                             </button>
                         </div>
-                        <div className={`${stateOfBook == 2 ? 'tabActive yellow' : 'tab'}`}>
-                            <button className={`${stateOfBook == 2 ? 'tabTextActive' : 'tabText'}`} onClick={() => setStateOfBook(2)}>
+                        <div className={`${props.stateOfBook == 2 ? 'tabActive yellow' : 'tab'}`}>
+                            <button className={`${props.stateOfBook == 2 ? 'tabTextActive' : 'tabText'}`} onClick={() => props.setStateOfBook(2)}>
                                 Appointment
                             </button>
                         </div>
-                        <div className={`${stateOfBook == 3 ? 'tabActive green' : 'tab'}`}>
-                            <button className={`${stateOfBook == 3 ? 'tabTextActive' : 'tabText'}`} onClick={() => setStateOfBook(3)}>
+                        <div className={`${props.stateOfBook == 3 ? 'tabActive green' : 'tab'}`}>
+                            <button className={`${props.stateOfBook == 3 ? 'tabTextActive' : 'tabText'}`} onClick={() => props.setStateOfBook(3)}>
                                 Complete
                             </button>
                         </div>
@@ -90,21 +66,20 @@ function PendingBookList({ dealerId }) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {data?.map((row, index) => (
+                                {props.data?.map((row, index) => (
                                     <TableRow
                                         key={row.dealerId}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        onClick={() => handleClickTable(row.vehicleRegistrationId)}
                                         style={{ cursor: "pointer" }}
                                         className='tableRow'
                                     >
-                                        <TableCell align="left">{index + 1}</TableCell>
-                                        <TableCell component="th" scope="row">
+                                        <TableCell align="left" onClick={() => handleClickTable(row.vehicleRegistrationId)}>{row.serial_number}</TableCell>
+                                        <TableCell component="th" scope="row" onClick={() => handleClickTable(row.vehicleRegistrationId)}>
                                             {row.vehicleRegistrationNumber}
                                         </TableCell>
-                                        <TableCell align="left">{row.vehicleModelMake}</TableCell>
-                                        <TableCell align="left">{row.workType}</TableCell>
-                                        <TableCell align="right">{row.clientWhatsAppNumber}</TableCell>
+                                        <TableCell align="left" onClick={() => handleClickTable(row.vehicleRegistrationId)}>{row.vehicleModelMake}</TableCell>
+                                        <TableCell align="left" onClick={() => handleClickTable(row.vehicleRegistrationId)}>{row.workType}</TableCell>
+                                        <TableCell align="right" onClick={() => handleClickTable(row.vehicleRegistrationId)}>{row.clientWhatsAppNumber}</TableCell>
                                         <TableCell align="right">
                                             <Menutemp />
                                         </TableCell>
@@ -115,11 +90,11 @@ function PendingBookList({ dealerId }) {
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={totalRows}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
+                            count={props.totalRows}
+                            rowsPerPage={props.rowsPerPage}
+                            page={props.page}
+                            onPageChange={props.handleChangePage}
+                            onRowsPerPageChange={props.handleChangeRowsPerPage}
                         />
                     </TableContainer>
                 </div>
@@ -129,4 +104,4 @@ function PendingBookList({ dealerId }) {
     )
 }
 
-export default PendingBookList;
+export default BookList;

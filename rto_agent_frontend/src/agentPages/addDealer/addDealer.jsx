@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createDealer, resetAddDealer } from '../../action/agentAction/agentAction';
 import { ToastContainer, toast } from 'react-toastify';
 import '../../../node_modules/react-toastify/dist/ReactToastify.css';
-
+import { getStateList, getCityList } from '../../action/adminAction/adminAction';
 function AddDealer() {
     const { loading, success, error } = useSelector((state) => state.dealerCreate);
     const states = useSelector((state) => state.stateList.state);
@@ -39,10 +39,10 @@ function AddDealer() {
         }
     )
 
-    // useEffect(() => {
-    //     dispatch(getStateList());
-    //     dispatch(getCityList())
-    // }, [dispatch])
+    useEffect(() => {
+        dispatch(getStateList());
+        dispatch(getCityList())
+    }, [dispatch])
 
     const onChange = (e) => {
         setFormData((prevState) => ({

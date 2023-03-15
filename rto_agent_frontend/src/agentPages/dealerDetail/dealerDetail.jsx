@@ -2,10 +2,9 @@ import './dealerDetail.css';
 import * as React from 'react';
 import CountCard from '../dashboard/components/countCard/countCard';
 import { useDispatch, useSelector } from "react-redux";
-// import { dealerDetail } from ' action/agentAction/agentAction';
 import { dealerDetail } from '../../action/agentAction/agentAction';
 import { useParams } from 'react-router-dom';
-import PendingBookList from '../bookList/pendingBookList/pendingBookList';
+import DealerBookList from '../dealerBookList/dealerBookList';
 function DealerDetail() {
     let { id } = useParams();
     const dispatch = useDispatch();
@@ -13,9 +12,6 @@ function DealerDetail() {
     React.useEffect(() => {
         dispatch(dealerDetail(id))
     }, [dispatch])
-    // if (!data) {
-    //     data = []
-    // }
     console.log(data)
     return (
         <div className='dealerDetailWrapper'>
@@ -125,7 +121,7 @@ function DealerDetail() {
                 </div>
             </div>
             <div className=''>
-                <PendingBookList dealerId={id} />
+                <DealerBookList dealerId={id} />
             </div>
         </div>
     )

@@ -21,6 +21,9 @@ function NaveBar() {
                             <NavLink to="/dashboard" activeClassName="active" className="navLink">Dashboard </NavLink>
                             <NavLink to="/addDealer" activeClassName="active" className="navLink">add Dealer </NavLink>
                             <NavLink to="/addBook" activeClassName="active" className="navLink">add Book </NavLink>
+                            <NavLink to="/TTO" activeClassName="active" className="navLink">TTO BookList</NavLink>
+                            <NavLink to="/RRF" activeClassName="active" className="navLink">RRF BookList</NavLink>
+                            <NavLink to="/OTHER" activeClassName="active" className="navLink">OTHER BookList</NavLink>
                         </div>
                     </div>
                 </div>

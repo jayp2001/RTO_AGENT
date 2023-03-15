@@ -104,13 +104,13 @@ function AddBook() {
     const handleInsuranceStartDate = (date) => {
         setFormData((prevState) => ({
             ...prevState,
-            ["insuranceStartDate"]: date,
+            ["insuranceStartDate"]: date['$d'],
         }))
     };
     const handleInsuranceEndDate = (date) => {
         setFormData((prevState) => ({
             ...prevState,
-            ["insuranceEndDate"]: date,
+            ["insuranceEndDate"]: date['$d'],
         }))
     };
 
@@ -337,11 +337,11 @@ function AddBook() {
                                         </Select> */}
                                         <Autocomplete
                                             disablePortal
+                                            sx={{ width: '100%' }}
                                             id="vehicleClass"
                                             // value={formData.insuranceCompanyNameId}
                                             onChange={handleVehicleClassChange}
                                             options={vehicleClassList ? vehicleClassList : []}
-                                            sx={{ width: 300 }}
                                             getOptionLabel={(options) => options.vehicleClassName}
                                             renderInput={(params) => <TextField {...params} label="Vehicle Class" />}
                                         />
@@ -369,7 +369,7 @@ function AddBook() {
                                         // value={formData.insuranceCompanyNameId}
                                         onChange={handleVehicleCategoryChange}
                                         options={vehicleCategoriesList ? vehicleCategoriesList : []}
-                                        sx={{ width: 300 }}
+                                        sx={{ width: '100%' }}
                                         getOptionLabel={(options) => options.vehicleCategoryName}
                                         renderInput={(params) => <TextField {...params} label="Vehicle Category" />}
                                     />
@@ -502,7 +502,7 @@ function AddBook() {
                                             // value={formData.insuranceCompanyNameId}
                                             onChange={handleDealerChange}
                                             options={dealerDropdownList ? dealerDropdownList : []}
-                                            sx={{ width: 300 }}
+                                            sx={{ width: '100%' }}
                                             getOptionLabel={(options) => options.dealerDisplayName}
                                             renderInput={(params) => <TextField {...params} label="Dealer Code" />}
                                         />
@@ -810,7 +810,7 @@ function AddBook() {
                                             // value={formData.insuranceCompanyNameId}
                                             onChange={handleInsuranceChange}
                                             options={insuranceCompanyList ? insuranceCompanyList : []}
-                                            sx={{ width: 300 }}
+                                            sx={{ width: '100%' }}
                                             getOptionLabel={(options) => options.insuranceCompanyName}
                                             renderInput={(params) => <TextField {...params} label="Insurance Company Name" />}
                                         />

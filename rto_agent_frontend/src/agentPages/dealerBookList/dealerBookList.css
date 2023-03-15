@@ -1,0 +1,98 @@
+.pendingTableWrapper{
+    margin-top: 60px;
+    padding-left: 20px;
+    padding-right: 30px;
+}
+
+.pendingTableContainer{
+    background-color: #fff;
+    position: relative;
+    /* padding: px; */
+    border-radius: 0.75rem;
+    /* padding-top: 50px; */
+    box-shadow: rgba(0, 0, 0, 0.1) 0rem 0.25rem 0.375rem -0.0625rem, rgba(0, 0, 0, 0.06) 0rem 0.125rem 0.25rem -0.0625rem;
+}
+
+.tableHeader{
+        width: 96%;
+        height: 70px;
+        border-radius: 10px;
+        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%);
+        position: relative;
+        top: -25px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 18px;
+        padding-top: 22px;
+        padding-left: 20px;
+        padding-right: 20px;
+        z-index: 1000;
+}
+.tableContainerWrapper{
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+.tableRow:hover{
+    /* background-color: aqua; */
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.tabContainer{
+height: 50px;
+padding-left: 25px;
+padding-right: 25px;
+}
+
+.tab{
+height: 100%;
+min-width: 22%;
+border-radius: 0.75rem;
+text-align: center;
+/* background:linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%); */
+}
+.tabActive{
+    height: 100%;
+    text-align: center;
+    min-width: 22%;
+    border-radius: 0.75rem;
+    background:linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%);
+    }
+
+.tabWrapper{
+    height: 50px;
+}
+
+.tabText{
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+    padding-top: 10px;
+}
+.tabTextActive{
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.blue{
+    background:linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%) ;
+}
+
+.pink{
+    background:linear-gradient(195deg, rgb(236, 64, 122), rgb(216, 27, 96));
+}
+
+.green{
+    background:linear-gradient(195deg, rgb(102, 187, 106), rgb(67, 160, 71));
+}
+
+.yellow{
+    background: linear-gradient(195deg, rgb(255, 167, 38), rgb(251, 140, 0));
+}
+.orange{
+    background: linear-gradient(195deg, rgb(239, 83, 80), rgb(229, 57, 53));
+}
+
+

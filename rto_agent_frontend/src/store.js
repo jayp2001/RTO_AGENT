@@ -16,9 +16,10 @@ import{
   dealerDetailReducer,
   dealerCreateReducer,
   dealerBookListReducer,
-  addBookReducer
+  addBookReducer,
+  bookDetailReducer
 } from './reducer/agentReducer/agentReducer'
-import { dealerDropdown, insuranceCompany, serviceAuthority, vehicleCategories, vehicleClass } from "./reducer/agentReducer/agentReducer";
+import { dealerDropdown, insuranceCompany, serviceAuthority, vehicleCategories, otherBookListReducer,rrfBookListReducer,vehicleClass ,ttoBookListReducer } from "./reducer/agentReducer/agentReducer";
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   agentCreate:agentCreateReducer,
@@ -36,6 +37,10 @@ const reducer = combineReducers({
   serviceAuthority:serviceAuthority,
   insuranceCompanyL:insuranceCompany,
   dealerDropdown:dealerDropdown,
+  bookDetails:bookDetailReducer,
+  ttoBookList:ttoBookListReducer,
+  rrfBookList:rrfBookListReducer,
+  otherBookList:otherBookListReducer,
 });
 
 // const userInfoFromStorage = localStorage.getItem("userInfo")

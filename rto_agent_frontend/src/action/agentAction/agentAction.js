@@ -1,23 +1,35 @@
 import {BACKEND_BASE_URL} from '../../type/url';
 import axios from "axios";
 import{
-DEALER_LIST_REQUEST,
-DEALER_LIST_SUCCESS,
-DEALER_LIST_FAIL,
-DEALER_DETAIL_REQUEST,
-DEALER_DETAIL_SUCCESS,
-DEALER_DETAIL_FAIL,
-ADD_DEALER_REQUEST,
-ADD_DEALER_SUCCESS,
-ADD_DEALER_FAIL,
-DEALER_BOOK_LIST_REQUEST,
-DEALER_BOOK_LIST_SUCCESS,
-DEALER_BOOK_LIST_FAIL,
-DEALER_RESET,
-ADD_BOOK_REQUEST,
-ADD_BOOK_SUCCESS,
-ADD_BOOK_FAIL,
-ADD_BOOK_RESET,
+    DEALER_LIST_REQUEST,
+    DEALER_LIST_SUCCESS,
+    DEALER_LIST_FAIL,
+
+    DEALER_DETAIL_REQUEST,
+    DEALER_DETAIL_SUCCESS,
+    DEALER_DETAIL_FAIL,
+
+    ADD_DEALER_REQUEST,
+    ADD_DEALER_SUCCESS,
+    ADD_DEALER_FAIL,
+
+    DEALER_BOOK_LIST_REQUEST,
+    DEALER_BOOK_LIST_SUCCESS,
+    DEALER_BOOK_LIST_FAIL,
+    DEALER_RESET,
+
+    ADD_BOOK_REQUEST,
+    ADD_BOOK_SUCCESS,
+    ADD_BOOK_FAIL,
+    ADD_BOOK_RESET,
+
+    BOOK_DETAIL_REQUEST,
+    BOOK_DETAIL_SUCCESS,
+    BOOK_DETAIL_FAIL,
+
+    BOOK_LIST_REQUEST,
+    BOOK_LIST_SUCCESS,
+    BOOK_LIST_FAIL
 } from '../../type/agentTypes/agentTypes'
 
 import{
@@ -212,7 +224,9 @@ DEALER_LIST_DROPDOWN_FAIL,
       });
   
       const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-      console.log('date',bookData.vehicleRegistrationDate)
+      bookData.vehicleRegistrationDate = bookData.vehicleRegistrationDate.toString().slice(4,15);
+      bookData.insuranceStartDate = bookData.insuranceStartDate.toString().slice(4,15);
+      bookData.insuranceEndDate = bookData.insuranceEndDate.toString().slice(4,15);
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -433,6 +447,84 @@ DEALER_LIST_DROPDOWN_FAIL,
           : error.message;
       dispatch({
         type: DEALER_LIST_DROPDOWN_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+
+  export const bookDetail = (id) => async (
+    dispatch,
+    getState
+  ) => {
+    try {
+      dispatch({
+        type: BOOK_DETAIL_REQUEST,
+      });
+  
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const {data} = await axios.get(
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getVehicleRegistrationDetailsById?vehicleRegistrationId=${id}`,
+        config
+      );
+      console.log('>>>',data)
+      dispatch({
+        type: BOOK_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data
+          ? error.response.data
+          : error.message;
+      dispatch({
+        type: BOOK_DETAIL_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+
+  export const bookList = (page,numPerPage,type,workStatus) => async (
+    dispatch,
+    getState
+  ) => {
+    try {
+      dispatch({
+        type: BOOK_LIST_REQUEST,
+      });
+  
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      console.log('<><><><>',workStatus);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const {data} = await axios.get(
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getVehicleRegistrationDetailsByAgentId?page=${page}&numPerPage=${numPerPage}&type=${type}&workStatus=${workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING'}`,
+        config
+      );
+      console.log('>>>',data)
+      dispatch({
+        type: BOOK_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data
+          ? error.response.data
+          : error.message;
+      dispatch({
+        type: BOOK_LIST_FAIL,
         payload: message,
       });
     }
