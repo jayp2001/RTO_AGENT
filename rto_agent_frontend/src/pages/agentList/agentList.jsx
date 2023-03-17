@@ -7,12 +7,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Checkbox from '@mui/material/Checkbox';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
+// import TableSortLabel from '@mui/material/TableSortLabel';
+// import Checkbox from '@mui/material/Checkbox';
+// import PropTypes from 'prop-types';
+// import Box from '@mui/material/Box';
 import { useDispatch, useSelector } from "react-redux";
 import { agentList } from "../../action/adminAction/adminAction";
+import Menutemp from './menu'
 
 
 function AgentList() {
@@ -108,11 +109,11 @@ function AgentList() {
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>id</TableCell>
-                                        <TableCell align="right">Name</TableCell>
-                                        <TableCell align="right">Middle Name&nbsp;(g)</TableCell>
-                                        <TableCell align="right">Last Name&nbsp;(g)</TableCell>
-                                        <TableCell align="right">birth date&nbsp;(g)</TableCell>
+                                        <TableCell>no.</TableCell>
+                                        <TableCell align="left">Name</TableCell>
+                                        <TableCell align="left">Email</TableCell>
+                                        <TableCell align="left">Mobile No.</TableCell>
+                                        <TableCell align="right"></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -121,13 +122,13 @@ function AgentList() {
                                             key={row.agentId}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
-                                            <TableCell align="right">{row.agentId}</TableCell>
-                                            <TableCell component="th" scope="row">
-                                                {row.agentFirstName}
+                                            <TableCell align="left">{row.serial_number}</TableCell>
+                                            <TableCell align='left'>
+                                                {row.agentName}
                                             </TableCell>
-                                            <TableCell align="right">{row.agentMiddleName}</TableCell>
-                                            <TableCell align="right">{row.agentLastName}</TableCell>
-                                            <TableCell align="right">{row.agentBirthDate}</TableCell>
+                                            <TableCell align="left">{row.agentEmailId}</TableCell>
+                                            <TableCell align="left">{row.agentMobileNumber}</TableCell>
+                                            <TableCell align="right"><Menutemp /></TableCell>
 
                                         </TableRow>
                                     ))}

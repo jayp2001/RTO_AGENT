@@ -1,7 +1,7 @@
 .admin_container{
     background-color: white;
-    width: 95%;
-    padding: 30px;
+    width: 100%;
+    padding-top: 30px;
     padding-bottom: 50px;
     margin-top: 50px;
     border-radius: 10px;
@@ -9,7 +9,7 @@
 }
 
 .addAdmin_wrapper{
-    padding: 30px;
+    /* padding: 30px; */
     width: 100%;
     /* height: 700px; */
 }

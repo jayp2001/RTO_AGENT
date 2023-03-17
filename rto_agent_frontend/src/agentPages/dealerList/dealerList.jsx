@@ -11,6 +11,7 @@ import TablePagination from '@mui/material/TablePagination';
 import { useDispatch, useSelector } from "react-redux";
 import { dealerList } from "../../action/agentAction/agentAction"
 import { useNavigate } from "react-router-dom";
+import Menutemp from './menu';
 // import { dealerList } from "../../action/adminAction/adminAction";
 
 function DealerList() {
@@ -66,6 +67,7 @@ function DealerList() {
                                     <TableCell align="center">Dealer Code</TableCell>
                                     <TableCell align="right">Phone Number</TableCell>
                                     <TableCell align="right">Whatsapp Number</TableCell>
+                                    <TableCell align="right"></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -73,18 +75,18 @@ function DealerList() {
                                     <TableRow
                                         key={row.dealerId}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        onClick={() => handleClickTable(row.dealerId)}
                                         style={{ cursor: "pointer" }}
                                         className='tableRow'
                                     >
-                                        <TableCell align="left">{index + 1}</TableCell>
-                                        <TableCell component="th" scope="row">
+                                        <TableCell align="left" onClick={() => handleClickTable(row.dealerId)}>{index + 1}</TableCell>
+                                        <TableCell component="th" scope="row" onClick={() => handleClickTable(row.dealerId)}>
                                             {row.dealerFirmName}
                                         </TableCell>
-                                        <TableCell align="left">{row.dealerName}</TableCell>
-                                        <TableCell align="center">{row.dealerDisplayName}</TableCell>
-                                        <TableCell align="right">{row.dealerMobileNumber}</TableCell>
-                                        <TableCell align="right">{row.dealerWhatsAppNumber}</TableCell>
+                                        <TableCell align="left" onClick={() => handleClickTable(row.dealerId)}>{row.dealerName}</TableCell>
+                                        <TableCell align="center" onClick={() => handleClickTable(row.dealerId)}>{row.dealerDisplayName}</TableCell>
+                                        <TableCell align="right" onClick={() => handleClickTable(row.dealerId)}>{row.dealerMobileNumber}</TableCell>
+                                        <TableCell align="right" onClick={() => handleClickTable(row.dealerId)}>{row.dealerWhatsAppNumber}</TableCell>
+                                        <TableCell align='right'><Menutemp /></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

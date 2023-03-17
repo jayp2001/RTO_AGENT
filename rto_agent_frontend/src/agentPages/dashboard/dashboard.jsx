@@ -7,17 +7,16 @@ function Dashboard() {
     return (
         <div className='dashboardWrapper'>
             <div className='card_wrapper flex justify-between'>
-                <div>
+                <div className='cardWrp'>
                     <CountCard color="black" />
                 </div>
-
-                <div>
+                <div className='cardWrp'>
                     <CountCard color="blue" />
                 </div>
-                <div>
+                <div className='cardWrp'>
                     <CountCard color="green" />
                 </div>
-                <div>
+                <div className='cardWrp'>
                     <CountCard color="pink" />
                 </div>
             </div>

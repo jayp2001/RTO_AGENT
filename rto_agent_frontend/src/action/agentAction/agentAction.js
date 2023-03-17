@@ -436,6 +436,7 @@ DEALER_LIST_DROPDOWN_FAIL,
         config
       );
       console.log('>>>',data)
+      data.unshift({ dealerId: 100, dealerDisplayName: 'PRIVATE' });
       dispatch({
         type: DEALER_LIST_DROPDOWN_SUCCESS,
         payload: data,

@@ -20,13 +20,33 @@ import RrfBookList from "./agentPages/rrfBookList/rrfBookList";
 import OtherBookList from "./agentPages/otherBookList/otherBookList";
 
 function App() {
+  const [y, setY] = React.useState(window.scrollY);
+
+  const handleNavigation = React.useCallback(
+    (e) => {
+      const window = e.currentTarget;
+      console.log(window.scrollTop)
+      setY(window.scrollTop);
+    },
+    [y]
+  );
+
+  React.useEffect(() => {
+    // setY(window.scrollY);
+    document.querySelector('.mainBody').addEventListener("scroll", handleNavigation,true);
+
+    return () => {
+      document.querySelector('.mainBody').removeEventListener("scroll", handleNavigation,true);
+    };
+  }, [handleNavigation]);
+
   return (
     <>
     <BrowserRouter>
         <div className="flex mainBodyWrapper">
           <NaveBar/>
           <div className="mainBody">
-              <Nav/>
+              <Nav scrollH={y}/>
               <div className="mt-8">
                 <Routes>
                   <Route path="/" element={<ProtectedAdminRoute/>}>

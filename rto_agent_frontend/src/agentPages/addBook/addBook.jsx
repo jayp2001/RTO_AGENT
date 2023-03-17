@@ -261,6 +261,9 @@ function AddBook() {
         }))
         console.log('>>', formData.insuranceCompanyNameId);
     }
+    // if (dealerDropdownList) {
+    //     dealerDropdownList.unshift({ dealerId: 100, dealerDisplayName: 'PRIVATE' });
+    // }
     return (
         <>
             <div className="addAdmin_wrapper flex items-center">

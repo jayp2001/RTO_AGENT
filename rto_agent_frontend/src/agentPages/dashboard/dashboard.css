@@ -1,11 +1,11 @@
 .card_wrapper{
-    /* padding-left: 20px; */
-    padding-left: 30px;
-    /* margin-top: 100px; */
-    max-width: 77%;
-    height: 100%;
+    max-width: 100%;
+    min-height:134px
 }
 
 .dashboardWrapper{
     margin-top: 100px;
+}
+.cardWrp{
+    width: 23%;
 }

@@ -23,7 +23,7 @@ const ProtectedAgentRoutes = () => {
     const decoded = jwt_decode(user.token);
     const expirationTime = (decoded.exp * 1000) - 60000
     const auth = new Date(expirationTime) > new Date() ? true : false
-    console.log('<<>>',new Date(expirationTime),decoded,new Date(expirationTime) > new Date() ? true : false)
+    // console.log('<<>>',new Date(expirationTime),decoded,new Date(expirationTime) > new Date() ? true : false)
     return(
         auth?
         <Outlet />:

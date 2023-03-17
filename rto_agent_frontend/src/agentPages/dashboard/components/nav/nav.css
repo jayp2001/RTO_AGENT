@@ -19,14 +19,64 @@ background-color: #fff;
 } */
 
 .tt{
-    width: 76%;
+    width: 77%;
     position: fixed;
-    left: 22%;
+    /* left: 22%; */
     top: 3.5%;
     height: 65px;
     border-radius: 0.75rem;
     z-index: 5000;
-    background-color: #fff;
+    /* background-color: #fff !important; */
     backdrop-filter: saturate(200%) blur(1.875rem);
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: rgb(255 255 255 / 90%) 0rem 0rem 0.0625rem 0.0625rem inset, rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem;
+  }
+
+  .ttg{
+    width: 77%;
+    position: fixed;
+    /* left: 22%; */
+    top: 3.5%;
+    height: 65px;
+    border-radius: 0.75rem;
+    z-index: 5000;
+    /* background-color: #fff; */
+    /* backdrop-filter: saturate(200%) blur(1.875rem); */
+    background-color: rgb(240,242,245);
+    /* background-color: transparent; */
+  }
+
+  .breadcumWrapper{
+    font-size: 14px;
+    color: rgb(52, 71, 103);
+    font-weight: 400;
+    letter-spacing: 0.02857em;
+    opacity: 1;
+    text-transform: capitalize;
+  }
+
+  .greeting{
+    font-size: 16px;
+    line-height: 1.625;
+    letter-spacing: 0.0075em;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: rgb(52, 71, 103);
+  }
+
+  .breadCumContainer{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .logout{
+    color: rgb(52, 71, 103);
+    font-weight: 700;
+  }
+
+  .activeNav{
+    color: rgb(52, 71, 103);
+    font-size: 16px;
+    font-weight: 500;
+    background: transparent;
   }
