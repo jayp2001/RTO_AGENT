@@ -28,7 +28,18 @@ import{
 
     BOOK_LIST_REQUEST,
     BOOK_LIST_SUCCESS,
-    BOOK_LIST_FAIL
+    BOOK_LIST_FAIL,
+
+    ALL_BOOK_LIST_REQUEST,
+    ALL_BOOK_LIST_SUCCESS,
+    ALL_BOOK_LIST_FAIL,
+
+    EXPORT_EXCAL_REQUEST,
+    EXPORT_EXCAL_SUCCESS,
+    EXPORT_EXCAL_FAIL,
+    EXPORT_EXCAL_RESET,
+    EXPORT_EXCAL_ERROR,
+
     } from '../../type/agentTypes/agentTypes'
 
     import{
@@ -247,3 +258,34 @@ export const dealerListReducer = (state = [],action) =>{
         return state;
     }
   }
+
+  export const allBookListReducer = (state = [],action) =>{
+    switch (action.type) {
+      case ALL_BOOK_LIST_REQUEST:
+        return { loading: true };
+      case ALL_BOOK_LIST_SUCCESS:
+        return { state: action.payload.rows,totalRows: action.payload.numRows};
+      case ALL_BOOK_LIST_FAIL:
+        return { loading: false, error: action.payload };
+  
+      default:
+        return state;
+    }
+  }
+
+  export const exportExcal = (state = {}, action) => {
+    switch (action.type) {
+      case EXPORT_EXCAL_REQUEST:
+        return { loading: true };
+      case EXPORT_EXCAL_SUCCESS:
+        return { loading: false, success: true };
+      case EXPORT_EXCAL_FAIL:
+        return { loading: false, error: action.payload };
+      case EXPORT_EXCAL_RESET:
+          return {}
+      case EXPORT_EXCAL_ERROR:
+          return {}
+      default:
+        return state;
+    }
+  };

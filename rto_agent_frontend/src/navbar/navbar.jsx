@@ -39,6 +39,7 @@ function NaveBar() {
                                 </>}
                             <NavLink to="/addDealer" activeClassName="active" className="navLink">add Dealer </NavLink>
                             <NavLink to="/addBook" activeClassName="active" className="navLink">add Book </NavLink>
+                            <NavLink to="/bookList" activeClassName="active" className="navLink">BookList</NavLink>
                             <NavLink to="/TTO" activeClassName="active" className="navLink">TTO BookList</NavLink>
                             <NavLink to="/RRF" activeClassName="active" className="navLink">RRF BookList</NavLink>
                             <NavLink to="/OTHER" activeClassName="active" className="navLink">OTHER BookList</NavLink>

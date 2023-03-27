@@ -18,6 +18,7 @@ import VehicleDetail from "./agentPages/vehicleDetail/vehicleDetail";
 import TtoBookList from "./agentPages/ttoBookList/ttoBookList";
 import RrfBookList from "./agentPages/rrfBookList/rrfBookList";
 import OtherBookList from "./agentPages/otherBookList/otherBookList";
+import AllBookList from "./agentPages/allBookList/allBookList";
 
 function App() {
   const [y, setY] = React.useState(window.scrollY);
@@ -62,6 +63,7 @@ function App() {
                     <Route path="/TTO" element={<TtoBookList/>}/>
                     <Route path="/RRF" element={<RrfBookList/>}/>
                     <Route path="/OTHER" element={<OtherBookList/>}/>
+                    <Route path="/bookList" element={<AllBookList/>}/>
                   </Route>
                   <Route path='/login' exact element={<LoginPage />}/>
                   <Route path='*' element={<PageNotFoundRedirect/>}/>

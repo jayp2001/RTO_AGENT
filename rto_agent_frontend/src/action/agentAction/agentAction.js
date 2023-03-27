@@ -1,5 +1,6 @@
 import {BACKEND_BASE_URL} from '../../type/url';
 import axios from "axios";
+import { saveAs } from 'file-saver';
 import{
     DEALER_LIST_REQUEST,
     DEALER_LIST_SUCCESS,
@@ -29,7 +30,18 @@ import{
 
     BOOK_LIST_REQUEST,
     BOOK_LIST_SUCCESS,
-    BOOK_LIST_FAIL
+    BOOK_LIST_FAIL,
+
+    ALL_BOOK_LIST_REQUEST,
+    ALL_BOOK_LIST_SUCCESS,
+    ALL_BOOK_LIST_FAIL,
+
+    EXPORT_EXCAL_REQUEST,
+    EXPORT_EXCAL_SUCCESS,
+    EXPORT_EXCAL_FAIL,
+    EXPORT_EXCAL_RESET,
+    EXPORT_EXCAL_ERROR,
+
 } from '../../type/agentTypes/agentTypes'
 
 import{
@@ -493,7 +505,7 @@ DEALER_LIST_DROPDOWN_FAIL,
   };
 
 
-  export const bookList = (page,numPerPage,type,workStatus) => async (
+  export const bookList = (page,numPerPage,filter,type,workStatus) => async (
     dispatch,
     getState
   ) => {
@@ -511,7 +523,7 @@ DEALER_LIST_DROPDOWN_FAIL,
         },
       };
       const {data} = await axios.get(
-        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getVehicleRegistrationDetailsByAgentId?page=${page}&numPerPage=${numPerPage}&type=${type}&workStatus=${workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING'}`,
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getListOfVehicleRegistrationDetails?page=${page}&numPerPage=${numPerPage}&startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&type=${type?type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
         config
       );
       console.log('>>>',data)
@@ -529,4 +541,110 @@ DEALER_LIST_DROPDOWN_FAIL,
         payload: message,
       });
     }
+  };
+
+  export const allBookList = (page,numPerPage,filter,workStatus) => async (
+    dispatch,
+    getState
+  ) => {
+    try {
+      dispatch({
+        type: ALL_BOOK_LIST_REQUEST,
+      });
+  
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      // console.log('<><><><>',workStatus);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const {data} = await axios.get(
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getListOfVehicleRegistrationDetails?page=${page}&numPerPage=${numPerPage}&startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus != 10 || !workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&type=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
+        config
+      );
+      console.log('>>>',data)
+      dispatch({
+        type: ALL_BOOK_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data
+          ? error.response.data
+          : error.message;
+      dispatch({
+        type: ALL_BOOK_LIST_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+  export const exportExcel = (filter,workStatus) => async (
+    dispatch,
+    getState
+  ) => {
+    try {
+      dispatch({
+        type: EXPORT_EXCAL_REQUEST,
+      });
+  
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      const config = {
+        headers: {
+          // 'Content-Disposition': "attachment;filename=report.xls",
+          // 'Content-type': "application/vnd.ms-excel",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      axios({
+        url: `${BACKEND_BASE_URL}vehicleRegistrationrouter/exportExcelSheetForVehicleDetails?startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&type=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
+        method: 'GET',
+        headers: {Authorization: `Bearer ${userInfo.token}`},
+        responseType: 'blob', // important
+        }).then((response) => {
+        // create file link in browser's memory
+        const href = URL.createObjectURL(response.data);
+        // create "a" HTML element with href to file & click
+        const link = document.createElement('a');
+        link.href = href;
+        link.setAttribute('download', 'file.xlsx'); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+    
+        // clean up "a" element & remove ObjectURL
+        document.body.removeChild(link);
+        URL.revokeObjectURL(href);
+
+        dispatch({
+          type: EXPORT_EXCAL_SUCCESS,
+          payload: response.data,
+        });
+    });
+  
+      
+    } catch (error) {
+      console.log(error)
+      const message =
+        error.response && error.response.data
+          ? error.response.data
+          : error.message;
+      dispatch({
+        type: EXPORT_EXCAL_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+  export const resetExport = () => async (dispatch)=>{
+    dispatch({
+      type: EXPORT_EXCAL_RESET,
+    })
+  };
+  export const resetExportError = () => async (dispatch)=>{
+    dispatch({
+      type: EXPORT_EXCAL_ERROR,
+    })
   };
