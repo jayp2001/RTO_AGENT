@@ -294,9 +294,10 @@ function AddDealer() {
                                         onChange={onChange}
                                     >
                                         {
-                                            states?.map((state) => (
+                                            states ? states.map((state) => (
                                                 <MenuItem value={state.stateId}>{state.stateName}</MenuItem>
                                             ))
+                                                : <></>
                                         }
 
                                     </Select>

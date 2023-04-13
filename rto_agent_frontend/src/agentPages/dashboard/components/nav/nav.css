@@ -74,11 +74,6 @@ background-color: #fff;
     font-weight: 700;
   }
 
-  .logout:hover{
-    color: red;
-    cursor: pointer;
-  }
-
   .activeNav{
     color: rgb(52, 71, 103);
     font-size: 16px;

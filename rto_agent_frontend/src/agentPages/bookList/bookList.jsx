@@ -23,38 +23,52 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
+import Lottie from "lottie-react";
+import loader from '../../animation/loader.json'
+import successAnimation from '../../animation/success.json'
 
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { dealerDropdown } from '../../action/agentAction/agentAction'
+import { dealerDropdown, recieptUpload, resetReciept, resetDeleteBook, resetRecieptError } from '../../action/agentAction/agentAction'
 import { useLocation } from 'react-router-dom';
+
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import CloseIcon from '@mui/icons-material/Close';
+import { ToastContainer, toast } from 'react-toastify';
 
 function BookList(props) {
     const location = useLocation();
     const [state, setState] = React.useState({
         right: false,
     });
+    const [appointmentDate, setAppointmentDate] = React.useState(null)
     const dealerDropdownList = useSelector((state) => state.dealerDropdown.state);
-    // const [filter, setFilter] = React.useState({
-    //     searchOption: 'lastUpdated',
-    //     startDate: null,
-    //     endDate: null,
-    //     dealerId: null,
-    //     type: null
-    // });
-
+    const { loading, success, error } = useSelector((state) => state.recieptUpload);
+    const deleteBookRes = useSelector((state) => state.deleteBook);
+    const [bookId, setBookId] = React.useState('');
+    const [vehicleNo, setVehicleNo] = React.useState('')
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 550,
+        height: 395,
+        bgcolor: 'background.paper',
+        borderRadius: '10px',
+        boxShadow: 24,
+        p: 4,
+    };
+    const [openModal, setOpen] = React.useState(false);
+    const handleOpen = (id, vehicleNum) => { setOpen(true); setVehicleNo(vehicleNum); setBookId(id) }
+    const handleClose = () => { setOpen(false); setBookId(''); setVehicleNo(''); }
+    const [fileName, setFileName] = React.useState(null);
+    const [file, setFile] = React.useState('');
     const navigate = useNavigate();
     const handleClickTable = (id) => {
         navigate(`/vehicleDetail/${id}`)
@@ -76,40 +90,7 @@ function BookList(props) {
         dispatch(dealerDropdown());
     }, [dispatch])
 
-    const list = (anchor) => (
-        <Box
-            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-            role="presentation"
-            onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
-        >
-            <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-            <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-        </Box>
-    );
+    console.log('::::')
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -140,6 +121,66 @@ function BookList(props) {
             ["endDate"]: date && date['$d'] ? date['$d'] : null,
         }))
     };
+
+    const handleAppointmentDate = (date) => {
+        setAppointmentDate(date && date['$d'] ? date['$d'] : null)
+    }
+
+    const handleFileUpload = (event) => {
+        console.log("FILE", event.target.files)
+        setFile(event.target.files)
+        setFileName(event.target.files[0].name)
+    }
+
+    const handleSave = () => {
+        props.moveToNextStep(file, appointmentDate, bookId)
+    }
+    const deleteBook = (id) => {
+        if (window.confirm('Are you sure want to delete ?'))
+            props.handleDeleteBook(id)
+    }
+
+    if (deleteBookRes.loading ? true : false) {
+        toast.loading("Please wait...", {
+            toastId: 'loading'
+        })
+    }
+    if (deleteBookRes.success ? true : false) {
+        toast.dismiss('loading');
+        toast.dismiss('error');
+        toast('Book deleted',
+            {
+                type: 'success',
+                toastId: 'success',
+                position: "bottom-right",
+                toastId: 'error',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+
+        dispatch(resetDeleteBook())
+    }
+    if (deleteBookRes.error ? true : false) {
+        toast.dismiss('loading');
+        toast(error, {
+            type: 'error',
+            position: "bottom-right",
+            toastId: 'error',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+        dispatch(resetDeleteBook())
+    }
 
     return (
         <div className='pendingTableWrapper'>
@@ -184,6 +225,7 @@ function BookList(props) {
                                                         InputLabelProps={{ style: { fontSize: 16 } }}
                                                         label="Start Date"
                                                         inputFormat="DD/MM/YYYY"
+                                                        disabled={props.filter.searchOption === 'lastUpdated'}
                                                         value={props.filter.startDate}
                                                         onChange={handleStartDate}
                                                         name="startDate"
@@ -201,6 +243,7 @@ function BookList(props) {
                                                         InputProps={{ style: { fontSize: 16, width: '100%' } }}
                                                         InputLabelProps={{ style: { fontSize: 16 } }}
                                                         label="End Date"
+                                                        disabled={props.filter.searchOption === 'lastUpdated'}
                                                         inputFormat="DD/MM/YYYY"
                                                         value={props.filter.endDate}
                                                         onChange={handleEndDate}
@@ -241,11 +284,12 @@ function BookList(props) {
                                             </div>
                                             <div className='col-span-4'>
                                                 <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label">Work Filter</InputLabel>
+                                                    <InputLabel id="demo-simple-select-label" disabled={props.filter.searchOption === 'lastUpdated'}>Work Filter</InputLabel>
                                                     <Select
                                                         labelId="workFilter"
                                                         id="workFilter"
                                                         name='type'
+                                                        disabled={props.filter.searchOption === 'lastUpdated'}
                                                         value={props.filter.type}
                                                         label="Work Filter"
                                                         onChange={handleChange}
@@ -254,9 +298,9 @@ function BookList(props) {
                                                         }}
                                                     >
                                                         <MenuItem value={null}>Clear</MenuItem>
-                                                        <MenuItem value={'TTO'}>TTO</MenuItem>
-                                                        <MenuItem value={'RRF'}>RRF</MenuItem>
-                                                        <MenuItem value={'OTHER'}>OTHER</MenuItem>
+                                                        <MenuItem value={2}>TTO</MenuItem>
+                                                        <MenuItem value={1}>RRF</MenuItem>
+                                                        <MenuItem value={3}>OTHER</MenuItem>
                                                     </Select>
                                                 </FormControl>
                                             </div>
@@ -288,31 +332,31 @@ function BookList(props) {
                     </div>
                 </div>
                 <div className='tabContainer content-center grid gap-2 grid-cols-12'>
-                    <div className='col-span-9 flex tabWrapper'>
+                    <div className='col-span-10 flex tabWrapper'>
                         {
-                            location.pathname === "/bookList" && <div className={`${props.stateOfBook == 10 ? 'allTabActive' : 'allTab'}`}>
-                                <button className={`${props.stateOfBook == 10 ? 'allTabTextActive ' : 'tabText'}`} onClick={() => props.setStateOfBook(10)}>
+                            (location.pathname === "/bookList" || location.pathname.split('/').at(-2) === 'dealer') && <div className={`${props.stateOfBook == 10 ? 'allTabActive' : 'allTab'}`}>
+                                <button className={`${props.stateOfBook == 10 ? 'allTabTextActive ' : 'tabText'}`} onClick={() => { props.setStateOfBook(10); props.setPage(0) }}>
                                     ALL
                                 </button>
                             </div>
                         }
                         <div className={`${props.stateOfBook == 0 ? 'tabActive pink' : 'tab'}`}>
-                            <button className={`${props.stateOfBook == 0 ? 'tabTextActive ' : 'tabText'}`} onClick={() => props.setStateOfBook(0)}>
+                            <button className={`${props.stateOfBook == 0 ? 'tabTextActive ' : 'tabText'}`} onClick={() => { props.setStateOfBook(0); props.setPage(0) }}>
                                 Pendding
                             </button>
                         </div>
                         <div className={`${props.stateOfBook == 2 ? 'tabActive yellow' : 'tab'}`}>
-                            <button className={`${props.stateOfBook == 2 ? 'tabTextActive' : 'tabText'}`} onClick={() => props.setStateOfBook(2)}>
+                            <button className={`${props.stateOfBook == 2 ? 'tabTextActive' : 'tabText'}`} onClick={() => { props.setStateOfBook(2); props.setPage(0) }}>
                                 Appointment
                             </button>
                         </div>
                         <div className={`${props.stateOfBook == 3 ? 'tabActive green' : 'tab'}`}>
-                            <button className={`${props.stateOfBook == 3 ? 'tabTextActive' : 'tabText'}`} onClick={() => props.setStateOfBook(3)}>
+                            <button className={`${props.stateOfBook == 3 ? 'tabTextActive' : 'tabText'}`} onClick={() => { props.setStateOfBook(3); props.setPage(0) }}>
                                 Complete
                             </button>
                         </div>
                         <div className={location.pathname === "/bookList" ? 'allSearchFieldWrapper' : 'searchFieldWrapper'}>
-                            <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                            <FormControl sx={{ m: 1, width: '95%' }} variant="standard">
                                 <InputLabel>Search</InputLabel>
                                 <Input
                                     id="standard-adornment-password"
@@ -330,7 +374,7 @@ function BookList(props) {
                             </FormControl>
                         </div>
                     </div>
-                    <div className='col-span-3 flex justify-end'>
+                    <div className='col-span-2 flex justify-end'>
                         <button className='exportBtnWrp' onClick={() => props.handleExport()}>
                             Export Excal
                         </button>
@@ -365,7 +409,7 @@ function BookList(props) {
                                         <TableCell align="left" onClick={() => handleClickTable(row.vehicleRegistrationId)}>{row.workType}</TableCell>
                                         <TableCell align="right" onClick={() => handleClickTable(row.vehicleRegistrationId)}>{row.clientWhatsAppNumber}</TableCell>
                                         <TableCell align="right">
-                                            <Menutemp />
+                                            <Menutemp bookId={row.vehicleRegistrationId} deleteBook={deleteBook} vehicleWorkStatus={row.vehicleWorkStatus} vehicleNum={row.vehicleRegistrationNumber} handleOpen={handleOpen} />
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -383,18 +427,122 @@ function BookList(props) {
                     </TableContainer>
                 </div>
             </div>
-            <React.Fragment key={'left'}>
-                <SwipeableDrawer
-                    style={{ zIndex: 7251 }}
-                    anchor={'left'}
-                    open={state['left']}
-                    onClose={toggleDrawer('left', false)}
-                    onOpen={toggleDrawer('left', true)}
-                >
-                    {list('left')}
-                </SwipeableDrawer>
-            </React.Fragment>
-        </div>
+            {/* <Button onClick={handleOpen}>Open modal</Button> */}
+            <Modal
+                open={openModal}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                {(loading ? true : false) ?
+                    <Box Box sx={style}>
+                        <Lottie style={{ height: '100%', width: '100%' }} animationData={loader} loop={true} autoPlay={true} rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }} />
+                    </Box>
+                    :
+                    !(success ? true : false) ?
+                        < Box sx={style}>
+                            <div className='uploadRecieptHeader'>
+                                <div className="header flex items-center ">
+                                    <div className="grid justify-items-center w-full">
+                                        <div className="header_text">
+                                            {vehicleNo}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='fileUploadContainer'>
+                                <div className='grid grid-cols-12 fileName'>
+                                    {fileName && <div className='fileNameWrp col-start-4 col-span-6 grid content-center'>
+                                        <div className='w-full overflow-hidden flex justify-between'>
+                                            <div className='fileN'>
+                                                {fileName}
+                                            </div>
+                                            <div>
+                                                <IconButton onClick={() => {
+                                                    document.getElementById("fileUpload").value = "";
+                                                    setFile(null)
+                                                    setFileName('')
+                                                }} fontSize='large' sx={{ minHeight: 0, minWidth: 0, padding: 0 }}>
+                                                    <CloseIcon />
+                                                </IconButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                                <div className='uploadBtnWrp w-full flex justify-center'>
+                                    <div className='col-start-4 col-span-5'>
+                                        <Button variant="contained" component="label">
+                                            Upload reciept
+                                            <input hidden accept="*" id='fileUpload' onChange={handleFileUpload} type="file" />
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='grid grid-cols-12 mt-8'>
+                                <div className='col-start-1 col-span-5'>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DesktopDatePicker
+                                            textFieldStyle={{ width: '100%' }}
+                                            InputProps={{ style: { fontSize: 14, width: '100%' } }}
+                                            InputLabelProps={{ style: { fontSize: 14 } }}
+                                            label="Appointment Date"
+                                            required
+                                            inputFormat="DD/MM/YYYY"
+                                            value={appointmentDate}
+                                            onChange={handleAppointmentDate}
+                                            name="appointmentDate"
+                                            PopperProps={{
+                                                style: { zIndex: 35001 }
+                                            }}
+                                            renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}
+                                        />
+                                    </LocalizationProvider>
+                                </div>
+                            </div>
+                            <div className='grid grid-cols-12 gap-4 mt-6'>
+                                <div className='col-start-7 col-span-3 text-center'>
+                                    <button className='saveBtn' onClick={() => handleSave()}>
+                                        Save
+                                    </button>
+                                </div>
+                                <div className='col-span-3 text-center'>
+                                    <button className='cancleBtn' onClick={() => {
+                                        document.getElementById("fileUpload").value = "";
+                                        setFile(null)
+                                        setFileName('')
+                                        setAppointmentDate(null)
+                                        setOpen(false)
+                                    }}
+                                    >
+                                        Cancle
+                                    </button>
+                                </div>
+                            </div>
+                        </Box>
+                        : (
+                            <>
+                                <Box sx={style} className='flex justify-center'>
+                                    <Lottie style={{ height: '100%', width: '80%' }} animationData={successAnimation} loop={false} autoPlay={true} rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }} />
+                                </Box>
+                                {
+                                    setTimeout(() => {
+                                        dispatch(resetReciept())
+                                        document.getElementById("fileUpload").value = "";
+                                        setFile(null)
+                                        setFileName('')
+                                        setAppointmentDate(null)
+                                        setOpen(false)
+                                    }, 2500)
+
+                                }
+                            </>
+                        )
+                }
+
+            </Modal>
+            <ToastContainer />
+        </div >
     )
 }
 

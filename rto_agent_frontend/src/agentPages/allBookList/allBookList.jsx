@@ -3,7 +3,7 @@ import * as React from 'react';
 import './allBookList.css';
 import { allBookList } from "../../action/agentAction/agentAction";
 import BookList from '../bookList/bookList';
-import { exportExcel, resetExport, resetExportError } from '../../action/agentAction/agentAction';
+import { exportExcel, resetExport, resetExportError, recieptUpload, deleteBook } from '../../action/agentAction/agentAction';
 import { ToastContainer, toast } from 'react-toastify';
 
 function AllBookList() {
@@ -15,7 +15,7 @@ function AllBookList() {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const totalRows = useSelector((state) => state.allBookList.totalRows);
     const [filter, setFilter] = React.useState({
-        searchOption: 'lastUpdated',
+        searchOption: 20,
         startDate: null,
         endDate: null,
         dealerId: null,
@@ -28,7 +28,7 @@ function AllBookList() {
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-        dispatch(allBookList(newPage + 1, rowsPerPage, 'TTO', stateOfBook))
+        dispatch(allBookList(newPage + 1, rowsPerPage, filter, stateOfBook))
     };
 
     const handleChangeRowsPerPage = (event) => {
@@ -36,7 +36,7 @@ function AllBookList() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
         console.log('>>>????', page, parseInt(event.target.value, 10));
-        dispatch(allBookList(page + 1, parseInt(event.target.value, 10), 'TTO', stateOfBook))
+        dispatch(allBookList(page + 1, parseInt(event.target.value, 10), filter, stateOfBook))
     };
 
     const handleExport = () => {
@@ -98,7 +98,7 @@ function AllBookList() {
     }
     const resetFilter = () => {
         setFilter({
-            searchOption: 'lastUpdated',
+            searchOption: 20,
             startDate: null,
             endDate: null,
             dealerId: null,
@@ -106,6 +106,21 @@ function AllBookList() {
         })
     }
     console.log('>>>', totalRows)
+
+    const moveToNextStep = (file, appointmentDate, bookId) => {
+        dispatch(recieptUpload(file, appointmentDate, bookId))
+        setTimeout(() => {
+            dispatch(allBookList(1, rowsPerPage, filter, stateOfBook))
+        }, 3000)
+    }
+
+    const handleDeleteBook = (id) => {
+        dispatch(deleteBook(id))
+        setTimeout(() => {
+            dispatch(allBookList(1, rowsPerPage, filter, stateOfBook))
+        }, 1000)
+    }
+
     return (
         <>
             <div className="ttoListContainer">
@@ -121,8 +136,11 @@ function AllBookList() {
                     handleExport={handleExport}
                     filter={filter}
                     setFilter={setFilter}
+                    setPage={setPage}
                     applyFilter={applyFilter}
                     resetFilter={resetFilter}
+                    moveToNextStep={moveToNextStep}
+                    handleDeleteBook={handleDeleteBook}
                 />
             </div>
             <ToastContainer />

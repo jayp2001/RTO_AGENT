@@ -40,6 +40,18 @@ import{
     EXPORT_EXCAL_RESET,
     EXPORT_EXCAL_ERROR,
 
+    RECIEPT_UPLOAD_REQUEST,
+    RECIEPT_UPLOAD_SUCCESS,
+    RECIEPT_UPLOAD_FAIL,
+    RECIEPT_UPLOAD_RESET,
+    RECIEPT_UPLOAD_ERROR,
+
+    DELETE_BOOK_REQUEST,
+    DELETE_BOOK_SUCCESS,
+    DELETE_BOOK_FAIL,
+    DELETE_BOOK_RESET,
+    DELETE_BOOK_RESET_ERROR,
+
     } from '../../type/agentTypes/agentTypes'
 
     import{
@@ -69,7 +81,7 @@ export const dealerListReducer = (state = [],action) =>{
       case DEALER_LIST_REQUEST:
         return { loading: true };
       case DEALER_LIST_SUCCESS:
-        return { state: action.payload.rows,totalRows: action.payload.numRows};
+        return { state: action.payload.rows,totalRows: action.payload.numRows,loading: false};
       case DEALER_LIST_FAIL:
         return { loading: false, error: action.payload };
   
@@ -289,3 +301,39 @@ export const dealerListReducer = (state = [],action) =>{
         return state;
     }
   };
+
+
+  export const recieptUploadReducer = (state = {}, action) => {
+    switch (action.type) {
+      case RECIEPT_UPLOAD_REQUEST:
+        return { loading: true };
+      case RECIEPT_UPLOAD_SUCCESS:
+        return { loading: false, success: true };
+      case RECIEPT_UPLOAD_FAIL:
+        return { loading: false, error: action.payload };
+      case RECIEPT_UPLOAD_RESET:
+          return {}
+      case RECIEPT_UPLOAD_ERROR:
+          return {}
+      default:
+        return state;
+    }
+  };
+
+  export const deleteBookReducer = (state = {}, action) => {
+    switch (action.type) {
+      case DELETE_BOOK_REQUEST:
+        return { loading: true };
+      case DELETE_BOOK_SUCCESS:
+        return { loading: false, success: true };
+      case DELETE_BOOK_FAIL:
+        return { loading: false, error: action.payload };
+      case DELETE_BOOK_RESET:
+          return {}
+      case DELETE_BOOK_RESET_ERROR:
+          return {}
+      default:
+        return state;
+    }
+  };
+

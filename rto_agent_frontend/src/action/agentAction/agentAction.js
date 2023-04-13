@@ -42,6 +42,18 @@ import{
     EXPORT_EXCAL_RESET,
     EXPORT_EXCAL_ERROR,
 
+    RECIEPT_UPLOAD_REQUEST,
+    RECIEPT_UPLOAD_SUCCESS,
+    RECIEPT_UPLOAD_FAIL,
+    RECIEPT_UPLOAD_RESET,
+    RECIEPT_UPLOAD_ERROR,
+
+    DELETE_BOOK_SUCCESS,
+    DELETE_BOOK_FAIL,
+    DELETE_BOOK_RESET,
+    DELETE_BOOK_RESET_ERROR,
+    DELETE_BOOK_REQUEST
+
 } from '../../type/agentTypes/agentTypes'
 
 import{
@@ -188,7 +200,7 @@ DEALER_LIST_DROPDOWN_FAIL,
     })
   };
 
-  export const dealerBookList = (page,numPerPage,id) => async (
+  export const dealerBookList = (page,numPerPage,filter,workStatus,id) => async (
     dispatch,
     getState
   ) => {
@@ -206,7 +218,7 @@ DEALER_LIST_DROPDOWN_FAIL,
         },
       };
       const {data} = await axios.get(
-        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getVehicleRegistrationDetailsBydealerId?page=${page}&numPerPage=${numPerPage}&dealerId=${id}`,
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getListOfVehicleRegistrationDetails?page=${page}&numPerPage=${numPerPage}&startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${id && id?id:''}&workStatus=${workStatus != 10 || !workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&workCategory=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
         config
       );
       console.log('>>>',data)
@@ -515,7 +527,7 @@ DEALER_LIST_DROPDOWN_FAIL,
       });
   
       const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-      console.log('<><><><>',workStatus);
+      console.log('<><><><>',workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':'PENDING');
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -523,7 +535,7 @@ DEALER_LIST_DROPDOWN_FAIL,
         },
       };
       const {data} = await axios.get(
-        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getListOfVehicleRegistrationDetails?page=${page}&numPerPage=${numPerPage}&startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&type=${type?type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getListOfVehicleRegistrationDetails?page=${page}&numPerPage=${numPerPage}&startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':'PENDING'}&workCategory=${type?type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
         config
       );
       console.log('>>>',data)
@@ -561,7 +573,7 @@ DEALER_LIST_DROPDOWN_FAIL,
         },
       };
       const {data} = await axios.get(
-        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getListOfVehicleRegistrationDetails?page=${page}&numPerPage=${numPerPage}&startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus != 10 || !workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&type=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getListOfVehicleRegistrationDetails?page=${page}&numPerPage=${numPerPage}&startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus != 10 || !workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&workCategory=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
         config
       );
       console.log('>>>',data)
@@ -600,7 +612,7 @@ DEALER_LIST_DROPDOWN_FAIL,
       };
 
       axios({
-        url: `${BACKEND_BASE_URL}vehicleRegistrationrouter/exportExcelSheetForVehicleDetails?startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&type=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
+        url: `${BACKEND_BASE_URL}vehicleRegistrationrouter/exportExcelSheetForVehicleDetails?startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus != 10 || !workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&workCategory=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
         method: 'GET',
         headers: {Authorization: `Bearer ${userInfo.token}`},
         responseType: 'blob', // important
@@ -646,5 +658,107 @@ DEALER_LIST_DROPDOWN_FAIL,
   export const resetExportError = () => async (dispatch)=>{
     dispatch({
       type: EXPORT_EXCAL_ERROR,
+    })
+  };
+
+  export const resetReciept = () => async (dispatch)=>{
+    dispatch({
+      type: RECIEPT_UPLOAD_RESET,
+    })
+  };
+  export const resetRecieptError = () => async (dispatch)=>{
+    dispatch({
+      type: RECIEPT_UPLOAD_ERROR,
+    })
+  };
+
+
+  export const recieptUpload = (file,date,id) => async (
+    dispatch,
+    getState
+  ) => {
+    console.log(">>>HELLO")
+    try {
+      dispatch({
+        type: RECIEPT_UPLOAD_REQUEST,
+      });
+  
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      console.log('HEllo',file)
+      console.log('???', file)
+      const { data } = await axios.post(
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/uploadReceipt`,
+        {
+          files:file,
+          appointmentDate:date,
+          vehicleRegistrationId:id,
+        },
+        config
+      );
+  
+      dispatch({
+        type: RECIEPT_UPLOAD_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data
+          ? error.response.data
+          : error.message;
+      dispatch({
+        type: RECIEPT_UPLOAD_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+
+
+  export const deleteBook = (id) => async (
+    dispatch,
+    getState
+  ) => {
+    try {
+      dispatch({
+        type:DELETE_BOOK_REQUEST,
+      });
+      console.log("book")
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.delete(
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/removeVehicleRegistrationDetails?vehicleRegistrationId=${id}`,
+        config
+      );
+  
+      dispatch({
+        type: DELETE_BOOK_SUCCESS,
+      });
+    } catch (error) {
+      console.log(error)
+      const message =
+        error.response && error.response.data
+          ? error.response.data
+          : error.message;
+      dispatch({
+        type: DELETE_BOOK_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+  export const resetDeleteBook = () => async (dispatch)=>{
+    dispatch({
+      type: DELETE_BOOK_RESET,
     })
   };

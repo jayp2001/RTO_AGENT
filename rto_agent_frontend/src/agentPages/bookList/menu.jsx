@@ -11,7 +11,7 @@ const options = [
 
 const ITEM_HEIGHT = 48;
 
-function Menutemp() {
+function Menutemp(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -48,11 +48,31 @@ function Menutemp() {
                     },
                 }}
             >
-                {options.map((option) => (
-                    <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-                        {option}
-                    </MenuItem>
-                ))}
+                {
+                    props.vehicleWorkStatus === 'Pending' ?
+                        <MenuItem key={'nextStep'}
+                            onClick={() => {
+                                handleClose();
+                                props.handleOpen(props.bookId, props.vehicleNum)
+                            }}>
+                            Move to next step
+                        </MenuItem>
+                        :
+                        null}
+                <MenuItem key={'markComplete'}
+                    onClick={() => {
+                        handleClose();
+                        props.handleOpen(props.bookId, props.vehicleNum)
+                    }}>
+                    Mark as complete
+                </MenuItem>
+                <MenuItem key={'delete'}
+                    onClick={() => {
+                        handleClose();
+                        props.deleteBook(props.bookId)
+                    }}>
+                    Delete
+                </MenuItem>
             </Menu>
         </div>
     );

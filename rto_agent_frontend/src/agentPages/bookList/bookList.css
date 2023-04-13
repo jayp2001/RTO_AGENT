@@ -45,7 +45,7 @@ padding-right: 25px;
 
 .tab{
 height: 100%;
-min-width: 18%;
+min-width: 20%;
 border-radius: 0.75rem;
 text-align: center;
 /* background:linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%); */
@@ -60,7 +60,7 @@ text-align: center;
 .tabActive{
     height: 100%;
     text-align: center;
-    min-width: 18%;
+    min-width: 20%;
     border-radius: 0.75rem;
     background:linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%);
     }
@@ -180,4 +180,80 @@ text-align: center;
     font-size: 18px;
     height: 50px;
     border-radius: 10px;
+}
+
+.css-79ws1d-MuiModal-root{
+    z-index: 13310 !important
+}
+
+.uploadRecieptHeader{
+    font-size: 18px;
+}
+
+.span{
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.fileNameWrp{
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    width: 100%;
+    text-overflow: ellipsis;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+.fileName{
+    min-height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.fileUploadContainer{
+    padding: 20px;
+    min-height: 150px;
+    margin-top: -30px;
+    border: 2px dashed blue;
+    border-radius: 10px;
+}
+/* 
+.uploadContainer{
+    display: flex;
+    flex-direction: column;
+} */
+.uploadBtnWrp{
+    position: relative;
+   top:20px
+}
+.saveBtn{
+    height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(76,217,100,1) 0%, rgba(23,243,112,1) 81%, rgba(0,255,117,1) 100%); */
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%);
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+.cancleBtn{
+    height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(76,217,100,1) 0%, rgba(23,243,112,1) 81%, rgba(0,255,117,1) 100%); */
+    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%); */
+    background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+.fileN{
+    max-width: 85%;
+    width: 85%;
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
