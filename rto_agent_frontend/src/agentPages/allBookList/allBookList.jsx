@@ -10,6 +10,7 @@ function AllBookList() {
     const data = useSelector((state) => state.allBookList.state);
     const { loading, success, error } = useSelector((state) => state.exportExcal);
     const dispatch = useDispatch();
+
     const [stateOfBook, setStateOfBook] = React.useState(10);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -135,6 +136,10 @@ function AllBookList() {
         }, 1000)
     }
 
+    const search = (searchWord) => {
+        dispatch(allBookList(1, rowsPerPage, filter, stateOfBook, searchWord))
+    }
+
     return (
         <>
             <div className="ttoListContainer">
@@ -157,6 +162,7 @@ function AllBookList() {
                     appointmentToComplete={appointmentToComplete}
                     handleDeleteBook={handleDeleteBook}
                     handleMoveToComplete={handleMoveToComplete}
+                    search={search}
                 />
             </div>
             <ToastContainer />

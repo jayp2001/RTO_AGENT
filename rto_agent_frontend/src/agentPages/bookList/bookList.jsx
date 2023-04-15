@@ -46,6 +46,7 @@ function BookList(props) {
     const [state, setState] = React.useState({
         right: false,
     });
+    const [searchWord, setSearchWord] = React.useState('');
     const [appointmentDate, setAppointmentDate] = React.useState(null)
     const dealerDropdownList = useSelector((state) => state.dealerDropdown.state);
     const { loading, success, error } = useSelector((state) => state.recieptUpload);
@@ -103,13 +104,36 @@ function BookList(props) {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popper' : undefined;
 
+
+    const debounce = (func) => {
+        let timer;
+        return function (...args) {
+            const context = this;
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+                timer = null;
+                func.apply(context, args)
+            }, 700)
+        }
+
+    }
+
     const handleChange = (e) => {
         props.setFilter((pervState) => ({
             ...pervState,
             [e.target.name]: e.target.value,
         }));
     };
+    const handleSearchChange = (e) => {
+        setSearchWord(e.target.value)
+        console.log(':::???>>>>', searchWord)
+    };
+    const handleSearch = () => {
+        console.log(':::???:::', document.getElementById('standard-adornment-password').value)
+        props.search(document.getElementById('standard-adornment-password').value)
+    }
 
+    const debounceFunction = React.useCallback(debounce(handleSearch), [])
     const handleStartDate = (date) => {
         props.setFilter((prevState) => ({
             ...prevState,
@@ -451,10 +475,13 @@ function BookList(props) {
                                 <Input
                                     id="standard-adornment-password"
                                     type='text'
+                                    value={searchWord}
+                                    onChange={(e) => { handleSearchChange(e); debounceFunction() }}
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <IconButton
                                                 aria-label="search"
+                                                onClick={() => props.search(searchWord)}
                                             >
                                                 {<SearchIcon />}
                                             </IconButton>
