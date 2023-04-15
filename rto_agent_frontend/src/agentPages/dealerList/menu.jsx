@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
+import { useNavigate } from "react-router-dom";
 
 const options = [
     'Edit',
@@ -18,10 +18,13 @@ function Menutemp(props) {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+    const navigate = useNavigate();
     const handleClose = () => {
         setAnchorEl(null);
     };
-
+    const handleEditClick = (id) => {
+        navigate(`/editDealer/${id}`)
+    }
     return (
         <div>
             <IconButton
@@ -51,6 +54,9 @@ function Menutemp(props) {
             >
                 <MenuItem key={'delete'} onClick={() => props.handleDeleteBook(props.dealerId)}>
                     Delete
+                </MenuItem>
+                <MenuItem key={'Edit'} onClick={() => handleEditClick(props.dealerId)}>
+                    Edit
                 </MenuItem>
             </Menu>
         </div>

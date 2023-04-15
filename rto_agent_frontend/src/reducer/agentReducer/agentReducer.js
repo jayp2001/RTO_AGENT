@@ -62,7 +62,19 @@ import{
     DELETE_DEALER_SUCCESS,
     DELETE_DEALER_FAIL,
     DELETE_DEALER_RESET,
-    DELETE_DEALER_RESET_ERROR
+    DELETE_DEALER_RESET_ERROR,
+
+    DEALER_DETAIL_EDIT_REQUEST,
+    DEALER_DETAIL_EDIT_SUCCESS,
+    DEALER_DETAIL_EDIT_FAIL,
+    EDIT_DEALER_RESET,
+    EDIT_DEALER_RESET_ERROR,
+
+    BOOK_EDIT_REQUEST,
+    BOOK_EDIT_SUCCESS,
+    BOOK_EDIT_FAIL,
+    BOOK_EDIT_RESET,
+    BOOK_EDIT_RESET_ERROR
 
     } from '../../type/agentTypes/agentTypes'
 
@@ -383,3 +395,36 @@ export const dealerListReducer = (state = [],action) =>{
     }
   };
 
+  export const dealerDetailEditReducer = (state = [],action) =>{
+    switch (action.type) {
+      case DEALER_DETAIL_EDIT_REQUEST:
+        return { loading: true };
+      case DEALER_DETAIL_EDIT_SUCCESS:
+        return { loading: false, success: true };
+      case DEALER_DETAIL_EDIT_FAIL:
+        return { loading: false, error: action.payload };
+        case EDIT_DEALER_RESET:
+          return {}
+      case EDIT_DEALER_RESET_ERROR:
+          return {}
+      default:
+        return state;
+    }
+  }
+
+  export const bookEditReducer = (state = [],action) =>{
+    switch (action.type) {
+      case BOOK_EDIT_REQUEST:
+        return { loading: true };
+      case BOOK_EDIT_SUCCESS:
+        return { loading: false, success: true };
+      case BOOK_EDIT_FAIL:
+        return { loading: false, error: action.payload };
+        case BOOK_EDIT_RESET:
+          return {}
+      case BOOK_EDIT_RESET_ERROR:
+          return {}
+      default:
+        return state;
+    }
+  }

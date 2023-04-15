@@ -19,6 +19,8 @@ import TtoBookList from "./agentPages/ttoBookList/ttoBookList";
 import RrfBookList from "./agentPages/rrfBookList/rrfBookList";
 import OtherBookList from "./agentPages/otherBookList/otherBookList";
 import AllBookList from "./agentPages/allBookList/allBookList";
+import EditDealer from "./agentPages/editDealer/editDealer";
+import EditBook from "./agentPages/editVehicleDetail/editVehicleDetail";
 
 function App() {
   const [y, setY] = React.useState(window.scrollY);
@@ -59,7 +61,9 @@ function App() {
                     <Route path="/addBook" element={<AddBook/>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/dealer/:id" element={<DealerDetail/>}/>
+                    <Route path="/editDealer/:id" element={<EditDealer/>}/>
                     <Route path="/vehicleDetail/:id" element={<VehicleDetail/>}/>
+                    <Route path="/editVehicleDetail/:id" element={<EditBook/>}/>
                     <Route path="/TTO" element={<TtoBookList/>}/>
                     <Route path="/RRF" element={<RrfBookList/>}/>
                     <Route path="/OTHER" element={<OtherBookList/>}/>

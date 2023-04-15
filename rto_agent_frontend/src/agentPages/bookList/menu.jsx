@@ -3,6 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useNavigate } from "react-router-dom";
 
 const options = [
     'move to next Step',
@@ -17,10 +18,13 @@ function Menutemp(props) {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+    const navigate = useNavigate();
     const handleClose = () => {
         setAnchorEl(null);
     };
-
+    const handleEditClick = (id) => {
+        navigate(`/editVehicleDetail/${id}`)
+    }
     return (
         <div>
             <IconButton
@@ -70,6 +74,13 @@ function Menutemp(props) {
                         props.deleteBook(props.bookId)
                     }}>
                     Delete
+                </MenuItem>
+                <MenuItem key={'Edit'}
+                    onClick={() => {
+                        handleClose();
+                        handleEditClick(props.bookId)
+                    }}>
+                    Edit
                 </MenuItem>
             </Menu>
         </div>

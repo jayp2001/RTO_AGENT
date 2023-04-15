@@ -64,7 +64,19 @@ import{
     DELETE_DEALER_SUCCESS,
     DELETE_DEALER_FAIL,
     DELETE_DEALER_RESET,
-    DELETE_DEALER_RESET_ERROR
+    DELETE_DEALER_RESET_ERROR,
+
+    DEALER_DETAIL_EDIT_REQUEST,
+    DEALER_DETAIL_EDIT_SUCCESS,
+    DEALER_DETAIL_EDIT_FAIL,
+    EDIT_DEALER_RESET,
+    EDIT_DEALER_RESET_ERROR,
+
+    BOOK_EDIT_REQUEST,
+    BOOK_EDIT_SUCCESS,
+    BOOK_EDIT_FAIL,
+    BOOK_EDIT_RESET,
+    BOOK_EDIT_RESET_ERROR
 
 } from '../../type/agentTypes/agentTypes'
 
@@ -881,5 +893,113 @@ DEALER_LIST_DROPDOWN_FAIL,
   export const resetDeleteDealerError = () => async (dispatch)=>{
     dispatch({
       type: DELETE_DEALER_RESET_ERROR,
+    })
+  };
+
+  export const dealerDetailEdit = (id,dealerData) => async (
+    dispatch,
+    getState
+  ) => {
+    try {
+      dispatch({
+        type: DEALER_DETAIL_EDIT_REQUEST,
+      });
+  
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const {data} = await axios.post(
+        `${BACKEND_BASE_URL}dealerrouter/updateDealerDetails`,
+        {
+          dealerId:id,
+          ...dealerData
+        },
+        config
+      );
+      console.log('>>>',data)
+      dispatch({
+        type: DEALER_DETAIL_EDIT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data
+          ? error.response.data
+          : error.message;
+      dispatch({
+        type: DEALER_DETAIL_EDIT_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+  export const resetEditDealer = () => async (dispatch)=>{
+    dispatch({
+      type: EDIT_DEALER_RESET,
+    })
+  };
+
+  export const resetEditDealerError = () => async (dispatch)=>{
+    dispatch({
+      type: EDIT_DEALER_RESET_ERROR,
+    })
+  };
+
+  export const bookEdit = (id,BookData) => async (
+    dispatch,
+    getState
+  ) => {
+    try {
+      dispatch({
+        type: BOOK_EDIT_REQUEST,
+      });
+  
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const {data} = await axios.post(
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/updateVehicleRegistrationDetails`,
+        {
+          vehicleRegistrationId:id,
+          ...BookData
+        },
+        config
+      );
+      console.log('>>>',data)
+      dispatch({
+        type: BOOK_EDIT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data
+          ? error.response.data
+          : error.message;
+      dispatch({
+        type: BOOK_EDIT_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+  export const resetEditbook = () => async (dispatch)=>{
+    dispatch({
+      type: BOOK_EDIT_RESET,
+    })
+  };
+
+  export const resetEditBookError = () => async (dispatch)=>{
+    dispatch({
+      type: BOOK_EDIT_RESET_ERROR,
     })
   };
