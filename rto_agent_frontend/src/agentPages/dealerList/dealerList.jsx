@@ -23,7 +23,7 @@ function DealerList() {
     // const totalRows = 10
     const data = useSelector((state) => state.dealerList.state);
     const totalRows = useSelector((state) => state.dealerList.totalRows);
-    const deleteDealerRes = useSelector((state) => state.dealerList.deleteDealer);
+    const deleteDealerRes = useSelector((state) => state.deleteDealer);
     React.useEffect(() => {
         dispatch(dealerList(page + 1, rowsPerPage))
     }, [dispatch, setRowsPerPage, setPage])
