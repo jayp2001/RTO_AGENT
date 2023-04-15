@@ -32,7 +32,7 @@ import Box from '@mui/material/Box';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { dealerDropdown, recieptUpload, resetReciept, resetDeleteBook, resetRecieptError } from '../../action/agentAction/agentAction'
+import { dealerDropdown, recieptUpload, resetMoveToComplete, resetMoveToCompleteError, resetReciept, resetDeleteBook, resetRecieptError } from '../../action/agentAction/agentAction'
 import { useLocation } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
@@ -50,6 +50,7 @@ function BookList(props) {
     const dealerDropdownList = useSelector((state) => state.dealerDropdown.state);
     const { loading, success, error } = useSelector((state) => state.recieptUpload);
     const deleteBookRes = useSelector((state) => state.deleteBook);
+    const moveToComplete = useSelector((state) => state.moveToComplete);
     const [bookId, setBookId] = React.useState('');
     const [vehicleNo, setVehicleNo] = React.useState('')
     const style = {
@@ -66,6 +67,7 @@ function BookList(props) {
     };
     const [openModal, setOpen] = React.useState(false);
     const handleOpen = (id, vehicleNum) => { setOpen(true); setVehicleNo(vehicleNum); setBookId(id) }
+    const handleNextStep = (id) => { props.appointmentToComplete(id) }
     const handleClose = () => { setOpen(false); setBookId(''); setVehicleNo(''); }
     const [fileName, setFileName] = React.useState(null);
     const [file, setFile] = React.useState('');
@@ -140,6 +142,10 @@ function BookList(props) {
             props.handleDeleteBook(id)
     }
 
+    const markAsComplete = (id) => {
+        props.handleMoveToComplete(id)
+    }
+
     if (deleteBookRes.loading ? true : false) {
         toast.loading("Please wait...", {
             toastId: 'loading'
@@ -167,7 +173,7 @@ function BookList(props) {
     }
     if (deleteBookRes.error ? true : false) {
         toast.dismiss('loading');
-        toast(error, {
+        toast(deleteBookRes.error, {
             type: 'error',
             position: "bottom-right",
             toastId: 'error',
@@ -180,6 +186,90 @@ function BookList(props) {
             theme: "colored",
         });
         dispatch(resetDeleteBook())
+    }
+
+    if (moveToComplete.loading ? true : false) {
+        toast.loading("Please wait...", {
+            toastId: 'loading'
+        })
+    }
+    if (moveToComplete.success ? true : false) {
+        toast.dismiss('loading');
+        toast.dismiss('error');
+        toast('Book moved to complete',
+            {
+                type: 'success',
+                toastId: 'success',
+                position: "bottom-right",
+                toastId: 'error',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+
+        dispatch(resetMoveToComplete())
+    }
+    if (moveToComplete.error ? true : false) {
+        toast.dismiss('loading');
+        toast(moveToComplete.error, {
+            type: 'error',
+            position: "bottom-right",
+            toastId: 'error',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+        dispatch(resetMoveToCompleteError())
+    }
+
+    if ((loading ? true : false) && !openModal) {
+        toast.loading("Please wait...", {
+            toastId: 'loading'
+        })
+    }
+    if ((success ? true : false) && !openModal) {
+        toast.dismiss('loading');
+        toast.dismiss('error');
+        toast('Book moved to next step',
+            {
+                type: 'success',
+                toastId: 'success',
+                position: "bottom-right",
+                toastId: 'error',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+
+        dispatch(resetReciept())
+    }
+    if ((error ? true : false) && !openModal) {
+        toast.dismiss('loading');
+        toast(error, {
+            type: 'error',
+            position: "bottom-right",
+            toastId: 'error',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+        dispatch(resetRecieptError())
     }
 
     return (
@@ -409,7 +499,7 @@ function BookList(props) {
                                         <TableCell align="left" onClick={() => handleClickTable(row.vehicleRegistrationId)}>{row.workType}</TableCell>
                                         <TableCell align="right" onClick={() => handleClickTable(row.vehicleRegistrationId)}>{row.clientWhatsAppNumber}</TableCell>
                                         <TableCell align="right">
-                                            <Menutemp bookId={row.vehicleRegistrationId} deleteBook={deleteBook} vehicleWorkStatus={row.vehicleWorkStatus} vehicleNum={row.vehicleRegistrationNumber} handleOpen={handleOpen} />
+                                            <Menutemp bookId={row.vehicleRegistrationId} deleteBook={deleteBook} handleNextStep={handleNextStep} markAsComplete={markAsComplete} vehicleWorkStatus={row.vehicleWorkStatus} vehicleNum={row.vehicleRegistrationNumber} handleOpen={handleOpen} />
                                         </TableCell>
                                     </TableRow>
                                 ))}

@@ -48,21 +48,19 @@ function Menutemp(props) {
                     },
                 }}
             >
-                {
-                    props.vehicleWorkStatus === 'Pending' ?
-                        <MenuItem key={'nextStep'}
-                            onClick={() => {
-                                handleClose();
-                                props.handleOpen(props.bookId, props.vehicleNum)
-                            }}>
-                            Move to next step
-                        </MenuItem>
-                        :
-                        null}
+                <MenuItem key={'nextStep'}
+                    onClick={() => {
+                        handleClose();
+                        props.vehicleWorkStatus === 'PENDING' ?
+                            props.handleOpen(props.bookId, props.vehicleNum) :
+                            props.handleNextStep(props.bookId)
+                    }}>
+                    Move to next step
+                </MenuItem>
                 <MenuItem key={'markComplete'}
                     onClick={() => {
                         handleClose();
-                        props.handleOpen(props.bookId, props.vehicleNum)
+                        props.markAsComplete(props.bookId)
                     }}>
                     Mark as complete
                 </MenuItem>

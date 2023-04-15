@@ -9,9 +9,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useDispatch, useSelector } from "react-redux";
-import { dealerList } from "../../action/agentAction/agentAction"
+import { dealerList, deleteDealer, resetDeleteDealer, resetDeleteDealerError } from "../../action/agentAction/agentAction"
 import { useNavigate } from "react-router-dom";
 import Menutemp from './menu';
+import { ToastContainer, toast } from 'react-toastify';
 // import { dealerList } from "../../action/adminAction/adminAction";
 
 function DealerList() {
@@ -22,6 +23,7 @@ function DealerList() {
     // const totalRows = 10
     const data = useSelector((state) => state.dealerList.state);
     const totalRows = useSelector((state) => state.dealerList.totalRows);
+    const deleteDealerRes = useSelector((state) => state.dealerList.deleteDealer);
     React.useEffect(() => {
         dispatch(dealerList(page + 1, rowsPerPage))
     }, [dispatch, setRowsPerPage, setPage])
@@ -41,6 +43,55 @@ function DealerList() {
 
     const handleClickTable = (id) => {
         navigate(`/dealer/${id}`)
+    }
+
+    const handleDeleteBook = (id) => {
+        dispatch(deleteDealer(id))
+        setTimeout(() => {
+            dispatch(dealerList(page + 1, rowsPerPage))
+        }, 1000)
+    }
+
+    if (deleteDealerRes && deleteDealerRes.loading ? true : false) {
+        toast.loading("Please wait...", {
+            toastId: 'loading'
+        })
+    }
+    if (deleteDealerRes && deleteDealerRes.success ? true : false) {
+        toast.dismiss('loading');
+        toast.dismiss('error');
+        toast('Dealer deleted',
+            {
+                type: 'success',
+                toastId: 'success',
+                position: "bottom-right",
+                toastId: 'error',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+
+        dispatch(resetDeleteDealer())
+    }
+    if (deleteDealerRes && deleteDealerRes.error ? true : false) {
+        toast.dismiss('loading');
+        toast(deleteDealerRes.error, {
+            type: 'error',
+            position: "bottom-right",
+            toastId: 'error',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+        dispatch(resetDeleteDealerError())
     }
 
     return (
@@ -86,7 +137,7 @@ function DealerList() {
                                         <TableCell align="center" onClick={() => handleClickTable(row.dealerId)}>{row.dealerDisplayName}</TableCell>
                                         <TableCell align="right" onClick={() => handleClickTable(row.dealerId)}>{row.dealerMobileNumber}</TableCell>
                                         <TableCell align="right" onClick={() => handleClickTable(row.dealerId)}>{row.dealerWhatsAppNumber}</TableCell>
-                                        <TableCell align='right'><Menutemp /></TableCell>
+                                        <TableCell align='right'><Menutemp dealerId={row.dealerId} handleDeleteBook={handleDeleteBook} /></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -101,6 +152,7 @@ function DealerList() {
                             onRowsPerPageChange={handleChangeRowsPerPage}
                         />
                     </TableContainer>
+                    <ToastContainer />
                 </div>
             </div>
 

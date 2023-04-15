@@ -3,7 +3,7 @@ import * as React from 'react';
 import './allBookList.css';
 import { allBookList } from "../../action/agentAction/agentAction";
 import BookList from '../bookList/bookList';
-import { exportExcel, resetExport, resetExportError, recieptUpload, deleteBook } from '../../action/agentAction/agentAction';
+import { exportExcel, resetExport, resetExportError, moveToComplete, recieptUpload, deleteBook } from '../../action/agentAction/agentAction';
 import { ToastContainer, toast } from 'react-toastify';
 
 function AllBookList() {
@@ -36,7 +36,7 @@ function AllBookList() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
         console.log('>>>????', page, parseInt(event.target.value, 10));
-        dispatch(allBookList(page + 1, parseInt(event.target.value, 10), filter, stateOfBook))
+        dispatch(allBookList(0 + 1, parseInt(event.target.value, 10), filter, stateOfBook))
     };
 
     const handleExport = () => {
@@ -114,6 +114,20 @@ function AllBookList() {
         }, 3000)
     }
 
+    const appointmentToComplete = (bookId) => {
+        dispatch(recieptUpload(bookId))
+        setTimeout(() => {
+            dispatch(allBookList(1, rowsPerPage, filter, stateOfBook))
+        }, 1000)
+    }
+
+    const handleMoveToComplete = (id) => {
+        dispatch(moveToComplete(id))
+        setTimeout(() => {
+            dispatch(allBookList(1, rowsPerPage, filter, stateOfBook))
+        }, 1000)
+    }
+
     const handleDeleteBook = (id) => {
         dispatch(deleteBook(id))
         setTimeout(() => {
@@ -140,7 +154,9 @@ function AllBookList() {
                     applyFilter={applyFilter}
                     resetFilter={resetFilter}
                     moveToNextStep={moveToNextStep}
+                    appointmentToComplete={appointmentToComplete}
                     handleDeleteBook={handleDeleteBook}
+                    handleMoveToComplete={handleMoveToComplete}
                 />
             </div>
             <ToastContainer />

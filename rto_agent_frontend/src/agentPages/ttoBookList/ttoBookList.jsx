@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as React from 'react';
 import { bookList } from "../../action/agentAction/agentAction";
 import BookList from '../bookList/bookList';
-import { exportExcel, recieptUpload, deleteBook, resetExport, resetExportError } from '../../action/agentAction/agentAction';
+import { exportExcel, recieptUpload, deleteBook, moveToComplete, resetExport, resetExportError } from '../../action/agentAction/agentAction';
 function TtoBookList() {
     const data = useSelector((state) => state.ttoBookList.state);
     const [filter, setFilter] = React.useState({
@@ -31,7 +31,7 @@ function TtoBookList() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
         console.log('>>>????', page, parseInt(event.target.value, 10));
-        dispatch(bookList(page + 1, parseInt(event.target.value, 10), filter, 2, stateOfBook))
+        dispatch(bookList(0 + 1, parseInt(event.target.value, 10), filter, 2, stateOfBook))
     };
 
     const handleExport = () => {
@@ -64,6 +64,20 @@ function TtoBookList() {
             dispatch(bookList(page + 1, rowsPerPage, filter, 2, stateOfBook))
         }, 1000)
     }
+    const handleMoveToComplete = (id) => {
+        dispatch(moveToComplete(id))
+        setTimeout(() => {
+            dispatch(bookList(1, rowsPerPage, filter, 2, stateOfBook))
+        }, 1000)
+    }
+
+    const appointmentToComplete = (bookId) => {
+        dispatch(recieptUpload(bookId))
+        setTimeout(() => {
+            dispatch(bookList(1, rowsPerPage, filter, 2, stateOfBook))
+        }, 1000)
+    }
+
     return (
         <div className="ttoListContainer">
             <BookList
@@ -83,6 +97,8 @@ function TtoBookList() {
                 resetFilter={resetFilter}
                 moveToNextStep={moveToNextStep}
                 handleDeleteBook={handleDeleteBook}
+                handleMoveToComplete={handleMoveToComplete}
+                appointmentToComplete={appointmentToComplete}
             />
         </div>
     )

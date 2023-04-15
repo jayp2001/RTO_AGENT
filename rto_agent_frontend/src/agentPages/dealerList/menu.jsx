@@ -12,7 +12,7 @@ const options = [
 
 const ITEM_HEIGHT = 48;
 
-function Menutemp() {
+function Menutemp(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -49,11 +49,9 @@ function Menutemp() {
                     },
                 }}
             >
-                {options.map((option) => (
-                    <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-                        {option}
-                    </MenuItem>
-                ))}
+                <MenuItem key={'delete'} onClick={() => props.handleDeleteBook(props.dealerId)}>
+                    Delete
+                </MenuItem>
             </Menu>
         </div>
     );

@@ -52,7 +52,19 @@ import{
     DELETE_BOOK_FAIL,
     DELETE_BOOK_RESET,
     DELETE_BOOK_RESET_ERROR,
-    DELETE_BOOK_REQUEST
+    DELETE_BOOK_REQUEST,
+
+    MOVE_TO_COMPLETE_REQUEST,
+    MOVE_TO_COMPLETE_SUCCESS,
+    MOVE_TO_COMPLETE_FAIL,
+    MOVE_TO_COMPLETE_RESET,
+    MOVE_TO_COMPLETE_ERROR,
+
+    DELETE_DEALER_REQUEST,
+    DELETE_DEALER_SUCCESS,
+    DELETE_DEALER_FAIL,
+    DELETE_DEALER_RESET,
+    DELETE_DEALER_RESET_ERROR
 
 } from '../../type/agentTypes/agentTypes'
 
@@ -76,6 +88,7 @@ INSURANCE_COMPANY_NAME_FAIL,
 DEALER_LIST_DROPDOWN_REQUEST,
 DEALER_LIST_DROPDOWN_SUCCESS,
 DEALER_LIST_DROPDOWN_FAIL,
+
 } from '../../type/agentTypes/dropDown'
 
 //Display dealer List
@@ -694,9 +707,12 @@ DEALER_LIST_DROPDOWN_FAIL,
       console.log('???', file)
       const { data } = await axios.post(
         `${BACKEND_BASE_URL}vehicleRegistrationrouter/uploadReceipt`,
+        file ?
         {
           files:file,
           appointmentDate:date,
+          vehicleRegistrationId:id,
+        }:{
           vehicleRegistrationId:id,
         },
         config
@@ -757,8 +773,113 @@ DEALER_LIST_DROPDOWN_FAIL,
     }
   };
 
+  export const resetDeleteBookError = () => async (dispatch)=>{
+    dispatch({
+      type: DELETE_BOOK_RESET_ERROR,
+    })
+  };
+
   export const resetDeleteBook = () => async (dispatch)=>{
     dispatch({
       type: DELETE_BOOK_RESET,
+    })
+  };
+
+  export const moveToComplete = (id) => async (
+    dispatch,
+    getState
+  ) => {
+    try {
+      dispatch({
+        type: MOVE_TO_COMPLETE_REQUEST,
+      });
+  
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/moveToComplete?vehicleRegistrationId=${id}`,
+        config
+      );
+  
+      dispatch({
+        type: MOVE_TO_COMPLETE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data
+          ? error.response.data
+          : error.message;
+      dispatch({
+        type: MOVE_TO_COMPLETE_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+  export const resetMoveToComplete = () => async (dispatch)=>{
+    dispatch({
+      type: MOVE_TO_COMPLETE_RESET,
+    })
+  };
+
+  export const resetMoveToCompleteError = () => async (dispatch)=>{
+    dispatch({
+      type: MOVE_TO_COMPLETE_ERROR,
+    })
+  };
+
+  export const deleteDealer = (id) => async (
+    dispatch,
+    getState
+  ) => {
+    try {
+      dispatch({
+        type:DELETE_DEALER_REQUEST,
+      });
+      console.log("book")
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.delete(
+        `${BACKEND_BASE_URL}dealerrouter/removeDealerDetails?dealerId=${id}`,
+        config
+      );
+  
+      dispatch({
+        type: DELETE_DEALER_SUCCESS,
+      });
+    } catch (error) {
+      console.log(error)
+      const message =
+        error.response && error.response.data
+          ? error.response.data
+          : error.message;
+      dispatch({
+        type: DELETE_DEALER_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+  export const resetDeleteDealer = () => async (dispatch)=>{
+    dispatch({
+      type: DELETE_DEALER_RESET,
+    })
+  };
+
+  export const resetDeleteDealerError = () => async (dispatch)=>{
+    dispatch({
+      type: DELETE_DEALER_RESET_ERROR,
     })
   };
