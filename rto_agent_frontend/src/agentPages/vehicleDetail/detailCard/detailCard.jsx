@@ -24,9 +24,24 @@ function DetailCard({ header, data }) {
                             <div className='title col-span-3 col-start-2'>
                                 {key}
                             </div>
-                            <div className='value col-span-6 col-start-6'>
-                                {data[key]}
-                            </div>
+                            {
+                                console.log('>>???>>????', key === 'TTO Form Link', key, data[key] ? true : false)
+                            }
+                            {
+                                key === 'pdfURL' && data[key] ?
+                                    <div className='value col-span-6 col-start-6'>
+                                        <a href={data[key]} target="_blank">
+                                            <button className='addAgent_button'>
+                                                Print TTO form
+                                            </button>
+                                        </a>
+                                    </div>
+                                    :
+                                    <div className='value col-span-6 col-start-6'>
+                                        {data[key]}
+                                    </div>
+                            }
+
                         </div>
                     ))
                         : null}
