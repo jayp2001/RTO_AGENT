@@ -83,7 +83,9 @@ function Nav({ scrollH }) {
                                     <NavLink className='activeNav' onClick={handleClick} to="/dashboard">
                                         Home
                                     </NavLink>
-
+                                    {/* <NavLink className='activeNav'>
+                                        Dealer List
+                                    </NavLink> */}
                                 </Breadcrumbs>
                             }
                             {
@@ -107,6 +109,18 @@ function Nav({ scrollH }) {
                                     </NavLink>
                                     <NavLink className='activeNav' onClick={handleClick} to="/addBook">
                                         Add Book
+                                    </NavLink>
+                                </Breadcrumbs>
+                            }
+                            {
+                                location.pathname.split('/').at(-1) === 'bookList'
+                                &&
+                                <Breadcrumbs aria-label="breadcrumb">
+                                    <NavLink to="/dashboard">
+                                        Home
+                                    </NavLink>
+                                    <NavLink className='activeNav' onClick={handleClick} to="/bookList">
+                                        Book List
                                     </NavLink>
                                 </Breadcrumbs>
                             }

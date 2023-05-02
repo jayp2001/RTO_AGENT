@@ -38,7 +38,7 @@ function NaveBar() {
                             RTO Agent
                             <hr className="hr"></hr>
                         </div>
-                        <div className="navLinkWrapper flex flex-col">
+                        <div className="navLinkWrapper gap-1 flex flex-col">
                             <NavLink to="/dashboard" activeClassName="active" className="navLink"><DashboardIcon style={{ marginTop: '-5px' }} />&nbsp;&nbsp;Dashboard</NavLink>
                             {role === 1 &&
                                 <>
