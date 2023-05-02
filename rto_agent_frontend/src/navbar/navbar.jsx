@@ -7,17 +7,17 @@ function NaveBar() {
     const decryptData = (text) => {
         const key = process.env.REACT_APP_AES_KEY;
         const bytes = CryptoJS.AES.decrypt(text, key);
-        const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        const data = bytes.toString(CryptoJS.enc.Utf8)?JSON.parse(bytes.toString(CryptoJS.enc.Utf8)):0;
         return (data);
     };
 
-    const user = JSON.parse(localStorage.getItem('userInfo'))
+    const user = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')):{}
     if (!user) {
         return null;
     }
-    const role = decryptData(user.isAdminrights)
+    const role = user && user.isAdminrights ? decryptData(user.isAdminrights) : 0;
     console.log('<L>', role)
-    if (location.pathname === "/login") {
+    if (location.pathname.toLowerCase() === "/login") {
         return null;
     }
 

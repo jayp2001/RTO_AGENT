@@ -52,7 +52,7 @@ function Nav({ scrollH }) {
     //     };
     // }, [handleNavigation]);
 
-    if (location.pathname === "/login") {
+    if (location.pathname.toLowerCase() === "/login") {
         return null;
     }
     console.log(location.pathname.split('/').at(-1))

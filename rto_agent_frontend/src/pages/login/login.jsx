@@ -9,7 +9,7 @@ import CryptoJS from 'crypto-js'
 const decryptData = (text) => {
     const key = process.env.REACT_APP_AES_KEY;
     const bytes = CryptoJS.AES.decrypt(text, key);
-    const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    const data = bytes.toString(CryptoJS.enc.Utf8) ? JSON.parse(bytes.toString(CryptoJS.enc.Utf8)):0;
     return (data);
 };
 

@@ -41,8 +41,8 @@ import {BACKEND_BASE_URL} from '../type/url'
       };
       const resData  = await axios.post(`${BACKEND_BASE_URL}agentrouter/authUser`
       ,
-      config,
-      data)
+      data,
+      config)
   
       dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
       // console.log("AES_data",resData.data.isAdminrights);

@@ -20,15 +20,23 @@ const ProtectedAgentRoutes = () => {
     // }
     // const role = decryptData(user.isAdminrights)
     // console.log("ROLE",role == '0')
-    const decoded = jwt_decode(user.token);
-    const expirationTime = (decoded.exp * 1000) - 60000
-    const auth = new Date(expirationTime) > new Date() ? true : false
-    // console.log('<<>>',new Date(expirationTime),decoded,new Date(expirationTime) > new Date() ? true : false)
-    return(
-        auth?
-        <Outlet />:
-        <Navigate to="/login" state={{ from: location }} replace />
-    )
+    try{
+        const decoded = jwt_decode(user.token);
+        const expirationTime = (decoded.exp * 1000) - 60000
+        const auth = new Date(expirationTime) > new Date() ? true : false
+        // console.log('<<>>',new Date(expirationTime),decoded,new Date(expirationTime) > new Date() ? true : false)
+        return(
+            auth?
+            <Outlet />:
+            <Navigate to="/login" state={{ from: location }} replace />
+        )
+    } 
+    catch(error){
+        return(
+            <Navigate to="/login" state={{ from: location }} replace />
+        )
+    }
+    
 
     // if(!user) {
     //     return <Navigate to="/" state={{ from: location}} replace />
