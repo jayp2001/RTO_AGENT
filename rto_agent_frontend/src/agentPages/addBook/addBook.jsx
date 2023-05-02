@@ -342,7 +342,7 @@ function AddBook() {
                                             disablePortal
                                             sx={{ width: '100%' }}
                                             id="vehicleClass"
-                                            // value={formData.insuranceCompanyNameId}
+                                            value={vehicleClassList ? vehicleClassList.find(obj => obj.vehicleClassId === formData.vehicleClass) : null}
                                             onChange={handleVehicleClassChange}
                                             options={vehicleClassList ? vehicleClassList : []}
                                             getOptionLabel={(options) => options.vehicleClassName}
@@ -369,7 +369,7 @@ function AddBook() {
                                     <Autocomplete
                                         disablePortal
                                         id="vehicleCategoriesList"
-                                        // value={formData.insuranceCompanyNameId}
+                                        value={vehicleCategoriesList ? vehicleCategoriesList.find(obj => obj.vehicleCategoryId === formData.vehicleCategory) : null}
                                         onChange={handleVehicleCategoryChange}
                                         options={vehicleCategoriesList ? vehicleCategoriesList : []}
                                         sx={{ width: '100%' }}
@@ -502,7 +502,7 @@ function AddBook() {
                                         <Autocomplete
                                             disablePortal
                                             id="dealerDropdownList"
-                                            // value={formData.insuranceCompanyNameId}
+                                            value={dealerDropdownList ? dealerDropdownList.find(obj => obj.dealerId === formData.dealerId) : null}
                                             onChange={handleDealerChange}
                                             options={dealerDropdownList ? dealerDropdownList : []}
                                             sx={{ width: '100%' }}
@@ -810,7 +810,7 @@ function AddBook() {
                                         <Autocomplete
                                             disablePortal
                                             id="insuranceCompanyList"
-                                            // value={formData.insuranceCompanyNameId}
+                                            value={insuranceCompanyList ? insuranceCompanyList.find(obj => obj.insuranceId === formData.insuranceCompanyNameId) : null}
                                             onChange={handleInsuranceChange}
                                             options={insuranceCompanyList ? insuranceCompanyList : []}
                                             sx={{ width: '100%' }}
