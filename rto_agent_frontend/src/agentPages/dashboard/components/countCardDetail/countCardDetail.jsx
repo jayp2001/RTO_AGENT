@@ -1,14 +1,13 @@
-import './countCard.css'
+import './countCardDetail.css'
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import EventIcon from '@mui/icons-material/Event';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
-
-function CountCardDashboard({ color, data, description, icon }) {
+function CountCard({ color, data, description, icon }) {
     return (
-        <div className='card'>
+        <div className='cardDealer'>
             <div className={`card_header_box flex justify-center ${color}`}>
                 <div className='grid content-center'>
                     {
@@ -22,6 +21,12 @@ function CountCardDashboard({ color, data, description, icon }) {
                     }
                     {
                         icon === 'complete' && <AssignmentTurnedInIcon />
+                    }
+                    {
+                        icon === 'lastMonth' && <EventRepeatIcon />
+                    }
+                    {
+                        icon === 'lastUpdated' && <EditCalendarIcon />
                     }
 
                 </div>
@@ -37,4 +42,4 @@ function CountCardDashboard({ color, data, description, icon }) {
     )
 }
 
-export default CountCardDashboard;
+export default CountCard;
