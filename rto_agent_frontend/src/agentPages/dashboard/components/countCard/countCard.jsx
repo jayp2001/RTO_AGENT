@@ -3,8 +3,6 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import EventIcon from '@mui/icons-material/Event';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import EventRepeatIcon from '@mui/icons-material/EventRepeat';
-import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 
 function CountCardDashboard({ color, data, description, icon }) {
     return (

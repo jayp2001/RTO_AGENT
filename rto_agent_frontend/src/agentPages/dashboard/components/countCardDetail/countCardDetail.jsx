@@ -4,7 +4,7 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import EventIcon from '@mui/icons-material/Event';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import EventRepeatIcon from '@mui/icons-material/EventRepeat';
-import EditCalendarIcon from '@mui/icons-material/EditCalendar';
+// import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 function CountCard({ color, data, description, icon }) {
     return (
         <div className='cardDealer'>
@@ -26,7 +26,7 @@ function CountCard({ color, data, description, icon }) {
                         icon === 'lastMonth' && <EventRepeatIcon />
                     }
                     {
-                        icon === 'lastUpdated' && <EditCalendarIcon />
+                        icon === 'lastUpdated' && <EventRepeatIcon />
                     }
 
                 </div>
