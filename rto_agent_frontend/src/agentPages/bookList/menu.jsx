@@ -52,22 +52,27 @@ function Menutemp(props) {
                     },
                 }}
             >
-                <MenuItem key={'nextStep'}
-                    onClick={() => {
-                        handleClose();
-                        props.vehicleWorkStatus === 'PENDING' ?
-                            props.handleOpen(props.bookId, props.vehicleNum) :
-                            props.handleNextStep(props.bookId)
-                    }}>
-                    Move to next step
-                </MenuItem>
-                <MenuItem key={'markComplete'}
-                    onClick={() => {
-                        handleClose();
-                        props.markAsComplete(props.bookId)
-                    }}>
-                    Mark as complete
-                </MenuItem>
+                {props.vehicleWorkStatus === 'COMPLETE' ?
+                    null : <>
+                        <MenuItem key={'nextStep'}
+                            onClick={() => {
+                                handleClose();
+                                props.vehicleWorkStatus === 'PENDING' ?
+                                    props.handleOpen(props.bookId, props.vehicleNum) :
+                                    props.handleNextStep(props.bookId)
+                            }}>
+                            Move to next step
+                        </MenuItem>
+                        <MenuItem key={'markComplete'}
+                            onClick={() => {
+                                handleClose();
+                                props.markAsComplete(props.bookId)
+                            }}>
+                            Mark as complete
+                        </MenuItem>
+                    </>
+                }
+
                 <MenuItem key={'delete'}
                     onClick={() => {
                         handleClose();
@@ -83,7 +88,7 @@ function Menutemp(props) {
                     Edit
                 </MenuItem>
             </Menu>
-        </div>
+        </div >
     );
 }
 

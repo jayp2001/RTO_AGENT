@@ -598,7 +598,7 @@ DEALER_LIST_DROPDOWN_FAIL,
         },
       };
       const {data} = await axios.get(
-        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getListOfVehicleRegistrationDetails?page=${page}&numPerPage=${numPerPage}&startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&searchWord=${searchWord ? searchWord : ''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus != 10 || !workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&workCategory=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
+        `${BACKEND_BASE_URL}vehicleRegistrationrouter/getListOfVehicleRegistrationDetails?page=${page}&numPerPage=${numPerPage}&startDate=${filter && filter.startDate?filter.startDate:''}&appointmentDate=${filter && filter.appointmentDate?filter.appointmentDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&searchWord=${searchWord ? searchWord : ''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus != 10 || !workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&workCategory=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
         config
       );
       console.log('>>>',data)
@@ -637,7 +637,7 @@ DEALER_LIST_DROPDOWN_FAIL,
       };
 
       axios({
-        url: `${BACKEND_BASE_URL}vehicleRegistrationrouter/exportExcelSheetForVehicleDetails?startDate=${filter && filter.startDate?filter.startDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus != 10 || !workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&workCategory=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
+        url: `${BACKEND_BASE_URL}vehicleRegistrationrouter/exportExcelSheetForVehicleDetails?startDate=${filter && filter.startDate?filter.startDate:''}&appointmentDate=${filter && filter.appointmentDate?filter.appointmentDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus != 10 || !workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&workCategory=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
         method: 'GET',
         headers: {Authorization: `Bearer ${userInfo.token}`},
         responseType: 'blob', // important
@@ -646,8 +646,9 @@ DEALER_LIST_DROPDOWN_FAIL,
         const href = URL.createObjectURL(response.data);
         // create "a" HTML element with href to file & click
         const link = document.createElement('a');
+        const name = 'bookList'+new Date().toLocaleDateString()+'.xlsx'
         link.href = href;
-        link.setAttribute('download', 'file.xlsx'); //or any other extension
+        link.setAttribute('download', name); //or any other extension
         document.body.appendChild(link);
         link.click();
     
@@ -698,7 +699,7 @@ DEALER_LIST_DROPDOWN_FAIL,
   };
 
 
-  export const recieptUpload = (file,date,id) => async (
+  export const recieptUpload = (file,date,id,sendReceipt) => async (
     dispatch,
     getState
   ) => {
@@ -724,6 +725,7 @@ DEALER_LIST_DROPDOWN_FAIL,
           files:file,
           appointmentDate:date,
           vehicleRegistrationId:id,
+          sendReceipt:sendReceipt
         }:{
           vehicleRegistrationId:id,
         },

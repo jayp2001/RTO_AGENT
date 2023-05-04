@@ -8,6 +8,7 @@ function TtoBookList() {
     const data = useSelector((state) => state.ttoBookList.state);
     const [filter, setFilter] = React.useState({
         searchOption: 20,
+        appointmentDate: null,
         startDate: null,
         endDate: null,
         dealerId: null,
@@ -36,7 +37,9 @@ function TtoBookList() {
 
     const handleExport = () => {
         // console.log(">>>>LLL")
-        dispatch(exportExcel(filter, stateOfBook));
+        if (window.confirm('are you sure you want to export excel file ?'))
+            dispatch(exportExcel(filter, stateOfBook));
+
     }
 
     const applyFilter = () => {
@@ -46,6 +49,7 @@ function TtoBookList() {
     const resetFilter = () => {
         setFilter({
             searchOption: 20,
+            appointmentDate: null,
             startDate: null,
             endDate: null,
             dealerId: null,

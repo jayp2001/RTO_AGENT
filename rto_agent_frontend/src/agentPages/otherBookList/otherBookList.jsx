@@ -10,6 +10,7 @@ function OtherBookList() {
     const dispatch = useDispatch();
     const [filter, setFilter] = React.useState({
         searchOption: 20,
+        appointmentDate: null,
         startDate: null,
         endDate: null,
         dealerId: null,
@@ -37,8 +38,8 @@ function OtherBookList() {
     };
 
     const handleExport = () => {
-        // console.log(">>>>LLL")
-        dispatch(exportExcel(filter, stateOfBook));
+        if (window.confirm('are you sure you want to export excel file ?'))
+            dispatch(exportExcel(filter, stateOfBook));
     }
 
     const applyFilter = () => {
@@ -47,6 +48,7 @@ function OtherBookList() {
     const resetFilter = () => {
         setFilter({
             searchOption: 20,
+            appointmentDate: null,
             startDate: null,
             endDate: null,
             dealerId: null,

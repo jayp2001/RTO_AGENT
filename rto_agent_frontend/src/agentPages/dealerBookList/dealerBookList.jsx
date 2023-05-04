@@ -39,8 +39,8 @@ function DealerBookList(props) {
     };
 
     const handleExport = () => {
-        // console.log(">>>>LLL")
-        dispatch(exportExcel(filter, stateOfBook));
+        if (window.confirm('are you sure you want to export excel file ?'))
+            dispatch(exportExcel(filter, stateOfBook));
     }
 
     const applyFilter = () => {
