@@ -391,7 +391,7 @@ function EditBook() {
                                 <div className="col-span-4">
                                     <FormControlLabel control={<Checkbox checked={formData.HPT} name='HPT' onClick={handleCheckbox} />} label="Termination of Hypothecation" />
                                 </div>
-                                <div className="col-span-2">
+                                <div className="col-span-4">
                                     <FormControlLabel control={<Checkbox checked={formData.DRC} name='DRC' onClick={handleCheckbox} />} label="Duplicate RC" />
                                 </div>
                             </div>

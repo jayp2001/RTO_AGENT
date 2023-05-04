@@ -26,7 +26,7 @@ import TuneIcon from '@mui/icons-material/Tune';
 import Lottie from "lottie-react";
 import loader from '../../animation/loader.json'
 import successAnimation from '../../animation/success.json'
-
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import Box from '@mui/material/Box';
 
 import Popper from '@mui/material/Popper';
@@ -40,6 +40,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import { ToastContainer, toast } from 'react-toastify';
+import { Checkbox } from '@mui/material';
 
 function BookList(props) {
     const location = useLocation();
@@ -47,6 +48,7 @@ function BookList(props) {
         right: false,
     });
     const [searchWord, setSearchWord] = React.useState('');
+    const [sendReceipt, setSendReceipt] = React.useState(true);
     const [appointmentDate, setAppointmentDate] = React.useState(null)
     const dealerDropdownList = useSelector((state) => state.dealerDropdown.state);
     const { loading, success, error } = useSelector((state) => state.recieptUpload);
@@ -98,6 +100,9 @@ function BookList(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
+        if (props.filter.searchOption === 'lastUpdated') {
+            props.setStateOfBook(null)
+        }
         setAnchorEl(anchorEl ? null : event.currentTarget);
     };
 
@@ -125,8 +130,14 @@ function BookList(props) {
         }));
     };
     const handleSearchChange = (e) => {
+        if (e.target.value.length) {
+            console.log("PPPPP")
+            props.setStateOfBook(null)
+        } else {
+            props.setStateOfBook(10)
+        }
+        // setStateOfBook
         setSearchWord(e.target.value)
-        console.log(':::???>>>>', searchWord)
     };
     const handleSearch = () => {
         console.log(':::???:::', document.getElementById('standard-adornment-password').value)
@@ -138,6 +149,12 @@ function BookList(props) {
         props.setFilter((prevState) => ({
             ...prevState,
             ["startDate"]: date && date['$d'] ? date['$d'] : null,
+        }))
+    };
+    const handleAppointmentDateFilter = (date) => {
+        props.setFilter((prevState) => ({
+            ...prevState,
+            ["appointmentDate"]: date && date['$d'] ? date['$d'] : null,
         }))
     };
 
@@ -159,7 +176,7 @@ function BookList(props) {
     }
 
     const handleSave = () => {
-        props.moveToNextStep(file, appointmentDate, bookId)
+        props.moveToNextStep(file, appointmentDate, bookId, sendReceipt)
     }
     const deleteBook = (id) => {
         if (window.confirm('Are you sure want to delete ?'))
@@ -314,13 +331,14 @@ function BookList(props) {
                                         <div className='grid grid-cols-12 gap-6'>
                                             <div className='col-span-4'>
                                                 <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label">Search Options</InputLabel>
+                                                    <InputLabel id="demo-simple-select-label" disabled={props.stateOfBook == 2}>Search Options</InputLabel>
                                                     <Select
                                                         labelId="Search"
                                                         id="Search"
                                                         name='searchOption'
                                                         value={props.filter.searchOption}
                                                         label="Search Options"
+                                                        disabled={props.stateOfBook == 2}
                                                         onChange={handleChange}
                                                         MenuProps={{
                                                             style: { zIndex: 35001 }
@@ -339,7 +357,7 @@ function BookList(props) {
                                                         InputLabelProps={{ style: { fontSize: 16 } }}
                                                         label="Start Date"
                                                         inputFormat="DD/MM/YYYY"
-                                                        disabled={props.filter.searchOption === 'lastUpdated'}
+                                                        disabled={props.filter.searchOption === 'lastUpdated' || props.stateOfBook == 2}
                                                         value={props.filter.startDate}
                                                         onChange={handleStartDate}
                                                         name="startDate"
@@ -357,7 +375,7 @@ function BookList(props) {
                                                         InputProps={{ style: { fontSize: 16, width: '100%' } }}
                                                         InputLabelProps={{ style: { fontSize: 16 } }}
                                                         label="End Date"
-                                                        disabled={props.filter.searchOption === 'lastUpdated'}
+                                                        disabled={props.filter.searchOption === 'lastUpdated' || props.stateOfBook == 2}
                                                         inputFormat="DD/MM/YYYY"
                                                         value={props.filter.endDate}
                                                         onChange={handleEndDate}
@@ -373,12 +391,13 @@ function BookList(props) {
                                         <div className='grid grid-cols-12 gap-6'>
                                             <div className='col-span-4'>
                                                 <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label">Dealer</InputLabel>
+                                                    <InputLabel id="demo-simple-select-label" disabled={props.stateOfBook == 2}>Dealer</InputLabel>
                                                     <Select
                                                         labelId="DealerId"
                                                         id="DealerId"
                                                         name='dealerId'
                                                         value={props.filter.dealerId}
+                                                        disabled={props.stateOfBook == 2}
                                                         label="Dealer"
                                                         onChange={handleChange}
                                                         MenuProps={{
@@ -398,12 +417,12 @@ function BookList(props) {
                                             </div>
                                             <div className='col-span-4'>
                                                 <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label" disabled={props.filter.searchOption === 'lastUpdated'}>Work Filter</InputLabel>
+                                                    <InputLabel id="demo-simple-select-label" disabled={props.filter.searchOption === 'lastUpdated' || props.stateOfBook == 2}>Work Filter</InputLabel>
                                                     <Select
                                                         labelId="workFilter"
                                                         id="workFilter"
                                                         name='type'
-                                                        disabled={props.filter.searchOption === 'lastUpdated'}
+                                                        disabled={props.filter.searchOption === 'lastUpdated' || props.stateOfBook == 2}
                                                         value={props.filter.type}
                                                         label="Work Filter"
                                                         onChange={handleChange}
@@ -417,6 +436,25 @@ function BookList(props) {
                                                         <MenuItem value={3}>OTHER</MenuItem>
                                                     </Select>
                                                 </FormControl>
+                                            </div>
+                                            <div className='col-span-4'>
+                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                    <DesktopDatePicker
+                                                        textFieldStyle={{ width: '100%' }}
+                                                        InputProps={{ style: { fontSize: 16, width: '100%' } }}
+                                                        InputLabelProps={{ style: { fontSize: 16 } }}
+                                                        label="Appointment Date"
+                                                        inputFormat="DD/MM/YYYY"
+                                                        disabled={props.stateOfBook !== 2}
+                                                        value={props.filter.appointmentDate}
+                                                        onChange={handleAppointmentDateFilter}
+                                                        name="appointmentDate"
+                                                        PopperProps={{
+                                                            style: { zIndex: 35001 }
+                                                        }}
+                                                        renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}
+                                                    />
+                                                </LocalizationProvider>
                                             </div>
                                         </div>
                                         <div className='grid grid-cols-12 gap-6'>
@@ -449,23 +487,33 @@ function BookList(props) {
                     <div className='col-span-10 flex tabWrapper'>
                         {
                             (location.pathname === "/bookList" || location.pathname.split('/').at(-2) === 'dealer') && <div className={`${props.stateOfBook == 10 ? 'allTabActive' : 'allTab'}`}>
-                                <button className={`${props.stateOfBook == 10 ? 'allTabTextActive ' : 'tabText'}`} onClick={() => { props.setStateOfBook(10); props.setPage(0) }}>
+                                <button className={`${props.stateOfBook == 10 ? 'allTabTextActive ' : 'tabText'}`} onClick={() => { props.setStateOfBook(10); props.resetFilter(); setSearchWord(''); props.setPage(0) }}>
                                     ALL
                                 </button>
                             </div>
                         }
                         <div className={`${props.stateOfBook == 0 ? 'tabActive pink' : 'tab'}`}>
-                            <button className={`${props.stateOfBook == 0 ? 'tabTextActive ' : 'tabText'}`} onClick={() => { props.setStateOfBook(0); props.setPage(0) }}>
+                            <button className={`${props.stateOfBook == 0 ? 'tabTextActive ' : 'tabText'}`} onClick={() => {
+                                props.setFilter((prevState) => ({
+                                    ...prevState,
+                                    ["appointmentDate"]: null,
+                                })); props.setStateOfBook(0); props.setPage(0); setSearchWord('');
+                            }}>
                                 Pendding
                             </button>
                         </div>
                         <div className={`${props.stateOfBook == 2 ? 'tabActive yellow' : 'tab'}`}>
-                            <button className={`${props.stateOfBook == 2 ? 'tabTextActive' : 'tabText'}`} onClick={() => { props.setStateOfBook(2); props.setPage(0) }}>
+                            <button className={`${props.stateOfBook == 2 ? 'tabTextActive' : 'tabText'}`} onClick={() => { props.setStateOfBook(2); props.setPage(0); setSearchWord(''); }}>
                                 Appointment
                             </button>
                         </div>
                         <div className={`${props.stateOfBook == 3 ? 'tabActive green' : 'tab'}`}>
-                            <button className={`${props.stateOfBook == 3 ? 'tabTextActive' : 'tabText'}`} onClick={() => { props.setStateOfBook(3); props.setPage(0) }}>
+                            <button className={`${props.stateOfBook == 3 ? 'tabTextActive' : 'tabText'}`} onClick={() => {
+                                props.setFilter((prevState) => ({
+                                    ...prevState,
+                                    ["appointmentDate"]: null,
+                                })); props.setStateOfBook(3); props.setPage(0); setSearchWord('');
+                            }}>
                                 Complete
                             </button>
                         </div>
@@ -615,6 +663,16 @@ function BookList(props) {
                                             renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}
                                         />
                                     </LocalizationProvider>
+                                </div>
+                                <div className='col-start-6 col-span-2 flex justify-end'>
+                                    <Checkbox checked={sendReceipt} onClick={() => setSendReceipt(!sendReceipt)} />
+                                </div>
+                                <div className='col-start-8 col-span-6'>
+                                    <div className='flex'>
+                                        <div className='grid content-center'><WhatsAppIcon fontSize='large' style={{ color: "green" }} /></div>&nbsp;&nbsp;
+                                        <div>Send Receipt on Whatsapp !</div>
+                                    </div>
+
                                 </div>
                             </div>
                             <div className='grid grid-cols-12 gap-4 mt-6'>

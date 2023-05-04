@@ -46,10 +46,13 @@ function DealerList() {
     }
 
     const handleDeleteBook = (id) => {
-        dispatch(deleteDealer(id))
-        setTimeout(() => {
-            dispatch(dealerList(page + 1, rowsPerPage))
-        }, 1000)
+        if (window.confirm('are you sure you want to export excel file ?')) {
+            dispatch(deleteDealer(id))
+            setTimeout(() => {
+                dispatch(dealerList(page + 1, rowsPerPage))
+            }, 1000)
+        }
+
     }
 
     if (deleteDealerRes && deleteDealerRes.loading ? true : false) {

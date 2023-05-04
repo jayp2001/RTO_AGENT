@@ -16,6 +16,7 @@ function AllBookList() {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const totalRows = useSelector((state) => state.allBookList.totalRows);
     const [filter, setFilter] = React.useState({
+        appointmentDate: null,
         searchOption: 20,
         startDate: null,
         endDate: null,
@@ -33,26 +34,22 @@ function AllBookList() {
     };
 
     const handleChangeRowsPerPage = (event) => {
-        console.log('>>><<,', page, rowsPerPage);
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
-        console.log('>>>????', page, parseInt(event.target.value, 10));
         dispatch(allBookList(0 + 1, parseInt(event.target.value, 10), filter, stateOfBook))
     };
 
     const handleExport = () => {
-        // console.log(">>>>LLL")
-        dispatch(exportExcel(filter, stateOfBook));
+        if (window.confirm('are you sure you want to export excel file ?'))
+            dispatch(exportExcel(filter, stateOfBook));
     }
 
     const applyFilter = () => {
         dispatch(allBookList(page + 1, rowsPerPage, filter, stateOfBook))
     }
 
-    console.log('>>>L>', error, success, loading)
 
     if (loading) {
-        console.log('>>><<', loading)
         toast.loading("Please wait...", {
             toastId: 'll'
         })
@@ -99,6 +96,7 @@ function AllBookList() {
     }
     const resetFilter = () => {
         setFilter({
+            appointmentDate: null,
             searchOption: 20,
             startDate: null,
             endDate: null,
@@ -106,10 +104,8 @@ function AllBookList() {
             type: null
         })
     }
-    console.log('>>>', totalRows)
-
-    const moveToNextStep = (file, appointmentDate, bookId) => {
-        dispatch(recieptUpload(file, appointmentDate, bookId))
+    const moveToNextStep = (file, appointmentDate, bookId, sendReceipt) => {
+        dispatch(recieptUpload(file, appointmentDate, bookId, sendReceipt))
         setTimeout(() => {
             dispatch(allBookList(1, rowsPerPage, filter, stateOfBook))
         }, 3000)
@@ -139,7 +135,6 @@ function AllBookList() {
     const search = (searchWord) => {
         dispatch(allBookList(1, rowsPerPage, filter, stateOfBook, searchWord))
     }
-
     return (
         <>
             <div className="ttoListContainer">
