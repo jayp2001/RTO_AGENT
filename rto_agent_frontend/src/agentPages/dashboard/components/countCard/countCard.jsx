@@ -3,6 +3,7 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import EventIcon from '@mui/icons-material/Event';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import CountUp from 'react-countup';
 
 function CountCardDashboard({ color, data, description, icon }) {
     return (
@@ -25,7 +26,8 @@ function CountCardDashboard({ color, data, description, icon }) {
                 </div>
             </div>
             <div className='count'>
-                {data ? data : 0}
+            <CountUp start={0} end={data ? data : 0} duration={3} />
+                {/* {data ? data : 0} */}
             </div>
             <hr className='hrCount'></hr>
             <div className='countDescription'>

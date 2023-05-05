@@ -10,6 +10,8 @@ import PrintIcon from '@mui/icons-material/Print';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from 'axios';
+import { BACKEND_BASE_URL } from '../../type/url';
 
 function VehicleDetail() {
     let { id } = useParams();
@@ -32,6 +34,22 @@ function VehicleDetail() {
         }
     }
 
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+        const WhatsAppSend = async (Id) => {
+            if(window.confirm('Are you sure want to send ?')){
+                const config = {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${userInfo.token}`,
+                    },
+                };
+                const { data } = await axios.get(
+                    `${BACKEND_BASE_URL}whatsApprouter/sendReceiptOnWapp?vehicleRegistrationId=${Id}`,
+                    config
+                );
+            }
+        };
+
     if (!data) {
         return null
     }
@@ -41,7 +59,7 @@ function VehicleDetail() {
             <div className='col-span-9 grid gap-14'>
                 {data ? keys.map((key) => (
                     <>
-                    { key !== 'TTO Form Link'?
+                    { key !== 'TTO Form Link' && key !== 'Receipt Id'?
                         <DetailCard header={key} data={data[key]} />:null
                     }
                     </>
@@ -63,11 +81,16 @@ function VehicleDetail() {
                                     :
                                     null
                             }
-                            {/* <button className='btnPrintTTO'><PrintIcon />&nbsp;Print TTO</button> */}
-                        
-                        <div className='btnGreen printdiv justify-self-center'>
-                            <button className='btnSendMsg'><WhatsAppIcon />&nbsp;Send Whatsapp</button>
-                        </div>
+                            {
+                                (keys.includes("Receipt Id")) === true ?
+
+                                        <div className='btnGreen printdiv justify-self-center'>
+                                            <button className='btnSendMsg' onClick={()=>WhatsAppSend(id)}><WhatsAppIcon />&nbsp;Send Whatsapp</button>
+                                        </div>
+                                    
+                                    :
+                                    null
+                            }
                         <div className='btnBlue printdiv justify-self-center'>
                             <button className='btnEdit' onClick={() => handleEditClick(id)}><EditIcon />&nbsp;Edit</button>
                         </div>

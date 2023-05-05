@@ -27,7 +27,7 @@ function Dashboard() {
     if (!count) {
         return null;
     }
-    console.log(count)
+    console.log(">>>>>>>>>>>>",count)
     return (
         <div className='dashboardWrapper'>
             <div className='card_wrapper flex justify-between'>
