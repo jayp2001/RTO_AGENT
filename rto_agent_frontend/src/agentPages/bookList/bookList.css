@@ -142,6 +142,20 @@ text-align: center;
     padding-left: 10px;
     padding-right: 10px;
 }
+.exportBtnWrpDisable{
+    height: 100%;
+    text-align: center;
+    min-width: 22%;
+    border-radius: 0.75rem;
+    cursor: not-allowed;
+    background:linear-gradient(195deg, rgb(235, 239, 244), rgb(206, 212, 218));
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
 .css-78trlr-MuiButtonBase-root-MuiIconButton-root{
     padding: none !important;

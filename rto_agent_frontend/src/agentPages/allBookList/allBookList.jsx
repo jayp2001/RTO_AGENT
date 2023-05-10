@@ -15,6 +15,7 @@ function AllBookList() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const totalRows = useSelector((state) => state.allBookList.totalRows);
+    console.log('numrows', totalRows)
     const [filter, setFilter] = React.useState({
         appointmentDate: null,
         searchOption: 20,

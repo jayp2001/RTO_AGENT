@@ -53,7 +53,7 @@ function Menutemp(props) {
                 }}
             >
                 {props.vehicleWorkStatus === 'COMPLETE' ?
-                    null : <>
+                    null : <div>
                         <MenuItem key={'nextStep'}
                             onClick={() => {
                                 handleClose();
@@ -70,7 +70,7 @@ function Menutemp(props) {
                             }}>
                             Mark as complete
                         </MenuItem>
-                    </>
+                    </div>
                 }
 
                 <MenuItem key={'delete'}
