@@ -273,9 +273,9 @@ DEALER_LIST_DROPDOWN_FAIL,
       });
   
       const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-      bookData.vehicleRegistrationDate = bookData.vehicleRegistrationDate.toString().slice(4,15);
-      bookData.insuranceStartDate = bookData.insuranceStartDate.toString().slice(4,15);
-      bookData.insuranceEndDate = bookData.insuranceEndDate.toString().slice(4,15);
+      bookData.vehicleRegistrationDate = bookData.vehicleRegistrationDate ? bookData.vehicleRegistrationDate.toString().slice(4,15) : '';
+      bookData.insuranceStartDate = bookData.insuranceStartDate ? bookData.insuranceStartDate.toString().slice(4,15):'';
+      bookData.insuranceEndDate = bookData.insuranceEndDate ? bookData.insuranceEndDate.toString().slice(4,15):'';
       const config = {
         headers: {
           "Content-Type": "application/json",
