@@ -56,6 +56,7 @@ function BookList(props) {
     const moveToComplete = useSelector((state) => state.moveToComplete);
     const [bookId, setBookId] = React.useState('');
     const [vehicleNo, setVehicleNo] = React.useState('')
+    const today = new Date();
     const style = {
         position: 'absolute',
         top: '50%',
@@ -149,6 +150,10 @@ function BookList(props) {
         props.setFilter((prevState) => ({
             ...prevState,
             ["startDate"]: date && date['$d'] ? date['$d'] : null,
+        }))
+        props.setFilter((prevState) => ({
+            ...prevState,
+            ["endDate"]: date && date['$d'] ? date['$d'] : null,
         }))
     };
     const handleAppointmentDateFilter = (date) => {
@@ -378,6 +383,7 @@ function BookList(props) {
                                                         disabled={props.filter.searchOption === 'lastUpdated' || props.stateOfBook == 2}
                                                         inputFormat="DD/MM/YYYY"
                                                         value={props.filter.endDate}
+                                                        minDate={props.filter.startDate}
                                                         onChange={handleEndDate}
                                                         name="endDate"
                                                         PopperProps={{
@@ -653,6 +659,7 @@ function BookList(props) {
                                             InputLabelProps={{ style: { fontSize: 14 } }}
                                             label="Appointment Date"
                                             required
+                                            minDate={today}
                                             inputFormat="DD/MM/YYYY"
                                             value={appointmentDate}
                                             onChange={handleAppointmentDate}

@@ -49,3 +49,6 @@
 .btnRed{
     background: linear-gradient(60deg, #ef5350, #e53935);
 }
+.btnPink{
+    background:linear-gradient(195deg, rgb(236, 64, 122), rgb(216, 27, 96));
+}

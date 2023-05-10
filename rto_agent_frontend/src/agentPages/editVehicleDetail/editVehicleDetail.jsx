@@ -169,6 +169,18 @@ function EditBook() {
             ...prevState,
             ["insuranceStartDate"]: date && date['$d'] ? date['$d'] : null,
         }))
+
+        var d = new Date(date && date['$d'] ? date['$d'] : null);
+        (d.setDate(d.getDate() - 1));
+        console.log(">>>",d.toString());
+        var a = new Date(d)
+        a.setFullYear(a.getFullYear() + 1);
+        console.log("???",a.toString());
+        const s = a.toString();
+        setFormData((prevState) => ({
+            ...prevState,
+            ["insuranceEndDate"]: s && date && date['$d']? s : null,
+        }))
     };
     const handleInsuranceEndDate = (date) => {
         setFormData((prevState) => ({
@@ -1264,7 +1276,6 @@ function EditBook() {
                                             InputProps={{ style: { fontSize: 14, width: '100%' } }}
                                             InputLabelProps={{ style: { fontSize: 14 } }}
                                             label="Insurance Start Date"
-                                            required
                                             inputFormat="DD/MM/YYYY"
                                             value={formData.insuranceStartDate}
                                             onChange={handleInsuranceStartDate}
@@ -1280,9 +1291,9 @@ function EditBook() {
                                             InputProps={{ style: { fontSize: 14, width: '100%' } }}
                                             InputLabelProps={{ style: { fontSize: 14 } }}
                                             label="Insurance End Date"
-                                            required
                                             inputFormat="DD/MM/YYYY"
                                             value={formData.insuranceEndDate}
+                                            minDate={formData.insuranceStartDate}
                                             onChange={handleInsuranceEndDate}
                                             name="insuranceEndDate"
                                             renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}

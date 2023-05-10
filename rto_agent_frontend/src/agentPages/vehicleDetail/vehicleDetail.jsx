@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteBook } from '../../action/agentAction/agentAction';
 import PrintIcon from '@mui/icons-material/Print';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
@@ -68,7 +69,7 @@ function VehicleDetail() {
             </div>
             <div className='sidebarContainer col-span-3'>
                 <div className='sideBarbtn'>
-                    <div className="grid grid-rows-4  grid-flow-col gap-3">
+                    <div className="grid grid-rows-5  grid-flow-col gap-3">
                         {
                                 (keys.includes("TTO Form Link")) === true ?
                                 <div className='btnYellow printdiv justify-self-center'>
@@ -83,6 +84,18 @@ function VehicleDetail() {
                             }
                             {
                                 (keys.includes("Receipt Id")) === true ?
+                                <div className='btnPink printdiv justify-self-center'>
+                                    <a href={data['Receipt Id']['receiptURL']} target="_blank">
+                                        <button className='btnPrintTTO'>
+                                        <RemoveRedEyeOutlinedIcon />&nbsp;View Receipt
+                                        </button>
+                                    </a>
+                                </div>
+                                    :
+                                    null
+                            }
+                            {
+                                (keys.includes("Receipt Id")) === true ?
 
                                         <div className='btnGreen printdiv justify-self-center'>
                                             <button className='btnSendMsg' onClick={()=>WhatsAppSend(id)}><WhatsAppIcon />&nbsp;Send Whatsapp</button>
@@ -90,7 +103,7 @@ function VehicleDetail() {
                                     
                                     :
                                     null
-                            }
+                            }   
                         <div className='btnBlue printdiv justify-self-center'>
                             <button className='btnEdit' onClick={() => handleEditClick(id)}><EditIcon />&nbsp;Edit</button>
                         </div>
