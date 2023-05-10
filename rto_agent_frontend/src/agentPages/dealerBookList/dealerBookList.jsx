@@ -56,6 +56,9 @@ function DealerBookList(props) {
             type: null
         })
     }
+    const search = (searchWord) => {
+        dispatch(dealerBookList(page + 1, rowsPerPage, filter, stateOfBook, props.dealerId, searchWord))
+    }
     return (
         <BookList
             data={data}
@@ -71,6 +74,7 @@ function DealerBookList(props) {
             setFilter={setFilter}
             applyFilter={applyFilter}
             resetFilter={resetFilter}
+            search={search}
         />
     )
 }

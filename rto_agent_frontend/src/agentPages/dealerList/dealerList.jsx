@@ -132,7 +132,7 @@ function DealerList() {
                                         style={{ cursor: "pointer" }}
                                         className='tableRow'
                                     >
-                                        <TableCell align="left" onClick={() => handleClickTable(row.dealerId)}>{index + 1}</TableCell>
+                                        <TableCell align="left" onClick={() => handleClickTable(row.dealerId)}>{(index + 1) + (page * rowsPerPage)}</TableCell>
                                         <TableCell component="th" scope="row" onClick={() => handleClickTable(row.dealerId)}>
                                             {row.dealerFirmName}
                                         </TableCell>

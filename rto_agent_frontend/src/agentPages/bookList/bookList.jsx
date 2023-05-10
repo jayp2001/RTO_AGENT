@@ -131,13 +131,16 @@ function BookList(props) {
         }));
     };
     const handleSearchChange = (e) => {
-        if (e.target.value.length) {
-            console.log("PPPPP")
-            props.setStateOfBook(null)
+        if (e.target.value.length > 0) {
+            console.log("PPPPP", e.target.value.length, props.stateOfBook)
+            props.setStateOfBook(100)
+            console.log('state', props.stateOfBook)
         } else {
             props.setStateOfBook(10)
         }
         // setStateOfBook
+        if (e.target.value.length > 0)
+            props.resetFilter();
         setSearchWord(e.target.value)
     };
     const handleSearch = () => {
@@ -403,7 +406,7 @@ function BookList(props) {
                                                         id="DealerId"
                                                         name='dealerId'
                                                         value={props.filter.dealerId}
-                                                        disabled={props.stateOfBook == 2}
+                                                        disabled={props.stateOfBook == 2 || location.pathname.split('/').at(-2) === 'dealer'}
                                                         label="Dealer"
                                                         onChange={handleChange}
                                                         MenuProps={{
@@ -524,29 +527,31 @@ function BookList(props) {
                             </button>
                         </div>
                         <div className={location.pathname === "/bookList" ? 'allSearchFieldWrapper' : 'searchFieldWrapper'}>
-                            <FormControl sx={{ m: 1, width: '95%' }} variant="standard">
-                                <InputLabel>Search</InputLabel>
-                                <Input
-                                    id="standard-adornment-password"
-                                    type='text'
-                                    value={searchWord}
-                                    onChange={(e) => { handleSearchChange(e); debounceFunction() }}
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="search"
-                                                onClick={() => props.search(searchWord)}
-                                            >
-                                                {<SearchIcon />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    }
-                                />
-                            </FormControl>
+                            {location.pathname !== "/TTO" && location.pathname !== "/RRF" && location.pathname !== "/OTHER" ?
+                                <FormControl sx={{ m: 1, width: '95%' }} variant="standard">
+                                    <InputLabel>Search</InputLabel>
+                                    <Input
+                                        id="standard-adornment-password"
+                                        type='text'
+                                        value={searchWord}
+                                        onChange={(e) => { handleSearchChange(e); debounceFunction() }}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="search"
+                                                    onClick={() => props.search(searchWord)}
+                                                >
+                                                    {<SearchIcon />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }
+                                    />
+                                </FormControl>
+                                : null}
                         </div>
                     </div>
                     <div className='col-span-2 flex justify-end'>
-                        <button className='exportBtnWrp' onClick={() => props.handleExport()}>
+                        <button className={searchWord.length === 0 ? 'exportBtnWrp' : 'exportBtnWrpDisable'} onClick={() => searchWord.length === 0 ? props.handleExport() : null}>
                             Export Excal
                         </button>
                     </div>
@@ -572,7 +577,7 @@ function BookList(props) {
                                         style={{ cursor: "pointer" }}
                                         className='tableRow'
                                     >
-                                        <TableCell align="left" onClick={() => handleClickTable(row.vehicleRegistrationId)}>{row.serial_number}</TableCell>
+                                        <TableCell align="left" onClick={() => handleClickTable(row.vehicleRegistrationId)}>{(index + 1) + (props.page * props.rowsPerPage)}</TableCell>
                                         <TableCell component="th" scope="row" onClick={() => handleClickTable(row.vehicleRegistrationId)}>
                                             {row.vehicleRegistrationNumber}
                                         </TableCell>
@@ -589,7 +594,7 @@ function BookList(props) {
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={props.totalRows}
+                            count={props.totalRows ? props.totalRows : 0}
                             rowsPerPage={props.rowsPerPage}
                             page={props.page}
                             onPageChange={props.handleChangePage}
