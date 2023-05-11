@@ -383,7 +383,7 @@ function BookList(props) {
                                                         InputProps={{ style: { fontSize: 16, width: '100%' } }}
                                                         InputLabelProps={{ style: { fontSize: 16 } }}
                                                         label="End Date"
-                                                        disabled={props.filter.searchOption === 'lastUpdated' || props.stateOfBook == 2}
+                                                        disabled={props.filter.searchOption === 'lastUpdated' || props.stateOfBook == 2 || props.filter.startDate === null}
                                                         inputFormat="DD/MM/YYYY"
                                                         value={props.filter.endDate}
                                                         minDate={props.filter.startDate}
@@ -551,8 +551,8 @@ function BookList(props) {
                         </div>
                     </div>
                     <div className='col-span-2 flex justify-end'>
-                        <button className={searchWord.length === 0 ? 'exportBtnWrp' : 'exportBtnWrpDisable'} onClick={() => searchWord.length === 0 ? props.handleExport() : null}>
-                            Export Excal
+                        <button className={searchWord.length === 0 && props.totalRows !== 0 ? 'exportBtnWrp' : 'exportBtnWrpDisable'} onClick={() => searchWord.length === 0 && props.totalRows !== 0 ? props.handleExport() : null}>
+                            Export Excel
                         </button>
                     </div>
                 </div>
