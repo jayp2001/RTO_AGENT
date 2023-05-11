@@ -126,29 +126,36 @@ function DealerList() {
                             </TableHead>
                             <TableBody>
                                 {data?.map((row, index) => (
-                                    <TableRow
-                                        key={row.dealerId}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        style={{ cursor: "pointer" }}
-                                        className='tableRow'
-                                    >
-                                        <TableCell align="left" onClick={() => handleClickTable(row.dealerId)}>{(index + 1) + (page * rowsPerPage)}</TableCell>
-                                        <TableCell component="th" scope="row" onClick={() => handleClickTable(row.dealerId)}>
-                                            {row.dealerFirmName}
-                                        </TableCell>
-                                        <TableCell align="left" onClick={() => handleClickTable(row.dealerId)}>{row.dealerName}</TableCell>
-                                        <TableCell align="center" onClick={() => handleClickTable(row.dealerId)}>{row.dealerDisplayName}</TableCell>
-                                        <TableCell align="right" onClick={() => handleClickTable(row.dealerId)}>{row.dealerMobileNumber}</TableCell>
-                                        <TableCell align="right" onClick={() => handleClickTable(row.dealerId)}>{row.dealerWhatsAppNumber}</TableCell>
-                                        <TableCell align='right'><Menutemp dealerId={row.dealerId} handleDeleteBook={handleDeleteBook} /></TableCell>
-                                    </TableRow>
+                                    totalRows !== 0 ?
+                                        <TableRow
+                                            key={row.dealerId}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            style={{ cursor: "pointer" }}
+                                            className='tableRow'
+                                        >
+                                            <TableCell align="left" onClick={() => handleClickTable(row.dealerId)}>{(index + 1) + (page * rowsPerPage)}</TableCell>
+                                            <TableCell component="th" scope="row" onClick={() => handleClickTable(row.dealerId)}>
+                                                {row.dealerFirmName}
+                                            </TableCell>
+                                            <TableCell align="left" onClick={() => handleClickTable(row.dealerId)}>{row.dealerName}</TableCell>
+                                            <TableCell align="center" onClick={() => handleClickTable(row.dealerId)}>{row.dealerDisplayName}</TableCell>
+                                            <TableCell align="right" onClick={() => handleClickTable(row.dealerId)}>{row.dealerMobileNumber}</TableCell>
+                                            <TableCell align="right" onClick={() => handleClickTable(row.dealerId)}>{row.dealerWhatsAppNumber}</TableCell>
+                                            <TableCell align='right'><Menutemp dealerId={row.dealerId} handleDeleteBook={handleDeleteBook} /></TableCell>
+                                        </TableRow> :
+                                        <TableRow
+                                            key={"null"}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+                                            <TableCell align="left" style={{ fontSize: "18px" }} >{"No Data Found...!"}</TableCell>
+                                        </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={totalRows}
+                            count={totalRows ? totalRows : 0}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}
