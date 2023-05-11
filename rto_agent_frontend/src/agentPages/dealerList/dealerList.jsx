@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useDispatch, useSelector } from "react-redux";
-import { dealerList, deleteDealer, resetDeleteDealer, resetDeleteDealerError } from "../../action/agentAction/agentAction"
+import { dealerList, deleteDealer, resetDeleteDealer, resetDeleteDealerError } from "../../action/agentAction/agentAction";
 import { useNavigate } from "react-router-dom";
 import Menutemp from './menu';
 import { ToastContainer, toast } from 'react-toastify';

@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { dealerDetail, dealerBookList, exportExcel } from '../../action/agentAction/agentAction';
 import { useParams } from 'react-router-dom';
 import DealerBookList from '../dealerBookList/dealerBookList';
+import { useNavigate } from "react-router-dom";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import {deleteDealer} from "../../action/agentAction/agentAction"
 
 function DealerDetail() {
     let { id } = useParams();
@@ -14,6 +17,18 @@ function DealerDetail() {
     React.useEffect(() => {
         dispatch(dealerDetail(id))
     }, [dispatch])
+
+    const handleDeleteClick = (id) => {
+        if (window.confirm('Are you sure want to delete ?')){
+            dispatch(deleteDealer(id));
+            navigate(`/dashboard`)
+        }
+    }
+
+    const navigate = useNavigate();
+    const handleEditClick = (id) => {
+        navigate(`/editDealer/${id}`)
+    }
 
     return (
         <div className='dealerDetailWrapper'>
@@ -25,6 +40,12 @@ function DealerDetail() {
                                 Dealer Detail
                             </div>
                         </div>
+                    </div>
+                    <div className='dealerEditTempBtn'>
+                        <button className="btnDedit" onClick={() => handleEditClick(id)}>Edit</button>
+                    </div>
+                    <div className='dealerDeleteTempBtn'>
+                        <button className="btnDdelete" onClick={() => handleDeleteClick(id)}>Delete</button>
                     </div>
                     {detaildata && detaildata.Dealerdetails &&
                         <div className='detailWrapper'>

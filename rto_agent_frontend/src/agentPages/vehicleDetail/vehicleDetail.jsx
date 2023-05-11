@@ -69,7 +69,7 @@ function VehicleDetail() {
             </div>
             <div className='sidebarContainer col-span-3'>
                 <div className='sideBarbtn'>
-                    <div className="grid grid-rows-5  grid-flow-col gap-3">
+                    <div className="grid grid-rows-1 gap-3">
                         {
                                 (keys.includes("TTO Form Link")) === true ?
                                 <div className='btnYellow printdiv justify-self-center'>
