@@ -431,7 +431,7 @@ function BookList(props) {
                                                         labelId="workFilter"
                                                         id="workFilter"
                                                         name='type'
-                                                        disabled={props.filter.searchOption === 'lastUpdated' || props.stateOfBook == 2}
+                                                        disabled={props.filter.searchOption === 'lastUpdated' || props.stateOfBook == 2 || (location.pathname === "/TTO" || location.pathname === "/RRF" || location.pathname === "/OTHER")}
                                                         value={props.filter.type}
                                                         label="Work Filter"
                                                         onChange={handleChange}
