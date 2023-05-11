@@ -31,7 +31,70 @@
     left: 25px;
     z-index: 1000;
 }
-
+@media only screen and (max-width: 1500px) and (min-width:1390px){
+    .dealerEditTempBtn{
+        position: absolute;
+        top: 130px;
+        left:450px;
+    }
+  }
+@media only screen and (max-width: 1390px) and (min-width:1150px){
+    .dealerEditTempBtn{
+        position: absolute;
+        top: 130px;
+        left: 350px;
+    }
+  }
+@media only screen and (max-width: 1150px) and (min-width:1000) {
+    .dealerEditTempBtn{
+        position: absolute;
+        top: 130px;
+        left: 300px;
+    }
+  }
+@media only screen and (max-width: 1500px) and (min-width:1390px) {
+    .dealerDeleteTempBtn{
+        position: absolute;
+        top: 130px;
+        left:520px;
+    }
+  }
+@media only screen and (max-width: 1390px) and (min-width:1150px){
+    .dealerDeleteTempBtn{
+        position: absolute;
+        top: 130px;
+        left: 420px;
+    }
+  }  
+@media only screen and (max-width: 1150px) and (min-width:1000){
+    .dealerDeleteTempBtn{
+        position: absolute;
+        top: 130px;
+        left:370px;
+    }
+  }
+.btnDedit{
+    border-radius: 5px;
+    width: 60px;
+    color: white;
+    position: absolute;
+    padding: 4px 4px 4px 4px;
+    font-size: 14px;
+    font-weight: 400;
+    box-sizing: border-box;
+    background:linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,122,255,1) 0%, rgba(0,156,255,1) 78%);
+}
+.btnDdelete{
+    border-radius: 5px;
+    width: 60px;
+    color: white;
+    position: absolute;
+    padding: 4px 4px 4px 4px;
+    font-size: 14px;
+    font-weight: 400;
+    box-sizing: border-box;
+    background: linear-gradient(60deg, #ef5350, #e53935);;
+}
 .countCardWrapper{
     width: 45%;
     border-radius: 0.75rem;
