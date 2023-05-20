@@ -30,10 +30,8 @@ function OtherBookList() {
     };
 
     const handleChangeRowsPerPage = (event) => {
-        console.log('>>><<,', page, rowsPerPage);
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
-        console.log('>>>????', page, parseInt(event.target.value, 10));
         dispatch(bookList(0 + 1, parseInt(event.target.value, 10), filter, 3, stateOfBook))
     };
 

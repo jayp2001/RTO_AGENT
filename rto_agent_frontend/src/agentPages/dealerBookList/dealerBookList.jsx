@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 // import { dealerList } from "../../../action/agentAction/agentAction"
 import { useNavigate } from "react-router-dom";
-import { dealerBookList, exportExcel } from "../../action/agentAction/agentAction";
+import { dealerBookList, exportExcel,recieptUpload,deleteBook ,moveToComplete} from "../../action/agentAction/agentAction";
 import Menutemp from './menu';
 import BookList from '../bookList/bookList';
 
@@ -46,7 +46,12 @@ function DealerBookList(props) {
     const applyFilter = () => {
         dispatch(dealerBookList(page + 1, rowsPerPage, filter, stateOfBook, props.dealerId))
     }
-
+    const moveToNextStep = (file, appointmentDate, bookId, sendReceipt) => {
+        dispatch(recieptUpload(file, appointmentDate, bookId, sendReceipt))
+        setTimeout(() => {
+            dispatch(dealerBookList(page + 1, rowsPerPage, filter, stateOfBook, props.dealerId))
+        }, 3000)
+    }
     const resetFilter = () => {
         setFilter({
             searchOption: 20,
@@ -59,6 +64,28 @@ function DealerBookList(props) {
     const search = (searchWord) => {
         dispatch(dealerBookList(page + 1, rowsPerPage, filter, stateOfBook, props.dealerId, searchWord))
     }
+
+    const appointmentToComplete = (bookId) => {
+        dispatch(recieptUpload(bookId))
+        setTimeout(() => {
+            dispatch(dealerBookList(page + 1, rowsPerPage, filter, stateOfBook, props.dealerId))
+        }, 1000)
+    }
+
+    const handleMoveToComplete = (id) => {
+        dispatch(moveToComplete(id))
+        setTimeout(() => {
+            dispatch(dealerBookList(page + 1, rowsPerPage, filter, stateOfBook, props.dealerId))
+        }, 1000)
+    }
+
+    const handleDeleteBook = (id) => {
+        dispatch(deleteBook(id))
+        setTimeout(() => {
+            dispatch(dealerBookList(page + 1, rowsPerPage, filter, stateOfBook, props.dealerId))
+        }, 1000)
+    }
+
     return (
         <BookList
             data={data}
@@ -69,11 +96,15 @@ function DealerBookList(props) {
             totalRows={totalRows}
             rowsPerPage={rowsPerPage}
             page={page}
+            moveToNextStep={moveToNextStep}
             handleExport={handleExport}
             filter={filter}
             setFilter={setFilter}
             applyFilter={applyFilter}
             resetFilter={resetFilter}
+            appointmentToComplete={appointmentToComplete}
+            handleDeleteBook={handleDeleteBook}
+            handleMoveToComplete={handleMoveToComplete}
             search={search}
         />
     )

@@ -34,7 +34,6 @@ function AgentList() {
     if (!data) {
         return null
     }
-    console.log(':>>>??', data.length)
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -77,10 +76,8 @@ function AgentList() {
     };
 
     const handleChangeRowsPerPage = (event) => {
-        console.log('>>><<,', page, rowsPerPage);
         setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-        console.log('>>>????', page, parseInt(event.target.value, 10));
+        setPage(0); 
         dispatch(agentList(page + 1, parseInt(event.target.value, 10)))
     };
 
@@ -93,8 +90,6 @@ function AgentList() {
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
-
-    console.log('<>', data)
     return (
         <div className="addAdmin_wrapper flex items-center">
             <div className="grid justify-items-center addAdmin_inner_wrapper">

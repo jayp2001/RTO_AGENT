@@ -107,9 +107,15 @@ function AllBookList() {
     }
     const moveToNextStep = (file, appointmentDate, bookId, sendReceipt) => {
         dispatch(recieptUpload(file, appointmentDate, bookId, sendReceipt))
-        setTimeout(() => {
-            dispatch(allBookList(1, rowsPerPage, filter, stateOfBook))
-        }, 3000)
+        // setTimeout(() => {
+        //     dispatch(allBookList(1, rowsPerPage, filter, stateOfBook))
+        // }, 3000)
+    }
+
+    const recallBook = ()=>{
+        // setTimeout(() => {
+                dispatch(allBookList(1, rowsPerPage, filter, stateOfBook))
+            // }, 3000)
     }
 
     const appointmentToComplete = (bookId) => {
@@ -158,6 +164,7 @@ function AllBookList() {
                     appointmentToComplete={appointmentToComplete}
                     handleDeleteBook={handleDeleteBook}
                     handleMoveToComplete={handleMoveToComplete}
+                    recallBook={recallBook}
                     search={search}
                 />
             </div>

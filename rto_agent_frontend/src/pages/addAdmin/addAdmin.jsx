@@ -23,7 +23,6 @@ import '../../../node_modules/react-toastify/dist/ReactToastify.css';
 
 function AddAdminPage() {
     const { loading, success, error } = useSelector((state) => state.agentCreate);
-    console.log(loading, success, error)
     const states = useSelector((state) => state.stateList.state);
     const citys = useSelector((state) => state.cityList.state)
     const dispatch = useDispatch();
@@ -49,7 +48,6 @@ function AddAdminPage() {
     //     dispatch(getCityList())
     // }, [dispatch, formData])
 
-    // console.log(":::", agentAddRes)
 
     const handleChange = (date) => {
         setFormData((prevState) => ({
@@ -67,7 +65,6 @@ function AddAdminPage() {
     const submit = (e) => {
 
         e.preventDefault();
-        console.log('>>>>>>>>>>', formData)
         dispatch(createAgent(formData))
     }
 

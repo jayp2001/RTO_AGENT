@@ -88,3 +88,6 @@ background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255
     margin-left: 5%;
     background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
 }
+.navBarContainerWrapper::-webkit-scrollbar {
+    display: none;
+  }

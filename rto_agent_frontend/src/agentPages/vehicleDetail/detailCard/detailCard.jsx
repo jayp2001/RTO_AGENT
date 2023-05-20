@@ -25,9 +25,6 @@ function DetailCard({ header, data }) {
                                 {key}
                             </div>
                             {
-                                console.log('>>???>>????', key === 'TTO Form Link', key, data[key] ? true : false)
-                            }
-                            {
                                 key === 'pdfURL' && data[key] ?
                                     <div className='value col-span-6 col-start-6'>
                                         <a href={data[key]} target="_blank">

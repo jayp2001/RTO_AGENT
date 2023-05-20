@@ -219,6 +219,21 @@ function AddBook() {
         }))
     }
     const handleCheckbox = (e) => {
+        if(e.target.name === 'TO' && formData[e.target.name] === true){
+            setFormData((prevState) => ({
+                ...prevState,
+                [e.target.name]: !formData[e.target.name],
+                ["buyerCity"]:'',
+                ["buyerState"]:'',
+                ["buyerAddressLine1"]:'',
+                ["buyerAddressLine2"]:'',
+                ["buyerAddressLine3"]:'',
+                ["buyerFirstName"]:'',
+                ["buyerMiddleName"]:'',
+                ["buyerLastName"]:'',
+                ["buyerPincode"]:'',
+            }))
+        }
         setFormData((prevState) => ({
             ...prevState,
             [e.target.name]: !formData[e.target.name],
@@ -239,7 +254,7 @@ function AddBook() {
                 if(formData.TO === false && (buyerFields.includes(element))){
                     setFormDataError((perv)=>({
                         ...perv,
-                        [element]:false
+                        [element]:true
                     }))
                     return null;
                 }else if(formData.dealerId !== 100 && element === "privateCustomerName"){
@@ -381,7 +396,6 @@ function AddBook() {
         console.log('>>', formData.insuranceCompanyNameId);
     }
     const handleVehicleCategoryChange = (event, value) => {
-        console.log(event)
         const id = value?.vehicleCategoryId
         setFormData((prevState) => ({
             ...prevState,
@@ -700,7 +714,7 @@ function AddBook() {
                                     <FormControlLabel control={<Checkbox checked={formData.AV} name='AV' onClick={handleCheckbox} />} label="Alteration of Vehicle" />
                                 </div>
                                 <div className="col-span-4">
-                                    <FormControlLabel control={<Checkbox checked={formData.NOC} name='NOC' onClick={handleCheckbox} />} label="Application for No Objection Certificate" />
+                                    <FormControlLabel control={<Checkbox checked={formData.NOC} name='NOC' onClick={handleCheckbox} />} label="Application for NOC" />
                                 </div>
                             </div>
                         </div>

@@ -83,7 +83,6 @@ function AddDealer() {
     }, [dispatch])
 
     const onChange = (e) => {
-        console.log(e.target.value)
         setFormData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value,
@@ -104,7 +103,6 @@ function AddDealer() {
             if(element === 'dealerEmailId'){
                 return null
             }else if(formDataError[element] === true || formData[element] === ''){
-                console.log(element)
                 setFormDataError((perv)=>({
                     ...perv,
                     [element]:true

@@ -21,7 +21,6 @@ function VehicleDetail() {
     React.useEffect(() => {
         dispatch(bookDetail(id))
     }, [dispatch])
-    console.log(data)
 
     const navigate = useNavigate();
     const handleEditClick = (id) => {

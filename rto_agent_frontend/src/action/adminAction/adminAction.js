@@ -80,7 +80,6 @@ import {
             `${BACKEND_BASE_URL}agentrouter/getAgentDetails?page=${page}&numPerPage=${numPerPage}`,
             config
           );
-          console.log('>>>',data)
           dispatch({
             type: AGENT_LIST_SUCCESS,
             payload: data,
@@ -120,7 +119,7 @@ import {
             `${BACKEND_BASE_URL}stateCityrouter/getstateDetails`,
             config
           );
-          console.log('>>>',data)
+
           dispatch({
             type: STATE_LIST_SUCCESS,
             payload: data,
@@ -160,7 +159,6 @@ import {
             `${BACKEND_BASE_URL}stateCityrouter/getcityDetails`,
             config
           );
-          console.log('>>>',data)
           dispatch({
             type: CITY_LIST_SUCCESS,
             payload: data,
@@ -220,7 +218,7 @@ import {
 
 
     export const resetAddAgent = () => async (dispatch)=>{
-      console.log("LKT")
+
       dispatch({
         type: RESET_STATE,
       })

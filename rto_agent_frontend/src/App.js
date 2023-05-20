@@ -28,7 +28,6 @@ function App() {
   const handleNavigation = React.useCallback(
     (e) => {
       const window = e.currentTarget;
-      console.log(window.scrollTop)
       setY(window.scrollTop);
     },
     [y]

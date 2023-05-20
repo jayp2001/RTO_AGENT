@@ -196,6 +196,21 @@ function EditBook() {
         }))
     }
     const handleCheckbox = (e) => {
+        if(e.target.name === 'TO' && formData[e.target.name] === true){
+            setFormData((prevState) => ({
+                ...prevState,
+                [e.target.name]: !formData[e.target.name],
+                ["buyerCity"]:'',
+                ["buyerState"]:'',
+                ["buyerAddressLine1"]:'',
+                ["buyerAddressLine2"]:'',
+                ["buyerAddressLine3"]:'',
+                ["buyerFirstName"]:'',
+                ["buyerMiddleName"]:'',
+                ["buyerLastName"]:'',
+                ["buyerPincode"]:'',
+            }))
+        }
         setFormData((prevState) => ({
             ...prevState,
             [e.target.name]: !formData[e.target.name],
@@ -295,8 +310,11 @@ function EditBook() {
             }
         })
         const isValidate = fields.filter(element => {
-           if(formDataError[element] === true || formData[element] === ''){
-                console.log(element)
+            console.log("formDataError",formDataError[element]);
+            console.log("formData",formData[element]);
+           if(formDataError[element] === true || formData[element] === '' || formData[element] === null){
+                console.log("KKKK")
+                console.log("isvalidate",formData.TO === false && (buyerFields.includes(element)))
                 if(formData.TO === false && (buyerFields.includes(element))){
                     setFormDataError((perv)=>({
                         ...perv,
@@ -318,6 +336,9 @@ function EditBook() {
                     return element;
                 }
                 
+            }
+            else{
+                console.log("LLLL")
             }
         })
         console.log('????',isValidate);
@@ -611,7 +632,7 @@ function EditBook() {
                         </div>
                         <div className="grid gird-rows-10 gap-y-6">
                             <div className="grid grid-cols-12 gap-x-5">
-                                <div className="col-span-3">
+                                <div className="col-span-4">
                                     <FormControlLabel control={<Checkbox checked={formData.TO} name="TO" onClick={handleCheckbox} />} label="Transfer Of Ownership" />
                                 </div>
                                 <div className="col-span-4">
@@ -622,7 +643,7 @@ function EditBook() {
                                 </div>
                             </div>
                             <div className="grid grid-cols-12 gap-x-5">
-                                <div className="col-span-3">
+                                <div className="col-span-4">
                                     <FormControlLabel control={<Checkbox checked={formData.addressChange} name='addressChange' onClick={handleCheckbox} />} label="Change of Address" />
                                 </div>
                                 <div className="col-span-4">
@@ -633,14 +654,14 @@ function EditBook() {
                                 </div>
                             </div>
                             <div className="grid grid-cols-12 gap-x-5">
-                                <div className="col-span-3">
+                                <div className="col-span-4">
                                     <FormControlLabel control={<Checkbox checked={formData.RRF} name='RRF' onClick={handleCheckbox} />} label="Renewal Of Registration" />
                                 </div>
                                 <div className="col-span-4">
                                     <FormControlLabel control={<Checkbox checked={formData.AV} name='AV' onClick={handleCheckbox} />} label="Alteration of Vehicle" />
                                 </div>
-                                <div className="col-span-5">
-                                    <FormControlLabel control={<Checkbox checked={formData.NOC} name='NOC' onClick={handleCheckbox} />} label="Application for No Objection Certificate" />
+                                <div className="col-span-4">
+                                    <FormControlLabel control={<Checkbox checked={formData.NOC} name='NOC' onClick={handleCheckbox} />} label="Application for NOC" />
                                 </div>
                             </div>
                         </div>

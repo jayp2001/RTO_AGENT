@@ -24,7 +24,6 @@ function NaveBar() {
         return null;
     }
     const role = user && user.isAdminrights ? decryptData(user.isAdminrights) : 0;
-    console.log('<L>', role)
     if (location.pathname.toLowerCase() === "/login") {
         return null;
     }

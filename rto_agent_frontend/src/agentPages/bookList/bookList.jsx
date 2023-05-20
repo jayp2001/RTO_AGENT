@@ -125,6 +125,12 @@ function BookList(props) {
     }
 
     const handleChange = (e) => {
+        console.log("LLLKKK")
+        console.log(">>>>LLLL",e.target.name === 'searchOption' && props.filter[e.target.name] === 20 && e.target.value === 'lastUpdated');
+        if(props.filter && e.target.name === 'searchOption' && props.filter[e.target.name] === 20 && e.target.value === 'lastUpdated'){
+            console.log(">>>>LLLL");
+            props.resetFilter()
+        }
         props.setFilter((pervState) => ({
             ...pervState,
             [e.target.name]: e.target.value,
@@ -184,7 +190,11 @@ function BookList(props) {
     }
 
     const handleSave = () => {
-        props.moveToNextStep(file, appointmentDate, bookId, sendReceipt)
+        if(file && fileName){
+        props.moveToNextStep(file, appointmentDate, bookId, sendReceipt)}
+        else{
+            alert("please upload file");
+        }
     }
     const deleteBook = (id) => {
         if (window.confirm('Are you sure want to delete ?'))
@@ -415,9 +425,9 @@ function BookList(props) {
                                                     >
                                                         <MenuItem value={null}>Clear</MenuItem>
                                                         {
-                                                            dealerDropdownList ? dealerDropdownList.map((row) => (
+                                                            dealerDropdownList ? dealerDropdownList.map((row) => row && row.dealerId !== 100 ?(
                                                                 <MenuItem value={row.dealerId}>{row.dealerDisplayName}</MenuItem>
-                                                            ))
+                                                            ):null)
                                                                 : null
                                                         }
 
@@ -629,97 +639,115 @@ function BookList(props) {
                     </Box>
                     :
                     !(success ? true : false) ?
-                        < Box sx={style}>
-                            <div className='uploadRecieptHeader'>
-                                <div className="header flex items-center ">
-                                    <div className="grid justify-items-center w-full">
-                                        <div className="header_text">
-                                            {vehicleNo}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='fileUploadContainer'>
-                                <div className='grid grid-cols-12 fileName'>
-                                    {fileName && <div className='fileNameWrp col-start-4 col-span-6 grid content-center'>
-                                        <div className='w-full overflow-hidden flex justify-between'>
-                                            <div className='fileN'>
-                                                {fileName}
-                                            </div>
-                                            <div>
-                                                <IconButton onClick={() => {
-                                                    document.getElementById("fileUpload").value = "";
-                                                    setFile(null)
-                                                    setFileName('')
-                                                }} fontSize='large' sx={{ minHeight: 0, minWidth: 0, padding: 0 }}>
-                                                    <CloseIcon />
-                                                </IconButton>
+                        !(error) ?
+                            <Box sx={style}>
+                                <div className='uploadRecieptHeader'>
+                                    <div className="header flex items-center ">
+                                        <div className="grid justify-items-center w-full">
+                                            <div className="header_text">
+                                                {vehicleNo}
                                             </div>
                                         </div>
                                     </div>
-                                    }
                                 </div>
-                                <div className='uploadBtnWrp w-full flex justify-center'>
-                                    <div className='col-start-4 col-span-5'>
-                                        <Button variant="contained" component="label">
-                                            Upload reciept
-                                            <input hidden accept="*" id='fileUpload' onChange={handleFileUpload} type="file" />
-                                        </Button>
+                                <div className='fileUploadContainer'>
+                                    <div className='grid grid-cols-12 fileName'>
+                                        {fileName && <div className='fileNameWrp col-start-4 col-span-6 grid content-center'>
+                                            <div className='w-full overflow-hidden flex justify-between'>
+                                                <div className='fileN'>
+                                                    {fileName}
+                                                </div>
+                                                <div>
+                                                    <IconButton onClick={() => {
+                                                        document.getElementById("fileUpload").value = "";
+                                                        setFile(null)
+                                                        setFileName('')
+                                                    }} fontSize='large' sx={{ minHeight: 0, minWidth: 0, padding: 0 }}>
+                                                        <CloseIcon />
+                                                    </IconButton>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                    <div className='uploadBtnWrp w-full flex justify-center'>
+                                        <div className='col-start-4 col-span-5'>
+                                            <Button variant="contained" component="label">
+                                                Upload reciept
+                                                <input hidden accept="application/pdf,image/*" id='fileUpload' onChange={handleFileUpload} type="file" />
+                                            </Button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className='grid grid-cols-12 mt-8'>
-                                <div className='col-start-1 col-span-5'>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <DesktopDatePicker
-                                            textFieldStyle={{ width: '100%' }}
-                                            InputProps={{ style: { fontSize: 14, width: '100%' } }}
-                                            InputLabelProps={{ style: { fontSize: 14 } }}
-                                            label="Appointment Date"
-                                            required
-                                            minDate={today}
-                                            inputFormat="DD/MM/YYYY"
-                                            value={appointmentDate}
-                                            onChange={handleAppointmentDate}
-                                            name="appointmentDate"
-                                            PopperProps={{
-                                                style: { zIndex: 35001 }
-                                            }}
-                                            renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}
-                                        />
-                                    </LocalizationProvider>
-                                </div>
-                                <div className='col-start-6 col-span-2 flex justify-end'>
-                                    <Checkbox checked={sendReceipt} onClick={() => setSendReceipt(!sendReceipt)} />
-                                </div>
-                                <div className='col-start-8 col-span-6'>
-                                    <div className='flex'>
-                                        <div className='grid content-center'><WhatsAppIcon fontSize='large' style={{ color: "green" }} /></div>&nbsp;&nbsp;
-                                        <div>Send Receipt on Whatsapp !</div>
+                                <div className='grid grid-cols-12 mt-8'>
+                                    <div className='col-start-1 col-span-5'>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <DesktopDatePicker
+                                                textFieldStyle={{ width: '100%' }}
+                                                InputProps={{ style: { fontSize: 14, width: '100%' } }}
+                                                InputLabelProps={{ style: { fontSize: 14 } }}
+                                                label="Appointment Date"
+                                                required
+                                                minDate={today}
+                                                inputFormat="DD/MM/YYYY"
+                                                value={appointmentDate}
+                                                onChange={handleAppointmentDate}
+                                                name="appointmentDate"
+                                                PopperProps={{
+                                                    style: { zIndex: 35001 }
+                                                }}
+                                                renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}
+                                            />
+                                        </LocalizationProvider>
                                     </div>
+                                    <div className='col-start-6 col-span-2 flex justify-end'>
+                                        <Checkbox checked={sendReceipt} onClick={() => setSendReceipt(!sendReceipt)} />
+                                    </div>
+                                    <div className='col-start-8 col-span-6'>
+                                        <div className='flex'>
+                                            <div className='grid content-center'><WhatsAppIcon fontSize='large' style={{ color: "green" }} /></div>&nbsp;&nbsp;
+                                            <div>Send Receipt on Whatsapp !</div>
+                                        </div>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='grid grid-cols-12 gap-4 mt-6'>
-                                <div className='col-start-7 col-span-3 text-center'>
-                                    <button className='saveBtn' onClick={() => handleSave()}>
-                                        Save
-                                    </button>
+                                <div className='grid grid-cols-12 gap-4 mt-6'>
+                                    <div className='col-start-7 col-span-3 text-center'>
+                                        <button className='saveBtn' onClick={() => handleSave()}>
+                                            Save
+                                        </button>
+                                    </div>
+                                    <div className='col-span-3 text-center'>
+                                        <button className='cancleBtn' onClick={() => {
+                                            document.getElementById("fileUpload").value = "";
+                                            setFile(null)
+                                            setFileName('')
+                                            setAppointmentDate(null)
+                                            setOpen(false)
+                                        }}
+                                        >
+                                            Cancle
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className='col-span-3 text-center'>
-                                    <button className='cancleBtn' onClick={() => {
-                                        document.getElementById("fileUpload").value = "";
-                                        setFile(null)
-                                        setFileName('')
-                                        setAppointmentDate(null)
-                                        setOpen(false)
-                                    }}
-                                    >
-                                        Cancle
-                                    </button>
-                                </div>
-                            </div>
-                        </Box>
+                            </Box>:
+                            (
+                                <>
+                                {
+                                        setTimeout(() => {
+                                            
+                                            setFile(null)
+                                            setFileName('')
+                                            setOpen(false)
+                                            setAppointmentDate(null)
+                                            setTimeout(() => {
+                                                dispatch(resetReciept())
+                                            }, 3000)
+                                        }, 0)
+
+                                    }
+                                </> 
+                            )
                         : (
                             <>
                                 <Box sx={style} className='flex justify-center'>
@@ -731,8 +759,9 @@ function BookList(props) {
                                         document.getElementById("fileUpload").value = "";
                                         setFile(null)
                                         setFileName('')
-                                        setAppointmentDate(null)
                                         setOpen(false)
+                                        props.recallBook()
+                                        setAppointmentDate(null)
                                     }, 2500)
 
                                 }

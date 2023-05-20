@@ -66,7 +66,6 @@ function Nav({ scrollH }) {
     const handleClick = (e) => {
         e.preventDefault()
     }
-    console.log('<><>', scrollH)
     if (!scrollH) {
         scrollH = 1
     }

@@ -19,11 +19,9 @@ const ProtectedAdminRoute = () => {
     //     return(<Navigate to="/login" state={{ from: location }} replace />)
     // }
     const role = decryptData(user.isAdminrights)
-    console.log("ROLE",role == '1')
     const decoded = jwt_decode(user.token);
     const expirationTime = (decoded.exp * 1000) - 60000
     const auth = new Date(expirationTime) > new Date() && role == '1' ? true : false
-    // console.log('<<>>',new Date(expirationTime),decoded,new Date(expirationTime) > new Date() ? true : false)
     return(
         auth?
         <Outlet />:

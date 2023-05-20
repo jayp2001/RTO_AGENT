@@ -31,11 +31,28 @@
     left: 25px;
     z-index: 1000;
 }
+@media only screen and (max-width: 3000px) and (min-width:1500px){
+    .dealerEditTempBtn{
+        position: absolute;
+        top: 130px;
+        left:520px;
+    }
+    .dealerDeleteTempBtn{
+        position: absolute;
+        top: 130px;
+        left:590px;
+    }
+  }
 @media only screen and (max-width: 1500px) and (min-width:1390px){
     .dealerEditTempBtn{
         position: absolute;
         top: 130px;
         left:450px;
+    }
+    .dealerDeleteTempBtn{
+        position: absolute;
+        top: 130px;
+        left:520px;
     }
   }
 @media only screen and (max-width: 1390px) and (min-width:1150px){
@@ -44,33 +61,34 @@
         top: 130px;
         left: 350px;
     }
-  }
-@media only screen and (max-width: 1150px) and (min-width:1000) {
-    .dealerEditTempBtn{
-        position: absolute;
-        top: 130px;
-        left: 300px;
-    }
-  }
-@media only screen and (max-width: 1500px) and (min-width:1390px) {
-    .dealerDeleteTempBtn{
-        position: absolute;
-        top: 130px;
-        left:520px;
-    }
-  }
-@media only screen and (max-width: 1390px) and (min-width:1150px){
     .dealerDeleteTempBtn{
         position: absolute;
         top: 130px;
         left: 420px;
     }
-  }  
-@media only screen and (max-width: 1150px) and (min-width:1000){
-    .dealerDeleteTempBtn{
+  }
+@media only screen and (max-width: 1150px) and (min-width:1000px) {
+    .dealerEditTempBtn{
         position: absolute;
         top: 130px;
+        left: 370px;
+    }
+    .dealerDeleteTempBtn{
+        position: absolute;
+        top: 165px;
         left:370px;
+    }
+  }
+  @media only screen and (max-width: 1000px) and (min-width:100px) {
+    .dealerEditTempBtn{
+        position: absolute;
+        top: 130px;
+        left: 330px;
+    }
+    .dealerDeleteTempBtn{
+        position: absolute;
+        top: 165px;
+        left:330px;
     }
   }
 .btnDedit{

@@ -1,5 +1,7 @@
 body{
   background-color: rgb(240,242,245);
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 
 .mainBodyWrapper{
@@ -16,6 +18,9 @@ body{
   padding-left: 20px;
   padding-right: 20px;
   overflow: scroll;
+}
+.mainBody::-webkit-scrollbar {
+  display: none;
 }
 
 /* .tt{

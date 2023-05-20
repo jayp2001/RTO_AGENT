@@ -484,7 +484,6 @@ DEALER_LIST_DROPDOWN_FAIL,
         `${BACKEND_BASE_URL}dealerrouter/ddlDealerByAgentId`,
         config
       );
-      console.log('>>>',data)
       data.unshift({ dealerId: 100, dealerDisplayName: 'PRIVATE' });
       dispatch({
         type: DEALER_LIST_DROPDOWN_SUCCESS,
@@ -637,7 +636,7 @@ DEALER_LIST_DROPDOWN_FAIL,
       };
 
       axios({
-        url: `${BACKEND_BASE_URL}vehicleRegistrationrouter/exportExcelSheetForVehicleDetails?startDate=${filter && filter.startDate?filter.startDate:''}&appointmentDate=${filter && filter.appointmentDate?filter.appointmentDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus != 10 || !workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'PENDING':''}&workCategory=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
+        url: `${BACKEND_BASE_URL}vehicleRegistrationrouter/exportExcelSheetForVehicleDetails?startDate=${filter && filter.startDate?filter.startDate:''}&appointmentDate=${filter && filter.appointmentDate?filter.appointmentDate:''}&endDate=${filter && filter.endDate?filter.endDate:''}&dealerId=${filter && filter.dealerId?filter.dealerId:''}&workStatus=${workStatus != 10 || !workStatus ? workStatus === 0 ? 'PENDING' : workStatus === 2 ? 'APPOINTMENT': workStatus === 3 ? 'COMPLETE':'':''}&workCategory=${filter && filter.type?filter.type:''}&searchOption=${filter && filter.searchOption === 'lastUpdated'?'lastUpdated':''}`,
         method: 'GET',
         headers: {Authorization: `Bearer ${userInfo.token}`},
         responseType: 'blob', // important
