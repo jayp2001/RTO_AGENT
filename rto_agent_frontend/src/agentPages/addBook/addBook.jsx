@@ -154,7 +154,7 @@ function AddBook() {
 
         ]
     )
-    
+
     const [workFields, setWorkFields] = useState(
         [
             "TO",
@@ -195,14 +195,14 @@ function AddBook() {
 
         var d = new Date(date && date['$d'] ? date['$d'] : null);
         (d.setDate(d.getDate() - 1));
-        console.log(">>>",d.toString());
+        console.log(">>>", d.toString());
         var a = new Date(d)
         a.setFullYear(a.getFullYear() + 1);
-        console.log("???",a.toString());
+        console.log("???", a.toString());
         const s = a.toString();
         setFormData((prevState) => ({
             ...prevState,
-            ["insuranceEndDate"]: s && date && date['$d']? s : null,
+            ["insuranceEndDate"]: s && date && date['$d'] ? s : null,
         }))
     };
     const handleInsuranceEndDate = (date) => {
@@ -219,19 +219,19 @@ function AddBook() {
         }))
     }
     const handleCheckbox = (e) => {
-        if(e.target.name === 'TO' && formData[e.target.name] === true){
+        if (e.target.name === 'TO' && formData[e.target.name] === true) {
             setFormData((prevState) => ({
                 ...prevState,
                 [e.target.name]: !formData[e.target.name],
-                ["buyerCity"]:'',
-                ["buyerState"]:'',
-                ["buyerAddressLine1"]:'',
-                ["buyerAddressLine2"]:'',
-                ["buyerAddressLine3"]:'',
-                ["buyerFirstName"]:'',
-                ["buyerMiddleName"]:'',
-                ["buyerLastName"]:'',
-                ["buyerPincode"]:'',
+                ["buyerCity"]: '',
+                ["buyerState"]: '',
+                ["buyerAddressLine1"]: '',
+                ["buyerAddressLine2"]: '',
+                ["buyerAddressLine3"]: '',
+                ["buyerFirstName"]: '',
+                ["buyerMiddleName"]: '',
+                ["buyerLastName"]: '',
+                ["buyerPincode"]: '',
             }))
         }
         setFormData((prevState) => ({
@@ -243,45 +243,45 @@ function AddBook() {
 
         e.preventDefault();
         console.log('>>>>>>>>>>', formData)
-        const isWorkSelected = workFields.filter(element=>{
-            if(formData[element]){
+        const isWorkSelected = workFields.filter(element => {
+            if (formData[element]) {
                 return true
             }
         })
         const isValidate = fields.filter(element => {
-           if(formDataError[element] === true || formData[element] === ''){
+            if (formDataError[element] === true || formData[element] === '') {
                 console.log(element)
-                if(formData.TO === false && (buyerFields.includes(element))){
-                    setFormDataError((perv)=>({
+                if (formData.TO === false && (buyerFields.includes(element))) {
+                    setFormDataError((perv) => ({
                         ...perv,
-                        [element]:true
+                        [element]: true
                     }))
                     return null;
-                }else if(formData.dealerId !== 100 && element === "privateCustomerName"){
-                    setFormDataError((perv)=>({
+                } else if (formData.dealerId !== '100' && element === "privateCustomerName") {
+                    setFormDataError((perv) => ({
                         ...perv,
-                        [element]:false
+                        [element]: false
                     }))
                     return null;
                 }
-                else{
-                    setFormDataError((perv)=>({
+                else {
+                    setFormDataError((perv) => ({
                         ...perv,
-                        [element]:true
+                        [element]: true
                     }))
                     return element;
                 }
-                
+
             }
         })
-        console.log('????',isValidate);
-        console.log('??/>>',isWorkSelected);
-        if(isValidate.length>0 || isWorkSelected.length === 0){
+        console.log('????', isValidate);
+        console.log('??/>>', isWorkSelected);
+        if (isValidate.length > 0 || isWorkSelected.length === 0) {
             alert(
                 "Please Fill All Field"
             )
-        }else{
-             dispatch(addBook(formData))
+        } else {
+            dispatch(addBook(formData))
         }
     }
 
@@ -435,28 +435,28 @@ function AddBook() {
                             <div className="grid grid-cols-12 gap-x-5">
                                 <div className="col-span-4">
                                     <TextField
-                                        onBlur={(e)=>{
-                                            if(e.target.value.length < 9){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 9) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    vehicleRegistrationNumber:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    vehicleRegistrationNumber: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    vehicleRegistrationNumber:false
+                                                    vehicleRegistrationNumber: false
                                                 }))
                                             }
                                         }}
-                                        onChange={(e)=>{
-                                            if(e.target.value.length<11)
-                                            {
-                                                    onChange(e)
+                                        onChange={(e) => {
+                                            if (e.target.value.length < 11) {
+                                                onChange(e)
                                             }
-                                            }}
+                                        }}
                                         value={formData.vehicleRegistrationNumber}
                                         error={formDataError.vehicleRegistrationNumber}
-                                        helperText={formDataError.vehicleRegistrationNumber?"Please Enter Vehicle Number (GJXXABXXXX)":''}
+                                        helperText={formDataError.vehicleRegistrationNumber ? "Please Enter Vehicle Number (GJXXABXXXX)" : ''}
                                         name="vehicleRegistrationNumber"
                                         id="outlined-required"
                                         label="Vehicle Registration Number"
@@ -467,23 +467,24 @@ function AddBook() {
                                 </div>
                                 <div className="col-span-4">
                                     <TextField
-                                        onBlur={(e)=>{
-                                            if(e.target.value.length < 5){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 5) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    vehicleChassisNumber:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    vehicleChassisNumber: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    vehicleChassisNumber:false
+                                                    vehicleChassisNumber: false
                                                 }))
                                             }
                                         }}
                                         onChange={onChange}
                                         value={formData.vehicleChassisNumber}
                                         error={formDataError.vehicleChassisNumber}
-                                        helperText={formDataError.vehicleChassisNumber?"Please Enter Chassis Number (5 Character)":''}
+                                        helperText={formDataError.vehicleChassisNumber ? "Please Enter Chassis Number (5 Character)" : ''}
                                         name="vehicleChassisNumber"
                                         id="outlined-required"
                                         label="Vehicle Chassis Number"
@@ -494,23 +495,24 @@ function AddBook() {
                                 </div>
                                 <div className="col-span-4">
                                     <TextField
-                                        onBlur={(e)=>{
-                                            if(e.target.value.length < 5){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 5) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    vehicleEngineNumber:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    vehicleEngineNumber: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    vehicleEngineNumber:false
+                                                    vehicleEngineNumber: false
                                                 }))
                                             }
                                         }}
                                         onChange={onChange}
                                         value={formData.vehicleEngineNumber}
                                         error={formDataError.vehicleEngineNumber}
-                                        helperText={formDataError.vehicleEngineNumber?"Please Enter Engine Number (5 Character)":''}
+                                        helperText={formDataError.vehicleEngineNumber ? "Please Enter Engine Number (5 Character)" : ''}
                                         name="vehicleEngineNumber"
                                         id="outlined-required"
                                         label="Vehicle Engine Number"
@@ -577,23 +579,24 @@ function AddBook() {
                                 </div>
                                 <div className="col-span-4">
                                     <TextField
-                                        onBlur={(e)=>{
-                                            if(e.target.value.length < 2){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 2) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    vehicleMake:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    vehicleMake: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    vehicleMake:false
+                                                    vehicleMake: false
                                                 }))
                                             }
                                         }}
                                         onChange={onChange}
                                         value={formData.vehicleMake}
                                         error={formDataError.vehicleMake}
-                                        helperText={formDataError.vehicleMake?"Please Enter Make":''}
+                                        helperText={formDataError.vehicleMake ? "Please Enter Make" : ''}
                                         name="vehicleMake"
                                         id="outlined-required"
                                         label="Vehicle Make"
@@ -606,23 +609,24 @@ function AddBook() {
                             <div className="grid grid-cols-12 gap-x-5">
                                 <div className="col-span-4">
                                     <TextField
-                                        onBlur={(e)=>{
-                                            if(e.target.value.length < 2){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 2) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    vehicleModel:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    vehicleModel: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    vehicleModel:false
+                                                    vehicleModel: false
                                                 }))
                                             }
                                         }}
                                         onChange={onChange}
                                         value={formData.vehicleModel}
                                         error={formDataError.vehicleModel}
-                                        helperText={formDataError.vehicleModel?"Please Enter Model":''}
+                                        helperText={formDataError.vehicleModel ? "Please Enter Model" : ''}
                                         name="vehicleModel"
                                         id="outlined-required"
                                         label="Vehicle Model"
@@ -649,18 +653,19 @@ function AddBook() {
                                 </div>
                                 <div className="col-span-4">
                                     <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label" required  error={formDataError.serviceAuthority}>Service Authority</InputLabel>
+                                        <InputLabel id="demo-simple-select-label" required error={formDataError.serviceAuthority}>Service Authority</InputLabel>
                                         <Select
-                                            onBlur={(e)=>{
-                                                if(e.target.value.length < 2){
-                                                    setFormDataError((perv)=>({
+                                            onBlur={(e) => {
+                                                if (e.target.value.length < 2) {
+                                                    setFormDataError((perv) => ({
                                                         ...perv,
-                                                        serviceAuthority:true
-                                                    }))}
-                                                else{
-                                                    setFormDataError((perv)=>({
+                                                        serviceAuthority: true
+                                                    }))
+                                                }
+                                                else {
+                                                    setFormDataError((perv) => ({
                                                         ...perv,
-                                                        serviceAuthority:false
+                                                        serviceAuthority: false
                                                     }))
                                                 }
                                             }}
@@ -740,23 +745,24 @@ function AddBook() {
                                             )) : null}
                                         </Select> */}
                                         <Autocomplete
-                                            onBlur={(e)=>{
-                                                if(e.target.value.length < 2){
-                                                    setFormDataError((perv)=>({
+                                            onBlur={(e) => {
+                                                if (e.target.value.length < 2) {
+                                                    setFormDataError((perv) => ({
                                                         ...perv,
-                                                        dealerId:true
-                                                    }))}
-                                                else{
-                                                    setFormDataError((perv)=>({
+                                                        dealerId: true
+                                                    }))
+                                                }
+                                                else {
+                                                    setFormDataError((perv) => ({
                                                         ...perv,
-                                                        dealerId:false
+                                                        dealerId: false
                                                     }))
                                                 }
                                             }}
                                             disablePortal
                                             id="dealerDropdownList"
                                             value={dealerDropdownList ? dealerDropdownList.find(obj => obj.dealerId === formData.dealerId) : null}
-                                           
+
                                             onChange={handleDealerChange}
                                             options={dealerDropdownList ? dealerDropdownList : []}
                                             sx={{ width: '100%' }}
@@ -765,27 +771,28 @@ function AddBook() {
                                         />
                                     </FormControl>
                                 </div>
-                                {formData?.dealerId == 100 &&
+                                {formData?.dealerId == '100' &&
                                     <>
                                         <div className="col-span-4">
                                             <TextField
-                                                onBlur={(e)=>{
-                                                    if(e.target.value.length < 2){
-                                                        setFormDataError((perv)=>({
+                                                onBlur={(e) => {
+                                                    if (e.target.value.length < 2) {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            privateCustomerName:true
-                                                        }))}
-                                                    else{
-                                                        setFormDataError((perv)=>({
+                                                            privateCustomerName: true
+                                                        }))
+                                                    }
+                                                    else {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            privateCustomerName:false
+                                                            privateCustomerName: false
                                                         }))
                                                     }
                                                 }}
                                                 onChange={onChange}
                                                 value={formData.privateCustomerName}
                                                 error={formDataError.privateCustomerName}
-                                                helperText={formDataError.privateCustomerName?"Please Enter Customer Name":''}
+                                                helperText={formDataError.privateCustomerName ? "Please Enter Customer Name" : ''}
                                                 name="privateCustomerName"
                                                 id="outlined-required"
                                                 label="Private Customer Name"
@@ -796,32 +803,32 @@ function AddBook() {
                                         </div>
                                     </>
                                 }
-                                {(formData?.dealerId == 100 || (formData.dealerId != 100 && !formData.TO)) &&
+                                {(formData?.dealerId == '100' || (formData.dealerId != '100' && !formData.TO)) &&
                                     <>
                                         <div className="col-span-4">
                                             <TextField
-                                                onBlur={(e)=>{
-                                                    if(e.target.value.length < 2){
-                                                        setFormDataError((perv)=>({
+                                                onBlur={(e) => {
+                                                    if (e.target.value.length < 2) {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            clientWhatsAppNumber:true
-                                                        }))}
-                                                    else{
-                                                        setFormDataError((perv)=>({
+                                                            clientWhatsAppNumber: true
+                                                        }))
+                                                    }
+                                                    else {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            clientWhatsAppNumber:false
+                                                            clientWhatsAppNumber: false
                                                         }))
                                                     }
                                                 }}
-                                                onChange={(e)=>{
-                                                    if((regex.test(e.target.value) || e.target.value === '') && e.target.value.length<11)
-                                                    {
+                                                onChange={(e) => {
+                                                    if ((regex.test(e.target.value) || e.target.value === '') && e.target.value.length < 11) {
                                                         onChange(e)
                                                     }
-                                                    }}
+                                                }}
                                                 value={formData.clientWhatsAppNumber}
                                                 error={formDataError.clientWhatsAppNumber}
-                                                helperText={formDataError.clientWhatsAppNumber?"Please Enter WhatsApp Number":''}
+                                                helperText={formDataError.clientWhatsAppNumber ? "Please Enter WhatsApp Number" : ''}
                                                 name="clientWhatsAppNumber"
                                                 id="outlined-required"
                                                 label="Customer Number"
@@ -841,23 +848,24 @@ function AddBook() {
                             <div className="grid grid-cols-12 gap-x-5">
                                 <div className="col-span-4">
                                     <TextField
-                                        onBlur={(e)=>{
-                                            if(e.target.value.length < 2){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 2) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    sellerFirstName:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    sellerFirstName: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    sellerFirstName:false
+                                                    sellerFirstName: false
                                                 }))
                                             }
                                         }}
                                         onChange={onChange}
                                         value={formData.sellerFirstName}
                                         error={formDataError.sellerFirstName}
-                                        helperText={formDataError.sellerFirstName?"Please Enter Owner Name":''}
+                                        helperText={formDataError.sellerFirstName ? "Please Enter Owner Name" : ''}
                                         name="sellerFirstName"
                                         id="outlined-required"
                                         label="Owner First Name"
@@ -868,23 +876,24 @@ function AddBook() {
                                 </div>
                                 <div className="col-span-4">
                                     <TextField
-                                         onBlur={(e)=>{
-                                            if(e.target.value.length < 2){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 2) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    sellerMiddleName:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    sellerMiddleName: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    sellerMiddleName:false
+                                                    sellerMiddleName: false
                                                 }))
                                             }
                                         }}
                                         onChange={onChange}
                                         value={formData.sellerMiddleName}
                                         error={formDataError.sellerMiddleName}
-                                        helperText={formDataError.sellerMiddleName?"Please Enter Owner Name":''}
+                                        helperText={formDataError.sellerMiddleName ? "Please Enter Owner Name" : ''}
                                         name="sellerMiddleName"
                                         id="outlined-required"
                                         label="Owner Middle Name"
@@ -895,23 +904,24 @@ function AddBook() {
                                 </div>
                                 <div className="col-span-4">
                                     <TextField
-                                         onBlur={(e)=>{
-                                            if(e.target.value.length < 2){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 2) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    sellerLastName:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    sellerLastName: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    sellerLastName:false
+                                                    sellerLastName: false
                                                 }))
                                             }
                                         }}
                                         onChange={onChange}
                                         value={formData.sellerLastName}
                                         error={formDataError.sellerLastName}
-                                        helperText={formDataError.sellerLastName?"Please Enter Owner Name":''}
+                                        helperText={formDataError.sellerLastName ? "Please Enter Owner Name" : ''}
                                         name="sellerLastName"
                                         id="outlined-required"
                                         label="Seller Last Name"
@@ -924,30 +934,30 @@ function AddBook() {
                             <div className="grid grid-cols-12 gap-x-5">
                                 <div className="col-span-4">
                                     <TextField
-                                         onBlur={(e)=>{
-                                            if(e.target.value.length < 2){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 2) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    sellerAddress:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    sellerAddress: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    sellerAddress:false
+                                                    sellerAddress: false
                                                 }))
                                             }
                                         }}
-                                        onChange={(e)=>{
-                                            if(e.target.value.length<13)
-                                            {
+                                        onChange={(e) => {
+                                            if (e.target.value.length < 13) {
                                                 onChange(e)
                                             }
-                                            }}
+                                        }}
                                         id="outlined-required"
                                         label="Town/City"
                                         value={formData.sellerAddress}
                                         error={formDataError.sellerAddress}
-                                        helperText={formDataError.sellerAddress?"Please Enter Only City Name":''}
+                                        helperText={formDataError.sellerAddress ? "Please Enter Only City Name" : ''}
                                         name="sellerAddress"
                                         InputProps={{ style: { fontSize: 14 } }}
                                         InputLabelProps={{ style: { fontSize: 14 } }}
@@ -965,23 +975,24 @@ function AddBook() {
                                     <div className="grid grid-cols-12 gap-x-5">
                                         <div className="col-span-4">
                                             <TextField
-                                                 onBlur={(e)=>{
-                                                    if(e.target.value.length < 2){
-                                                        setFormDataError((perv)=>({
+                                                onBlur={(e) => {
+                                                    if (e.target.value.length < 2) {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerFirstName:true
-                                                        }))}
-                                                    else{
-                                                        setFormDataError((perv)=>({
+                                                            buyerFirstName: true
+                                                        }))
+                                                    }
+                                                    else {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerFirstName:false
+                                                            buyerFirstName: false
                                                         }))
                                                     }
                                                 }}
                                                 onChange={onChange}
                                                 value={formData.buyerFirstName}
                                                 error={formDataError.buyerFirstName}
-                                                helperText={formDataError.buyerFirstName?"Please Enter Buyer Name":''}
+                                                helperText={formDataError.buyerFirstName ? "Please Enter Buyer Name" : ''}
                                                 name="buyerFirstName"
                                                 id="outlined-required"
                                                 label="Buyer First Name"
@@ -992,23 +1003,24 @@ function AddBook() {
                                         </div>
                                         <div className="col-span-4">
                                             <TextField
-                                                 onBlur={(e)=>{
-                                                    if(e.target.value.length < 2){
-                                                        setFormDataError((perv)=>({
+                                                onBlur={(e) => {
+                                                    if (e.target.value.length < 2) {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerMiddleName:true
-                                                        }))}
-                                                    else{
-                                                        setFormDataError((perv)=>({
+                                                            buyerMiddleName: true
+                                                        }))
+                                                    }
+                                                    else {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerMiddleName:false
+                                                            buyerMiddleName: false
                                                         }))
                                                     }
                                                 }}
                                                 onChange={onChange}
                                                 value={formData.buyerMiddleName}
                                                 error={formDataError.buyerMiddleName}
-                                                helperText={formDataError.buyerMiddleName?"Please Enter Buyer Name":''}
+                                                helperText={formDataError.buyerMiddleName ? "Please Enter Buyer Name" : ''}
                                                 name="buyerMiddleName"
                                                 id="outlined-required"
                                                 label="Buyer Middle Name"
@@ -1019,23 +1031,24 @@ function AddBook() {
                                         </div>
                                         <div className="col-span-4">
                                             <TextField
-                                                 onBlur={(e)=>{
-                                                    if(e.target.value.length < 2){
-                                                        setFormDataError((perv)=>({
+                                                onBlur={(e) => {
+                                                    if (e.target.value.length < 2) {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerLastName:true
-                                                        }))}
-                                                    else{
-                                                        setFormDataError((perv)=>({
+                                                            buyerLastName: true
+                                                        }))
+                                                    }
+                                                    else {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerLastName:false
+                                                            buyerLastName: false
                                                         }))
                                                     }
                                                 }}
                                                 onChange={onChange}
                                                 value={formData.buyerLastName}
                                                 error={formDataError.buyerLastName}
-                                                helperText={formDataError.buyerLastName?"Please Enter Buyer Name":''}
+                                                helperText={formDataError.buyerLastName ? "Please Enter Buyer Name" : ''}
                                                 name="buyerLastName"
                                                 id="outlined-required"
                                                 label="Buyer Last Name"
@@ -1048,30 +1061,30 @@ function AddBook() {
                                     <div className="grid grid-cols-12 gap-x-5">
                                         <div className="col-span-4">
                                             <TextField
-                                                 onBlur={(e)=>{
-                                                    if(e.target.value.length < 2){
-                                                        setFormDataError((perv)=>({
+                                                onBlur={(e) => {
+                                                    if (e.target.value.length < 2) {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerAddressLine1:true
-                                                        }))}
-                                                    else{
-                                                        setFormDataError((perv)=>({
+                                                            buyerAddressLine1: true
+                                                        }))
+                                                    }
+                                                    else {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerAddressLine1:false
+                                                            buyerAddressLine1: false
                                                         }))
                                                     }
                                                 }}
-                                                onChange={(e)=>{
-                                                    if(e.target.value.length<30)
-                                                    {
-                                                            onChange(e)
+                                                onChange={(e) => {
+                                                    if (e.target.value.length < 30) {
+                                                        onChange(e)
                                                     }
-                                                    }}
+                                                }}
                                                 id="outlined-required"
                                                 label="House no & Street name"
                                                 value={formData.buyerAddressLine1}
                                                 error={formDataError.buyerAddressLine1}
-                                                helperText={formDataError.buyerAddressLine1?"Please Enter Buyer Address":''}
+                                                helperText={formDataError.buyerAddressLine1 ? "Please Enter Buyer Address" : ''}
                                                 name="buyerAddressLine1"
                                                 InputProps={{ style: { fontSize: 14 } }}
                                                 InputLabelProps={{ style: { fontSize: 14 } }}
@@ -1080,28 +1093,28 @@ function AddBook() {
                                         </div>
                                         <div className="col-span-4">
                                             <TextField
-                                                onBlur={(e)=>{
-                                                    if(e.target.value.length < 2){
-                                                        setFormDataError((perv)=>({
+                                                onBlur={(e) => {
+                                                    if (e.target.value.length < 2) {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerAddressLine2:true
-                                                        }))}
-                                                    else{
-                                                        setFormDataError((perv)=>({
+                                                            buyerAddressLine2: true
+                                                        }))
+                                                    }
+                                                    else {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerAddressLine2:false
+                                                            buyerAddressLine2: false
                                                         }))
                                                     }
                                                 }}
-                                                onChange={(e)=>{
-                                                    if(e.target.value.length<30)
-                                                    {
-                                                            onChange(e)
+                                                onChange={(e) => {
+                                                    if (e.target.value.length < 30) {
+                                                        onChange(e)
                                                     }
-                                                    }}
+                                                }}
                                                 value={formData.buyerAddressLine2}
                                                 error={formDataError.buyerAddressLine2}
-                                                helperText={formDataError.buyerAddressLine2?"Please Enter Buyer Address":''}
+                                                helperText={formDataError.buyerAddressLine2 ? "Please Enter Buyer Address" : ''}
                                                 name="buyerAddressLine2"
                                                 id="outlined-required"
                                                 label="Landmark / Police station"
@@ -1112,28 +1125,28 @@ function AddBook() {
                                         </div>
                                         <div className="col-span-4">
                                             <TextField
-                                                onBlur={(e)=>{
-                                                    if(e.target.value.length < 2){
-                                                        setFormDataError((perv)=>({
+                                                onBlur={(e) => {
+                                                    if (e.target.value.length < 2) {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerAddressLine3:true
-                                                        }))}
-                                                    else{
-                                                        setFormDataError((perv)=>({
+                                                            buyerAddressLine3: true
+                                                        }))
+                                                    }
+                                                    else {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerAddressLine3:false
+                                                            buyerAddressLine3: false
                                                         }))
                                                     }
                                                 }}
-                                                onChange={(e)=>{
-                                                    if(e.target.value.length<30)
-                                                    {
-                                                            onChange(e)
+                                                onChange={(e) => {
+                                                    if (e.target.value.length < 30) {
+                                                        onChange(e)
                                                     }
-                                                    }}
+                                                }}
                                                 value={formData.buyerAddressLine3}
                                                 error={formDataError.buyerAddressLine3}
-                                                helperText={formDataError.buyerAddressLine3?"Please Enter Buyer Address":''}
+                                                helperText={formDataError.buyerAddressLine3 ? "Please Enter Buyer Address" : ''}
                                                 name="buyerAddressLine3"
                                                 id="outlined-required"
                                                 label="Village/Town/City"
@@ -1148,16 +1161,17 @@ function AddBook() {
                                             <FormControl style={{ minWidth: '100%' }}>
                                                 <InputLabel id="demo-simple-select-label" required error={formDataError.buyerState}>State</InputLabel>
                                                 <Select
-                                                    onBlur={(e)=>{
-                                                        if(e.target.value.length < 2){
-                                                            setFormDataError((perv)=>({
+                                                    onBlur={(e) => {
+                                                        if (e.target.value.length < 2) {
+                                                            setFormDataError((perv) => ({
                                                                 ...perv,
-                                                                buyerState:true
-                                                            }))}
-                                                        else{
-                                                            setFormDataError((perv)=>({
+                                                                buyerState: true
+                                                            }))
+                                                        }
+                                                        else {
+                                                            setFormDataError((perv) => ({
                                                                 ...perv,
-                                                                buyerState:false
+                                                                buyerState: false
                                                             }))
                                                         }
                                                     }}
@@ -1182,16 +1196,17 @@ function AddBook() {
                                             <FormControl style={{ minWidth: '100%' }}>
                                                 <InputLabel id="demo-simple-select-label" required error={formDataError.buyerCity}>City</InputLabel>
                                                 <Select
-                                                    onBlur={(e)=>{
-                                                        if(e.target.value.length < 2){
-                                                            setFormDataError((perv)=>({
+                                                    onBlur={(e) => {
+                                                        if (e.target.value.length < 2) {
+                                                            setFormDataError((perv) => ({
                                                                 ...perv,
-                                                                buyerCity:true
-                                                            }))}
-                                                        else{
-                                                            setFormDataError((perv)=>({
+                                                                buyerCity: true
+                                                            }))
+                                                        }
+                                                        else {
+                                                            setFormDataError((perv) => ({
                                                                 ...perv,
-                                                                buyerCity:false
+                                                                buyerCity: false
                                                             }))
                                                         }
                                                     }}
@@ -1199,7 +1214,7 @@ function AddBook() {
                                                     id="demo-simple-select"
                                                     value={formData.buyerCity}
                                                     error={formDataError.buyerCity}
-                                                    helperText={formDataError.buyerCity?"Please Select City":''}
+                                                    helperText={formDataError.buyerCity ? "Please Select City" : ''}
                                                     name="buyerCity"
                                                     label="City"
                                                     onChange={onChange}
@@ -1214,28 +1229,28 @@ function AddBook() {
                                         </div>
                                         <div className="col-span-4">
                                             <TextField
-                                                onBlur={(e)=>{
-                                                    if(e.target.value.length < 2){
-                                                        setFormDataError((perv)=>({
+                                                onBlur={(e) => {
+                                                    if (e.target.value.length < 2) {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerPincode:true
-                                                        }))}
-                                                    else{
-                                                        setFormDataError((perv)=>({
+                                                            buyerPincode: true
+                                                        }))
+                                                    }
+                                                    else {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            buyerPincode:false
+                                                            buyerPincode: false
                                                         }))
                                                     }
                                                 }}
-                                                onChange={(e)=>{
-                                                    if((regex.test(e.target.value) || e.target.value === '') && e.target.value.length<7)
-                                                    {
-                                                            onChange(e)
+                                                onChange={(e) => {
+                                                    if ((regex.test(e.target.value) || e.target.value === '') && e.target.value.length < 7) {
+                                                        onChange(e)
                                                     }
-                                                    }}
+                                                }}
                                                 value={formData.buyerPincode}
                                                 error={formDataError.buyerPincode}
-                                                helperText={formDataError.buyerPincode?"Please Enter Pincode":''}
+                                                helperText={formDataError.buyerPincode ? "Please Enter Pincode" : ''}
                                                 name="buyerPincode"
                                                 id="outlined-required"
                                                 label="PIN Code"
@@ -1248,28 +1263,28 @@ function AddBook() {
                                     <div className="grid grid-cols-12 gap-x-5">
                                         <div className="col-span-4">
                                             <TextField
-                                                onBlur={(e)=>{
-                                                    if(e.target.value.length < 2){
-                                                        setFormDataError((perv)=>({
+                                                onBlur={(e) => {
+                                                    if (e.target.value.length < 2) {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            clientWhatsAppNumber:true
-                                                        }))}
-                                                    else{
-                                                        setFormDataError((perv)=>({
+                                                            clientWhatsAppNumber: true
+                                                        }))
+                                                    }
+                                                    else {
+                                                        setFormDataError((perv) => ({
                                                             ...perv,
-                                                            clientWhatsAppNumber:false
+                                                            clientWhatsAppNumber: false
                                                         }))
                                                     }
                                                 }}
-                                                onChange={(e)=>{
-                                                    if((regex.test(e.target.value) || e.target.value === '') && e.target.value.length<11)
-                                                    {
-                                                            onChange(e)
+                                                onChange={(e) => {
+                                                    if ((regex.test(e.target.value) || e.target.value === '') && e.target.value.length < 11) {
+                                                        onChange(e)
                                                     }
-                                                    }}
+                                                }}
                                                 value={formData.clientWhatsAppNumber}
                                                 error={formDataError.clientWhatsAppNumber}
-                                                helperText={formDataError.clientWhatsAppNumber?"Please Enter WhatsApp Number":''}
+                                                helperText={formDataError.clientWhatsAppNumber ? "Please Enter WhatsApp Number" : ''}
                                                 name="clientWhatsAppNumber"
                                                 id="outlined-required"
                                                 label="Mobile Number"

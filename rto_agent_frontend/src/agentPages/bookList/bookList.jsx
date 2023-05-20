@@ -126,8 +126,8 @@ function BookList(props) {
 
     const handleChange = (e) => {
         console.log("LLLKKK")
-        console.log(">>>>LLLL",e.target.name === 'searchOption' && props.filter[e.target.name] === 20 && e.target.value === 'lastUpdated');
-        if(props.filter && e.target.name === 'searchOption' && props.filter[e.target.name] === 20 && e.target.value === 'lastUpdated'){
+        console.log(">>>>LLLL", e.target.name === 'searchOption' && props.filter[e.target.name] === 20 && e.target.value === 'lastUpdated');
+        if (props.filter && e.target.name === 'searchOption' && props.filter[e.target.name] === 20 && e.target.value === 'lastUpdated') {
             console.log(">>>>LLLL");
             props.resetFilter()
         }
@@ -190,9 +190,10 @@ function BookList(props) {
     }
 
     const handleSave = () => {
-        if(file && fileName){
-        props.moveToNextStep(file, appointmentDate, bookId, sendReceipt)}
-        else{
+        if (file && fileName) {
+            props.moveToNextStep(file, appointmentDate, bookId, sendReceipt)
+        }
+        else {
             alert("please upload file");
         }
     }
@@ -425,9 +426,9 @@ function BookList(props) {
                                                     >
                                                         <MenuItem value={null}>Clear</MenuItem>
                                                         {
-                                                            dealerDropdownList ? dealerDropdownList.map((row) => row && row.dealerId !== 100 ?(
+                                                            dealerDropdownList ? dealerDropdownList.map((row) => row && row.dealerId !== 100 ? (
                                                                 <MenuItem value={row.dealerId}>{row.dealerDisplayName}</MenuItem>
-                                                            ):null)
+                                                            ) : null)
                                                                 : null
                                                         }
 
@@ -730,12 +731,12 @@ function BookList(props) {
                                         </button>
                                     </div>
                                 </div>
-                            </Box>:
+                            </Box> :
                             (
                                 <>
-                                {
+                                    {
                                         setTimeout(() => {
-                                            
+
                                             setFile(null)
                                             setFileName('')
                                             setOpen(false)
@@ -746,7 +747,7 @@ function BookList(props) {
                                         }, 0)
 
                                     }
-                                </> 
+                                </>
                             )
                         : (
                             <>
