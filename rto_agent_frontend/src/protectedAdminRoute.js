@@ -15,9 +15,9 @@ const ProtectedAdminRoute = () => {
 
     const user = JSON.parse(localStorage.getItem('userInfo'))
     let location = useLocation();
-    // if(!user){
-    //     return(<Navigate to="/login" state={{ from: location }} replace />)
-    // }
+    if(!user || !user.isAdminrights){
+        return(<Navigate to="/login" state={{ from: location }} replace />)
+    }
     const role = decryptData(user.isAdminrights)
     const decoded = jwt_decode(user.token);
     const expirationTime = (decoded.exp * 1000) - 60000

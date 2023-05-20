@@ -484,7 +484,7 @@ DEALER_LIST_DROPDOWN_FAIL,
         `${BACKEND_BASE_URL}dealerrouter/ddlDealerByAgentId`,
         config
       );
-      data.unshift({ dealerId: 100, dealerDisplayName: 'PRIVATE' });
+      data.unshift({ dealerId: '100', dealerDisplayName: 'PRIVATE' });
       dispatch({
         type: DEALER_LIST_DROPDOWN_SUCCESS,
         payload: data,
