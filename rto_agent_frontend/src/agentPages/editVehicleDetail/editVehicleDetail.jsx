@@ -1109,6 +1109,7 @@ function EditBook() {
                                                     }}
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
+                                                    error={formDataError.buyerState}
                                                     value={formData.buyerState}
                                                     name="buyerState"
                                                     label="State"
@@ -1143,6 +1144,7 @@ function EditBook() {
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
                                                     value={formData.buyerCity}
+                                                    error={formDataError.buyerCity}
                                                     name="buyerCity"
                                                     label="City"
                                                     onChange={onChange}
