@@ -19,9 +19,9 @@ function Dashboard() {
             `${BACKEND_BASE_URL}vehicleRegistrationrouter/dashBoardCountNumber`,
             config
         )
-            .then((res) => {
-                setCount(res.data);
-            })
+        .then((res) => {
+            setCount(res.data);
+        })
 
     }, [])
     if (!count) {
@@ -44,7 +44,7 @@ function Dashboard() {
                     <CountCardDashboard color="green" data={count.AllCompleteBook ? count.AllCompleteBook : 0} description={"Complete Books"} icon={"complete"} />
                 </div>
             </div>
-            <DealerList />
+            <DealerList setCount={setCount}/>
         </div>
     )
 }

@@ -15,7 +15,7 @@ import Menutemp from './menu';
 import { ToastContainer, toast } from 'react-toastify';
 // import { dealerList } from "../../action/adminAction/adminAction";
 
-function DealerList() {
+function DealerList({setCount}) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const dispatch = useDispatch();
@@ -50,6 +50,7 @@ function DealerList() {
             dispatch(deleteDealer(id))
             setTimeout(() => {
                 dispatch(dealerList(page + 1, rowsPerPage))
+                setCount({})
             }, 1000)
         }
 
