@@ -98,25 +98,25 @@ function AddDealer() {
 
     const submit = () => {
         console.log('>>>>>>>>>>', formData)
-        
+
         const isValidate = fields.filter(element => {
-            if(element === 'dealerEmailId'){
+            if (element === 'dealerEmailId') {
                 return null
-            }else if(formDataError[element] === true || formData[element] === ''){
-                setFormDataError((perv)=>({
+            } else if (formDataError[element] === true || formData[element] === '') {
+                setFormDataError((perv) => ({
                     ...perv,
-                    [element]:true
+                    [element]: true
                 }))
                 return element;
             }
         })
-        console.log('????',isValidate);
-        if(isValidate.length>0){
+        console.log('????', isValidate);
+        if (isValidate.length > 0) {
             alert(
                 "Please Fill All Field"
             )
-        }else{
-             dispatch(createDealer(formData))
+        } else {
+            dispatch(createDealer(formData))
         }
     }
 
@@ -205,23 +205,24 @@ function AddDealer() {
                             </div>
                             <div className="col-span-5">
                                 <TextField
-                                    onBlur={(e)=>{
-                                        if(e.target.value.length < 2){
-                                            setFormDataError((perv)=>({
+                                    onBlur={(e) => {
+                                        if (e.target.value.length < 2) {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerFirstName:true
-                                            }))}
-                                        else{
-                                            setFormDataError((perv)=>({
+                                                dealerFirstName: true
+                                            }))
+                                        }
+                                        else {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerFirstName:false
+                                                dealerFirstName: false
                                             }))
                                         }
                                     }}
                                     onChange={onChange}
                                     value={formData.dealerFirstName}
                                     error={formDataError.dealerFirstName}
-                                    helperText={formDataError.dealerFirstName?"Please Enter Firest Name":''}
+                                    helperText={formDataError.dealerFirstName ? "Please Enter Firest Name" : ''}
                                     name="dealerFirstName"
                                     id="outlined-required"
                                     label="First Name"
@@ -232,23 +233,24 @@ function AddDealer() {
                             </div>
                             <div className="col-span-5">
                                 <TextField
-                                    onBlur={(e)=>{
-                                        if(e.target.value.length < 2){
-                                            setFormDataError((perv)=>({
+                                    onBlur={(e) => {
+                                        if (e.target.value.length < 2) {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerLastName:true
-                                            }))}
-                                        else{
-                                            setFormDataError((perv)=>({
+                                                dealerLastName: true
+                                            }))
+                                        }
+                                        else {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerLastName:false
+                                                dealerLastName: false
                                             }))
                                         }
                                     }}
                                     onChange={onChange}
                                     value={formData.dealerLastName}
                                     error={formDataError.dealerLastName}
-                                    helperText={formDataError.dealerLastName?"Please Enter Last Name":''}
+                                    helperText={formDataError.dealerLastName ? "Please Enter Last Name" : ''}
                                     name="dealerLastName"
                                     id="outlined-required"
                                     label="Last Name"
@@ -264,23 +266,24 @@ function AddDealer() {
                             </div>
                             <div className="col-span-5">
                                 <TextField
-                                    onBlur={(e)=>{
-                                        if(e.target.value.length < 2){
-                                            setFormDataError((perv)=>({
+                                    onBlur={(e) => {
+                                        if (e.target.value.length < 1) {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerDisplayName:true
-                                            }))}
-                                        else{
-                                            setFormDataError((perv)=>({
+                                                dealerDisplayName: true
+                                            }))
+                                        }
+                                        else {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerDisplayName:false
+                                                dealerDisplayName: false
                                             }))
                                         }
                                     }}
                                     onChange={onChange}
                                     value={formData.dealerDisplayName}
                                     error={formDataError.dealerDisplayName}
-                                    helperText={formDataError.dealerDisplayName?"Please Enter Dealer Code":''}
+                                    helperText={formDataError.dealerDisplayName ? "Please Enter Dealer Code" : ''}
                                     name="dealerDisplayName"
                                     id="outlined-required"
                                     label="Dealer Code"
@@ -294,33 +297,35 @@ function AddDealer() {
                                 <FormControl>
                                     <FormLabel id="demo-row-radio-buttons-group-label" required error={formDataError.dealerGender}>Gender</FormLabel>
                                     <RadioGroup
-                                        onBlur={(e)=>{
-                                            if(e.target.value.length < 2){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 2) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    dealerGender:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    dealerGender: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    dealerGender:false
+                                                    dealerGender: false
                                                 }))
                                             }
                                         }}
                                         row
                                         required
-                                        onChange={(e)=>{
-                                            setFormDataError((perv)=>({
-                                            ...perv,
-                                            dealerGender:false
-                                        }))
-                                            onChange(e)}}
+                                        onChange={(e) => {
+                                            setFormDataError((perv) => ({
+                                                ...perv,
+                                                dealerGender: false
+                                            }))
+                                            onChange(e)
+                                        }}
                                         aria-labelledby="demo-row-radio-buttons-group-label"
                                         value={formData.dealerGender}
                                         error={formDataError.dealerGender}
                                         name="dealerGender"
                                     >
-                                        <FormControlLabel  value="female" control={<Radio />} label="Female" />
+                                        <FormControlLabel value="female" control={<Radio />} label="Female" />
                                         <FormControlLabel value="male" control={<Radio />} label="Male" />
                                     </RadioGroup>
                                 </FormControl>
@@ -332,23 +337,24 @@ function AddDealer() {
                             </div>
                             <div className="col-span-5">
                                 <TextField
-                                    onBlur={(e)=>{
-                                        if(e.target.value.length < 2){
-                                            setFormDataError((perv)=>({
+                                    onBlur={(e) => {
+                                        if (e.target.value.length < 2) {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerFirmName:true
-                                            }))}
-                                        else{
-                                            setFormDataError((perv)=>({
+                                                dealerFirmName: true
+                                            }))
+                                        }
+                                        else {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerFirmName:false
+                                                dealerFirmName: false
                                             }))
                                         }
                                     }}
                                     onChange={onChange}
                                     value={formData.dealerFirmName}
                                     error={formDataError.dealerFirmName}
-                                    helperText={formDataError.dealerFirmName?"Please Enter Firm Name":''}
+                                    helperText={formDataError.dealerFirmName ? "Please Enter Firm Name" : ''}
                                     name="dealerFirmName"
                                     id="outlined-required"
                                     label="Firm Name"
@@ -360,21 +366,22 @@ function AddDealer() {
                             <div className="col-span-5">
                                 <div className="col-span-5">
                                     <TextField
-                                    onBlur={(e)=>{
-                                        if(emailRegx.test(e.target.value) || e.target.value === ''){
-                                            setFormDataError((perv)=>({
-                                                ...perv,
-                                                dealerEmailId:false
-                                            }))}
-                                        else{
-                                            setFormDataError((perv)=>({
-                                                ...perv,
-                                                dealerEmailId:true
-                                            }))
-                                        }
-                                    }}
+                                        onBlur={(e) => {
+                                            if (emailRegx.test(e.target.value) || e.target.value === '') {
+                                                setFormDataError((perv) => ({
+                                                    ...perv,
+                                                    dealerEmailId: false
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
+                                                    ...perv,
+                                                    dealerEmailId: true
+                                                }))
+                                            }
+                                        }}
                                         error={formDataError.dealerEmailId}
-                                        helperText={formDataError.dealerEmailId?"Please Enter valid Email":''}
+                                        helperText={formDataError.dealerEmailId ? "Please Enter valid Email" : ''}
                                         onChange={onChange}
                                         value={formData.dealerEmailId}
                                         name="dealerEmailId"
@@ -394,16 +401,17 @@ function AddDealer() {
                             </div>
                             <div className="col-span-10">
                                 <TextField
-                                    onBlur={(e)=>{
-                                        if(e.target.value.length < 2){
-                                            setFormDataError((perv)=>({
+                                    onBlur={(e) => {
+                                        if (e.target.value.length < 2) {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerFirmAddressLine1:true
-                                            }))}
-                                        else{
-                                            setFormDataError((perv)=>({
+                                                dealerFirmAddressLine1: true
+                                            }))
+                                        }
+                                        else {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerFirmAddressLine1:false
+                                                dealerFirmAddressLine1: false
                                             }))
                                         }
                                     }}
@@ -412,7 +420,7 @@ function AddDealer() {
                                     label="Address Line 1"
                                     value={formData.dealerFirmAddressLine1}
                                     error={formDataError.dealerFirmAddressLine1}
-                                    helperText={formDataError.dealerFirmAddressLine1?"Please Enter Address":''}
+                                    helperText={formDataError.dealerFirmAddressLine1 ? "Please Enter Address" : ''}
                                     name="dealerFirmAddressLine1"
                                     InputProps={{ style: { fontSize: 14 } }}
                                     InputLabelProps={{ style: { fontSize: 14 } }}
@@ -426,23 +434,24 @@ function AddDealer() {
                             </div>
                             <div className="col-span-10">
                                 <TextField
-                                    onBlur={(e)=>{
-                                        if(e.target.value.length < 2){
-                                            setFormDataError((perv)=>({
+                                    onBlur={(e) => {
+                                        if (e.target.value.length < 2) {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerFirmAddressLine2:true
-                                            }))}
-                                        else{
-                                            setFormDataError((perv)=>({
+                                                dealerFirmAddressLine2: true
+                                            }))
+                                        }
+                                        else {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerFirmAddressLine2:false
+                                                dealerFirmAddressLine2: false
                                             }))
                                         }
                                     }}
                                     onChange={onChange}
                                     value={formData.dealerFirmAddressLine2}
                                     error={formDataError.dealerFirmAddressLine2}
-                                    helperText={formDataError.dealerFirmAddressLine2?"Please Enter Address":''}
+                                    helperText={formDataError.dealerFirmAddressLine2 ? "Please Enter Address" : ''}
                                     name="dealerFirmAddressLine2"
                                     id="outlined-required"
                                     label="Address Line 2"
@@ -460,16 +469,17 @@ function AddDealer() {
                                 <FormControl style={{ minWidth: '100%' }}>
                                     <InputLabel required error={formDataError.dealerFirmState} id="demo-simple-select-label">State</InputLabel>
                                     <Select
-                                        onBlur={(e)=>{
-                                            if(e.target.value.length < 2){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 2) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    dealerFirmState:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    dealerFirmState: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    dealerFirmState:false
+                                                    dealerFirmState: false
                                                 }))
                                             }
                                         }}
@@ -496,16 +506,17 @@ function AddDealer() {
                                 <FormControl style={{ minWidth: '100%' }}>
                                     <InputLabel required error={formDataError.dealerFirmCity} id="demo-simple-select-label">City</InputLabel>
                                     <Select
-                                        onBlur={(e)=>{
-                                            if(e.target.value.length < 2){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 2) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    dealerFirmCity:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    dealerFirmCity: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    dealerFirmCity:false
+                                                    dealerFirmCity: false
                                                 }))
                                             }
                                         }}
@@ -531,28 +542,28 @@ function AddDealer() {
                             </div>
                             <div className="col-span-4">
                                 <TextField
-                                    onBlur={(e)=>{
-                                        if(e.target.value.length < 6){
-                                            setFormDataError((perv)=>({
+                                    onBlur={(e) => {
+                                        if (e.target.value.length < 6) {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerFirmPincode:true
-                                            }))}
-                                        else{
-                                            setFormDataError((perv)=>({
+                                                dealerFirmPincode: true
+                                            }))
+                                        }
+                                        else {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerFirmPincode:false
+                                                dealerFirmPincode: false
                                             }))
                                         }
                                     }}
-                                    onChange={(e)=>{
-                                        if((regex.test(e.target.value) || e.target.value === '') && e.target.value.length<7)
-                                        {
-                                                onChange(e)
+                                    onChange={(e) => {
+                                        if ((regex.test(e.target.value) || e.target.value === '') && e.target.value.length < 7) {
+                                            onChange(e)
                                         }
-                                        }}
+                                    }}
                                     value={formData.dealerFirmPincode}
                                     error={formDataError.dealerFirmPincode}
-                                    helperText={formDataError.dealerFirmPincode?"Please Enter Pincode":''}
+                                    helperText={formDataError.dealerFirmPincode ? "Please Enter Pincode" : ''}
                                     name="dealerFirmPincode"
                                     id="outlined-required"
                                     label="PIN Code"
@@ -568,28 +579,28 @@ function AddDealer() {
                             </div>
                             <div className="col-span-5">
                                 <TextField
-                                    onBlur={(e)=>{
-                                        if(e.target.value.length < 10){
-                                            setFormDataError((perv)=>({
+                                    onBlur={(e) => {
+                                        if (e.target.value.length < 10) {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerMobileNumber:true
-                                            }))}
-                                        else{
-                                            setFormDataError((perv)=>({
+                                                dealerMobileNumber: true
+                                            }))
+                                        }
+                                        else {
+                                            setFormDataError((perv) => ({
                                                 ...perv,
-                                                dealerMobileNumber:false
+                                                dealerMobileNumber: false
                                             }))
                                         }
                                     }}
-                                    onChange={(e)=>{
-                                        if((regex.test(e.target.value) || e.target.value === '') && e.target.value.length<11)
-                                        {
-                                                onChange(e)
+                                    onChange={(e) => {
+                                        if ((regex.test(e.target.value) || e.target.value === '') && e.target.value.length < 11) {
+                                            onChange(e)
                                         }
-                                        }}
+                                    }}
                                     value={formData.dealerMobileNumber}
                                     error={formDataError.dealerMobileNumber}
-                                    helperText={formDataError.dealerMobileNumber?"Please Enter Mobile Number":''}
+                                    helperText={formDataError.dealerMobileNumber ? "Please Enter Mobile Number" : ''}
                                     name="dealerMobileNumber"
                                     id="outlined-required"
                                     label="Mobile Number"
@@ -601,28 +612,28 @@ function AddDealer() {
                             <div className="col-span-5">
                                 <div className="col-span-5">
                                     <TextField
-                                        onBlur={(e)=>{
-                                            if(e.target.value.length < 10){
-                                                setFormDataError((perv)=>({
+                                        onBlur={(e) => {
+                                            if (e.target.value.length < 10) {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    dealerWhatsAppNumber:true
-                                                }))}
-                                            else{
-                                                setFormDataError((perv)=>({
+                                                    dealerWhatsAppNumber: true
+                                                }))
+                                            }
+                                            else {
+                                                setFormDataError((perv) => ({
                                                     ...perv,
-                                                    dealerWhatsAppNumber:false
+                                                    dealerWhatsAppNumber: false
                                                 }))
                                             }
                                         }}
-                                        onChange={(e)=>{
-                                            if((regex.test(e.target.value) || e.target.value === '') && e.target.value.length<11)
-                                            {
-                                                    onChange(e)
+                                        onChange={(e) => {
+                                            if ((regex.test(e.target.value) || e.target.value === '') && e.target.value.length < 11) {
+                                                onChange(e)
                                             }
-                                            }}
+                                        }}
                                         value={formData.dealerWhatsAppNumber}
                                         error={formDataError.dealerWhatsAppNumber}
-                                        helperText={formDataError.dealerWhatsAppNumber?"Please Enter WhatsApp Number":''}
+                                        helperText={formDataError.dealerWhatsAppNumber ? "Please Enter WhatsApp Number" : ''}
                                         name="dealerWhatsAppNumber"
                                         id="outlined-required"
                                         label="Whatsapp Number"

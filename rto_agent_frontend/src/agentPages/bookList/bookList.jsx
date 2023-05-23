@@ -425,8 +425,9 @@ function BookList(props) {
                                                         }}
                                                     >
                                                         <MenuItem value={null}>Clear</MenuItem>
+                                                        {console.log("dealerDropdownList", dealerDropdownList)}
                                                         {
-                                                            dealerDropdownList ? dealerDropdownList.map((row) => row && row.dealerId !== 100 ? (
+                                                            dealerDropdownList ? dealerDropdownList.map((row) => row && row.dealerId !== "100" ? (
                                                                 <MenuItem value={row.dealerId}>{row.dealerDisplayName}</MenuItem>
                                                             ) : null)
                                                                 : null

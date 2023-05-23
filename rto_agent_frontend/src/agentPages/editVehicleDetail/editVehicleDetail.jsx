@@ -823,7 +823,7 @@ function EditBook() {
                                 <div className="col-span-4">
                                     <TextField
                                         onBlur={(e) => {
-                                            if (e.target.value.length < 2) {
+                                            if (e.target.value.length < 1) {
                                                 setFormDataError((perv) => ({
                                                     ...perv,
                                                     sellerMiddleName: true
