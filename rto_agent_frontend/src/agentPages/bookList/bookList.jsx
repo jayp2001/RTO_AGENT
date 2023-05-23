@@ -757,13 +757,12 @@ function BookList(props) {
                                 </Box>
                                 {
                                     setTimeout(() => {
-                                        dispatch(resetReciept())
-                                        document.getElementById("fileUpload").value = "";
+                                        setOpen(false)
                                         setFile(null)
                                         setFileName('')
-                                        setOpen(false)
-                                        props.recallBook()
                                         setAppointmentDate(null)
+                                        dispatch(resetReciept())
+                                        props.recallBook()
                                     }, 2500)
 
                                 }
