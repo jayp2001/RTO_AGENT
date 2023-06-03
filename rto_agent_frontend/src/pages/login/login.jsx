@@ -4,21 +4,38 @@ import './login.css';
 import { useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import { login } from '../../action/userAction';
-import CryptoJS from 'crypto-js'
+import CryptoJS from 'crypto-js';
+import rtoLogo from '../../rto_logo.png';
+import Alert from '@mui/material/Alert';
+
+
+import IconButton from '@mui/material/IconButton';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import FormControl from "@mui/material/FormControl";
 
 const decryptData = (text) => {
     const key = process.env.REACT_APP_AES_KEY;
     const bytes = CryptoJS.AES.decrypt(text, key);
-    const data = bytes.toString(CryptoJS.enc.Utf8) ? JSON.parse(bytes.toString(CryptoJS.enc.Utf8)):0;
+    const data = bytes.toString(CryptoJS.enc.Utf8) ? JSON.parse(bytes.toString(CryptoJS.enc.Utf8)) : 0;
     return (data);
 };
 
 function LoginPage() {
     const [email, setEmail] = useState("");
+    const [showPassword, setShowPassword] = React.useState(false);
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
 
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+    // const { loading, success, error } = useSelector((state) => state.userLogin.state);
     const userLogin = useSelector((state) => state.userLogin);
     const { loading, error, userInfo } = userLogin;
 
@@ -44,7 +61,7 @@ function LoginPage() {
         <div>
             <div className="grid grid-cols-12">
                 <div className="col-span-6">
-
+                    <img src={rtoLogo} />
                 </div>
                 <div className="col-span-6">
                     <div className="grid grid-cols-12">
@@ -59,6 +76,11 @@ function LoginPage() {
                                 </div>
                                 <div className='textFieldWrapper'>
                                     <form onSubmit={submitHandler}>
+                                        {error &&
+                                            <div className='textField err'>
+                                                <Alert severity="error">{error}</Alert>
+                                            </div>
+                                        }
                                         <div className='textField'>
                                             <TextField
                                                 required
@@ -74,8 +96,9 @@ function LoginPage() {
                                             />
                                         </div>
                                         <div className='textField'>
-                                            <TextField
+                                            {/* <TextField
                                                 required
+                                                type="password"
                                                 onChange={(e) => setPassword(e.target.value)}
                                                 // onChange={onChange}
                                                 // value={formData.agentFirstName}
@@ -85,7 +108,34 @@ function LoginPage() {
                                                 InputProps={{ style: { fontSize: 18 } }}
                                                 InputLabelProps={{ style: { fontSize: 18 } }}
                                                 fullWidth
-                                            />
+                                            /> */}
+                                            <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
+                                                <InputLabel htmlFor="outlined-adornment-password">
+                                                    Password
+                                                </InputLabel>
+                                                <OutlinedInput
+                                                    name="agentFirstName"
+                                                    label="Password"
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    InputProps={{ style: { fontSize: 18 } }}
+                                                    InputLabelProps={{ style: { fontSize: 18 } }}
+                                                    fullWidth
+                                                    id="outlined-adornment-password"
+                                                    type={showPassword ? 'text' : 'password'}
+                                                    endAdornment={
+                                                        <InputAdornment position="end">
+                                                            <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={handleClickShowPassword}
+                                                                onMouseDown={handleMouseDownPassword}
+                                                                edge="end"
+                                                            >
+                                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    }
+                                                />
+                                            </FormControl>
                                         </div>
                                         <div className="buttonWrapper flex justify-around">
                                             <button className="loginBtn" type="submit">

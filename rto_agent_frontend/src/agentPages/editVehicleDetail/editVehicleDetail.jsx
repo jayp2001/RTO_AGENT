@@ -96,8 +96,7 @@ function EditBook() {
             buyerLastName: false,
             clientWhatsAppNumber: false,
             buyerPincode: false,
-            serviceAuthority: false
-
+            serviceAuthority: false,
         }
     )
 
@@ -188,7 +187,28 @@ function EditBook() {
             ["insuranceEndDate"]: date && date['$d'] ? date['$d'] : null,
         }))
     };
+    const handlePucStartDate = (date) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            ["puccStartDate"]: date && date['$d'] ? date['$d'] : null,
+        }))
 
+        var d = new Date(date && date['$d'] ? date['$d'] : null);
+        var a = new Date(d)
+        a.setMonth(a.getMonth() + 6);
+        (a.setDate(a.getDate() - 1));
+        const s = a.toString();
+        setFormData((prevState) => ({
+            ...prevState,
+            ["puccEndDate"]: s && date && date['$d'] ? s : null,
+        }))
+    };
+    const handlePucEndDate = (date) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            ["insuranceEndDate"]: date && date['$d'] ? date['$d'] : null,
+        }))
+    };
     const onChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -1242,6 +1262,58 @@ function EditBook() {
                                 </div>
                             </>
                         }
+                        <div className="formHeader2">
+                            PUC Details
+                        </div>
+                        <div className="grid gird-rows-10 gap-y-6">
+                            <div className="grid grid-cols-12 gap-x-5">
+                                <div className="col-span-4">
+                                    <TextField
+                                        onChange={onChange}
+                                        value={formData.puccNumber}
+                                        name="puccNumber"
+                                        id="outlined-required"
+                                        label="PUCC Number"
+                                        autoComplete='off'
+                                        InputProps={{ style: { fontSize: 14 } }}
+                                        InputLabelProps={{ style: { fontSize: 14 } }}
+                                        fullWidth
+                                    />
+                                </div>
+                                <div className="col-span-4">
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DesktopDatePicker
+                                            textFieldStyle={{ width: '100%' }}
+                                            InputProps={{ style: { fontSize: 14, width: '100%' } }}
+                                            InputLabelProps={{ style: { fontSize: 14 } }}
+                                            label="PUC Start Date"
+                                            inputFormat="DD/MM/YYYY"
+                                            value={formData.puccStartDate}
+                                            onChange={handlePucStartDate}
+                                            name="puccStartDate"
+                                            renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}
+                                        />
+                                    </LocalizationProvider>
+                                </div>
+                                <div className="col-span-4">
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DesktopDatePicker
+                                            textFieldStyle={{ width: '100%' }}
+                                            InputProps={{ style: { fontSize: 14, width: '100%' } }}
+                                            InputLabelProps={{ style: { fontSize: 14 } }}
+                                            label="PUC End Date"
+                                            inputFormat="DD/MM/YYYY"
+                                            value={formData.puccEndDate}
+                                            minDate={formData.puccStartDate}
+                                            onChange={handlePucEndDate}
+                                            name="puccEndDate"
+                                            renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}
+                                        />
+                                    </LocalizationProvider>
+                                </div>
+
+                            </div>
+                        </div>
                         <div className="formHeader2">
                             Insurance Details
                         </div>
