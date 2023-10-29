@@ -228,7 +228,7 @@ function AddBook() {
     const handlePucEndDate = (date) => {
         setFormData((prevState) => ({
             ...prevState,
-            ["insuranceEndDate"]: date && date['$d'] ? date['$d'] : null,
+            ["puccEndDate"]: date && date['$d'] ? date['$d'] : null,
         }))
     };
     const handleInsuranceEndDate = (date) => {

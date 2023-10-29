@@ -206,7 +206,7 @@ function EditBook() {
     const handlePucEndDate = (date) => {
         setFormData((prevState) => ({
             ...prevState,
-            ["insuranceEndDate"]: date && date['$d'] ? date['$d'] : null,
+            ["handlePucEndDate"]: date && date['$d'] ? date['$d'] : null,
         }))
     };
     const onChange = (e) => {
