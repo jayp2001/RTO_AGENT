@@ -277,7 +277,7 @@ DEALER_LIST_DROPDOWN_FAIL,
       bookData.insuranceStartDate = bookData.insuranceStartDate ? bookData.insuranceStartDate.toString().slice(4,15):'';
       bookData.insuranceEndDate = bookData.insuranceEndDate ? bookData.insuranceEndDate.toString().slice(4,15):'';
       bookData.puccStartDate = bookData.puccStartDate ? bookData.puccStartDate.toString().slice(4,15):'';
-      bookData.puccNumber = bookData.puccNumber ? bookData.puccNumber.toString().slice(4,15):'';
+      bookData.puccNumber = bookData.puccEndDate ? bookData.puccEndDate.toString().slice(4,15):'';
       const config = {
         headers: {
           "Content-Type": "application/json",

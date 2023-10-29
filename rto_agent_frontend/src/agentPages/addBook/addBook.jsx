@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import dayjs from 'dayjs';
+import { useRef } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -179,6 +180,7 @@ function AddBook() {
         dispatch(serviceAuthority());
         dispatch(vehicleCategories());
         dispatch(vehicleClass());
+        focus()
     }, [dispatch])
 
     // console.log(":::", agentAddRes)
@@ -263,6 +265,12 @@ function AddBook() {
             [e.target.name]: !formData[e.target.name],
         }))
     }
+    const textFieldRef = useRef(null);
+    const focus = () => {
+        if (textFieldRef.current) {
+            textFieldRef.current.focus();
+        }
+    };
     const submit = (e) => {
 
         e.preventDefault();
@@ -385,6 +393,7 @@ function AddBook() {
         dispatch(resetAddBook())
         setTimeout(() => {
             reset()
+            focus()
         }, 50)
     }
     if (error) {
@@ -463,7 +472,7 @@ function AddBook() {
                                 <div className="col-span-4">
                                     <TextField
                                         onBlur={(e) => {
-                                            if (e.target.value.length < 9) {
+                                            if (e.target.value.length < 8) {
                                                 setFormDataError((perv) => ({
                                                     ...perv,
                                                     vehicleRegistrationNumber: true
@@ -481,6 +490,7 @@ function AddBook() {
                                                 onChange(e)
                                             }
                                         }}
+                                        inputRef={textFieldRef}
                                         value={formData.vehicleRegistrationNumber}
                                         error={formDataError.vehicleRegistrationNumber}
                                         helperText={formDataError.vehicleRegistrationNumber ? "Please Enter Vehicle Number (GJXXABXXXX)" : ''}
@@ -1336,7 +1346,7 @@ function AddBook() {
                                         name="puccNumber"
                                         id="outlined-required"
                                         label="PUCC Number"
-                                        autoComplete='off'
+                                        // autoComplete='off'
                                         InputProps={{ style: { fontSize: 14 } }}
                                         InputLabelProps={{ style: { fontSize: 14 } }}
                                         fullWidth
