@@ -30,7 +30,6 @@ import { getStateList, getCityList } from '../../action/adminAction/adminAction'
 
 function AddBook() {
     const { loading, success, error } = useSelector((state) => state.addBook);
-    console.log(loading, success, error)
     const states = useSelector((state) => state.stateList.state);
     const citys = useSelector((state) => state.cityList.state);
     const dealerDropdownList = useSelector((state) => state.dealerDropdown.state);
@@ -209,6 +208,20 @@ function AddBook() {
             ["insuranceEndDate"]: s && date && date['$d'] ? s : null,
         }))
     };
+    function isDateWithin3YearsFromStartDate(registrationDate, startDate) {
+        // Parse the registration and start dates into Date objects
+        const regDate = new Date(registrationDate);
+        const start = new Date(startDate);
+
+        // Calculate the difference in milliseconds
+        const timeDifference = start - regDate;
+
+        // Calculate the number of milliseconds in 3 years
+        const threeYearsInMilliseconds = 3 * 365 * 24 * 60 * 60 * 1000;
+
+        // Check if the time difference is less than or equal to 3 years
+        return timeDifference <= threeYearsInMilliseconds;
+    }
     const handlePucStartDate = (date) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -217,7 +230,13 @@ function AddBook() {
 
         var d = new Date(date && date['$d'] ? date['$d'] : null);
         var a = new Date(d)
-        a.setMonth(a.getMonth() + 6);
+        console.log('vehicle date', formData.vehicleRegistrationDate, isDateWithin3YearsFromStartDate(formData.vehicleRegistrationDate, date && date['$d'] ? date['$d'] : null))
+        if (isDateWithin3YearsFromStartDate(formData.vehicleRegistrationDate, date && date['$d'] ? date['$d'] : null)) {
+            a.setMonth(a.getMonth() + 12);
+        } else {
+            a.setMonth(a.getMonth() + 6);
+        }
+        // a.setMonth(a.getMonth() + 6);
         (a.setDate(a.getDate() - 1));
         const s = a.toString();
         setFormData((prevState) => ({
@@ -272,48 +291,49 @@ function AddBook() {
         }
     };
     const submit = (e) => {
-
-        e.preventDefault();
-        console.log('>>>>>>>>>>', formData)
-        const isWorkSelected = workFields.filter(element => {
-            if (formData[element]) {
-                return true
-            }
-        })
-        const isValidate = fields.filter(element => {
-            if (formDataError[element] === true || formData[element] === '') {
-                console.log(element)
-                if (formData.TO === false && (buyerFields.includes(element))) {
-                    setFormDataError((perv) => ({
-                        ...perv,
-                        [element]: true
-                    }))
-                    return null;
-                } else if (formData.dealerId !== '100' && element === "privateCustomerName") {
-                    setFormDataError((perv) => ({
-                        ...perv,
-                        [element]: false
-                    }))
-                    return null;
+        if (loading || success) {
+            e.preventDefault();
+            console.log('>>>>>>>>>>', formData)
+            const isWorkSelected = workFields.filter(element => {
+                if (formData[element]) {
+                    return true
                 }
-                else {
-                    setFormDataError((perv) => ({
-                        ...perv,
-                        [element]: true
-                    }))
-                    return element;
-                }
+            })
+            const isValidate = fields.filter(element => {
+                if (formDataError[element] === true || formData[element] === '') {
+                    console.log(element)
+                    if (formData.TO === false && (buyerFields.includes(element))) {
+                        setFormDataError((perv) => ({
+                            ...perv,
+                            [element]: true
+                        }))
+                        return null;
+                    } else if (formData.dealerId !== '100' && element === "privateCustomerName") {
+                        setFormDataError((perv) => ({
+                            ...perv,
+                            [element]: false
+                        }))
+                        return null;
+                    }
+                    else {
+                        setFormDataError((perv) => ({
+                            ...perv,
+                            [element]: true
+                        }))
+                        return element;
+                    }
 
+                }
+            })
+            console.log('????', isValidate);
+            console.log('??/>>', isWorkSelected);
+            if (isValidate.length > 0 || isWorkSelected.length === 0) {
+                alert(
+                    "Please Fill All Field"
+                )
+            } else {
+                dispatch(addBook(formData))
             }
-        })
-        console.log('????', isValidate);
-        console.log('??/>>', isWorkSelected);
-        if (isValidate.length > 0 || isWorkSelected.length === 0) {
-            alert(
-                "Please Fill All Field"
-            )
-        } else {
-            dispatch(addBook(formData))
         }
     }
 
@@ -579,7 +599,7 @@ function AddBook() {
                                             disablePortal
                                             sx={{ width: '100%' }}
                                             id="vehicleClass"
-                                            value={vehicleClassList ? vehicleClassList.find(obj => obj.vehicleClassId === formData.vehicleClass) : null}
+                                            value={vehicleClassList ? vehicleClassList.find(obj => obj.vehicleClassId === formData.vehicleClass) ? vehicleClassList.find(obj => obj.vehicleClassId === formData.vehicleClass) : null : null}
                                             onChange={handleVehicleClassChange}
                                             options={vehicleClassList ? vehicleClassList : []}
                                             getOptionLabel={(options) => options.vehicleClassName}
@@ -605,8 +625,9 @@ function AddBook() {
                                     </FormControl> */}
                                     <Autocomplete
                                         disablePortal
+                                        defaultValue={null}
                                         id="vehicleCategoriesList"
-                                        value={vehicleCategoriesList ? vehicleCategoriesList.find(obj => obj.vehicleCategoryId === formData.vehicleCategory) : null}
+                                        value={vehicleCategoriesList ? vehicleCategoriesList.find(obj => obj.vehicleCategoryId === formData.vehicleCategory) ? vehicleCategoriesList.find(obj => obj.vehicleCategoryId === formData.vehicleCategory) : null : null}
                                         onChange={handleVehicleCategoryChange}
                                         options={vehicleCategoriesList ? vehicleCategoriesList : []}
                                         sx={{ width: '100%' }}
@@ -798,8 +819,8 @@ function AddBook() {
                                             }}
                                             disablePortal
                                             id="dealerDropdownList"
-                                            value={dealerDropdownList ? dealerDropdownList.find(obj => obj.dealerId === formData.dealerId) : null}
-
+                                            value={dealerDropdownList ? dealerDropdownList.find(obj => obj.dealerId === formData.dealerId) ? dealerDropdownList.find(obj => obj.dealerId === formData.dealerId) : null : null}
+                                            defaultValue={null}
                                             onChange={handleDealerChange}
                                             options={dealerDropdownList ? dealerDropdownList : []}
                                             sx={{ width: '100%' }}
@@ -1427,6 +1448,7 @@ function AddBook() {
                                         </Select> */}
                                         <Autocomplete
                                             disablePortal
+                                            defaultValue={null}
                                             id="insuranceCompanyList"
                                             value={insuranceCompanyList ? insuranceCompanyList.find(obj => obj.insuranceId === formData.insuranceCompanyNameId) : null}
                                             onChange={handleInsuranceChange}
